@@ -1,0 +1,45 @@
+name: Build Setup
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Cài Inno Setup (nếu runner chưa có)
+        shell: pwsh
+        run: |
+          if (-not (Test-Path "C:\Program Files (x86)\Inno Setup 6\ISCC.exe")) { choco install innosetup -y --no-progress }
+
+      - name: Lấy số phiên bản
+        id: ver
+        shell: pwsh
+        run: |
+          $v = "${{ github.ref_name }}"
+          if ($v -match '^v(\d+\.\d+\.\d+)$') { $v = $Matches[1] } else { $v = "1.0.0" }
+          "version=$v" >> $env:GITHUB_OUTPUT
+
+      - name: Biên dịch Setup.exe
+        shell: pwsh
+        run: |
+          & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" "/DMyAppVersion=${{ steps.ver.outputs.version }}" installer\VXT_PhongThuy.iss
+
+      - name: Lưu file cài (Artifacts)
+        uses: actions/upload-artifact@v4
+        with:
+          name: VXT_PhongThuy_Setup
+          path: Output/*.exe
+
+      - name: Đăng lên Releases (khi đẩy tag v*)
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: Output/*.exe

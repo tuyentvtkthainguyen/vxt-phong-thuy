@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VXT Phong Thủy – Huyền Không · Bát trạch · Bát tự</title>
+<style>
+:root{--bg:#faf7f2;--card:#fff;--ink:#2b2622;--mut:#7a6f66;--line:#e6ddd2;--acc:#9b2c2c;--acc2:#b7791f;
+--good:#2f855a;--good-bg:#e6f4ea;--warn:#b7791f;--warn-bg:#fdf3e1;--bad:#c53030;--bad-bg:#fde8e8;--neu-bg:#f1ede8}
+@media (prefers-color-scheme:dark){:root{--bg:#1b1917;--card:#252220;--ink:#eee7df;--mut:#a89d92;--line:#3a3531;
+--acc:#f08080;--acc2:#e3b04b;--good:#68d391;--good-bg:#1f3a2a;--warn-bg:#3d3220;--bad:#fc8181;--bad-bg:#432424;--neu-bg:#2e2a27}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{padding:18px 16px 8px;text-align:center}
+h1{margin:0;font-size:1.35rem;color:var(--acc)}
+header p{margin:4px 0 0;color:var(--mut);font-size:.88rem}
+nav{position:sticky;top:0;z-index:5;display:flex;gap:6px;justify-content:center;padding:8px;background:var(--bg);border-bottom:1px solid var(--line)}
+nav button{flex:1;max-width:150px;padding:8px 3px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;font-size:.8rem;cursor:pointer}
+nav button.on{background:var(--acc);color:#fff;border-color:var(--acc)}
+main{max-width:860px;margin:0 auto;padding:12px}
+section{display:none}section.on{display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin:10px 0}
+details{background:var(--card);border:1px solid var(--line);border-radius:12px;margin:8px 0;padding:0 14px}
+summary{cursor:pointer;padding:12px 0;font-weight:600;color:var(--acc)}
+details[open] summary{border-bottom:1px solid var(--line);margin-bottom:8px}
+details>div{padding-bottom:12px}
+table{border-collapse:collapse;width:100%;font-size:.86rem;margin:6px 0}
+th,td{border:1px solid var(--line);padding:5px 6px;text-align:left;vertical-align:top}
+th{background:var(--neu-bg)}
+.tip{background:var(--warn-bg);border-left:4px solid var(--acc2);padding:8px 10px;border-radius:6px;margin:8px 0;font-size:.9rem}
+.key{background:var(--good-bg);border-left:4px solid var(--good);padding:8px 10px;border-radius:6px;margin:8px 0;font-size:.9rem}
+label{display:block;font-size:.85rem;color:var(--mut);margin:8px 0 3px}
+select,input{width:100%;padding:9px;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--ink);font-size:.95rem}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn{padding:9px 14px;border-radius:9px;border:1px solid var(--acc);background:var(--acc);color:#fff;cursor:pointer;font-size:.92rem;margin:4px 4px 0 0}
+.btn.alt{background:transparent;color:var(--acc)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;max-width:420px;margin:10px auto}
+.cell{position:relative;aspect-ratio:1;border:1px solid var(--line);border-radius:8px;background:var(--card);padding:4px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer}
+.cell.toa{outline:3px solid var(--mut)}.cell.huong{outline:3px solid var(--acc)}
+.cell .nm{font-size:.68rem;color:var(--mut);text-align:center;line-height:1.2}
+.cell .sh{display:flex;justify-content:space-between;font-weight:700;font-size:1.35rem}
+.cell .v{text-align:center;font-size:1.05rem;color:var(--mut);font-weight:600}
+.cell .ln{position:absolute;right:5px;bottom:3px;font-size:.7rem;color:var(--acc2);font-weight:700}
+.cell .v.s-vuong{color:var(--good)}.cell .v.s-tu{color:var(--bad)}
+.s-vuong{color:var(--good)}.s-sinh{color:#3182ce}.s-thoai{color:var(--warn)}.s-tu{color:var(--bad)}
+.legend{font-size:.78rem;color:var(--mut);text-align:center}
+.tag{display:inline-block;padding:3px 9px;border-radius:20px;font-size:.82rem;margin:3px 3px 0 0;font-weight:600}
+.tag.g{background:var(--good-bg);color:var(--good)}.tag.b{background:var(--bad-bg);color:var(--bad)}.tag.n{background:var(--neu-bg);color:var(--ink)}
+.fc{min-height:150px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:1.05rem;cursor:pointer;user-select:none}
+.mut{color:var(--mut);font-size:.85rem}
+.opt{display:block;width:100%;text-align:left;margin:6px 0;padding:10px;border-radius:9px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer;font-size:.92rem}
+.opt.ok{background:var(--good-bg);border-color:var(--good)}.opt.no{background:var(--bad-bg);border-color:var(--bad)}
+.lst{margin:4px 0;padding-left:18px}
+</style>
+</head>
+<body>
+<header>
+<h1>Huyền Không Phi Tinh</h1>
+<p>Huyền Không · Bát trạch · Bát tự · Vật phẩm · Ôn tập</p>
+</header>
+<nav>
+<button data-t="hoc" class="on">📖 Học</button>
+<button data-t="lap">🧭 Lập bàn</button>
+<button data-t="bt">☯ Bát trạch</button>
+<button data-t="tu">🀄 Bát tự</button>
+<button data-t="vp">🧿 Vật phẩm</button>
+<button data-t="on">🎯 Ôn tập</button>
+</nav>
+<main>
+
+<!-- ================= HỌC ================= -->
+<section id="hoc" class="on">
+<div class="key"><b>Lộ trình học gợi ý:</b> 1) Lạc Thư &amp; 9 sao → 2) Tam nguyên cửu vận → 3) 24 sơn &amp; âm dương → 4) Cách lập tinh bàn → 5) Cách cục → 6) Tổ hợp sao → 7) Lưu niên &amp; hóa giải. Mỗi bài học xong thì sang tab <b>Lập bàn</b> để kiểm chứng.</div>
+
+<details open><summary>1. Lạc Thư – nền tảng của Phi tinh</summary><div>
+<p>Toàn bộ Huyền Không dựa trên ma phương <b>Lạc Thư</b>: 9 số xếp vào 9 cung, tổng mỗi hàng, cột, đường chéo đều bằng 15.</p>
+<table><tr><td>4 Tốn (ĐN)</td><td>9 Ly (N)</td><td>2 Khôn (TN)</td></tr>
+<tr><td>3 Chấn (Đ)</td><td><b>5 Trung</b></td><td>7 Đoài (T)</td></tr>
+<tr><td>8 Cấn (ĐB)</td><td>1 Khảm (B)</td><td>6 Càn (TB)</td></tr></table>
+<p class="mut">Sách Trung Hoa vẽ Nam ở trên, Bắc ở dưới, trang này cũng theo lối đó (có thể đổi trong tab Lập bàn).</p>
+<p><b>Đường bay (phi) của sao:</b> Trung cung → Càn → Đoài → Cấn → Ly → Khảm → Khôn → Chấn → Tốn. Đây là thứ tự 5→6→7→8→9→1→2→3→4 của Lạc Thư.</p>
+<ul class="lst"><li><b>Bay thuận:</b> số tăng dần theo đường bay (5,6,7,…).</li><li><b>Bay nghịch:</b> số giảm dần theo đường bay (5,4,3,…).</li></ul>
+<div class="tip">Thuộc lòng đường bay là việc cần làm đầu tiên. Mẹo nhớ: <b>“Trung – Càn – Đoài – Cấn – Ly – Khảm – Khôn – Chấn – Tốn”</b>.</div>
+</div></details>
+
+<details><summary>2. Cửu tinh – tính chất 9 sao</summary><div>
+<div id="tblStars"></div>
+<div class="key"><b>Cốt lõi:</b> Một sao tốt hay xấu tùy <b>thời vận</b>, không cố định. Sao đang vượng thì cát, sao đã qua thời (suy, tử) thì hung. Riêng 2 và 5 là hung tinh mạnh, gần như luôn cần hóa giải.</div>
+</div></details>
+
+<details><summary>3. Tam nguyên cửu vận – sao nào đang vượng</summary><div>
+<p>Một chu kỳ 180 năm gồm 3 nguyên (Thượng, Trung, Hạ), mỗi nguyên 3 vận, mỗi vận 20 năm.</p>
+<table><tr><th>Nguyên</th><th>Vận</th><th>Năm</th></tr>
+<tr><td rowspan="3">Thượng</td><td>1</td><td>1864–1883</td></tr><tr><td>2</td><td>1884–1903</td></tr><tr><td>3</td><td>1904–1923</td></tr>
+<tr><td rowspan="3">Trung</td><td>4</td><td>1924–1943</td></tr><tr><td>5</td><td>1944–1963</td></tr><tr><td>6</td><td>1964–1983</td></tr>
+<tr><td rowspan="3">Hạ</td><td>7</td><td>1984–2003</td></tr><tr><td>8</td><td>2004–2023</td></tr><tr><td><b>9</b></td><td><b>2024–2043 (hiện tại)</b></td></tr></table>
+<p><b>Trạng thái sao trong vận 9:</b></p>
+<ul class="lst"><li><span class="s-vuong"><b>Vượng khí: 9</b></span>, sao đắc lệnh, cát nhất.</li>
+<li><span class="s-sinh"><b>Sinh khí: 1, 2</b></span>, sao sắp tới thời (1 cho vận 1, 2 xa hơn).</li>
+<li><span class="s-thoai"><b>Thoái khí: 8</b></span>, vừa qua thời, vẫn còn tốt nhẹ.</li>
+<li><span class="s-tu"><b>Suy / tử khí: 7, 6, 5, 4, 3</b></span>, đã hết thời, dễ gây hung.</li></ul>
+<div class="tip">Vận của nhà tính theo <b>năm hoàn thiện / lợp mái / nhập trạch</b>, ranh giới năm lấy tiết Lập Xuân (~4/2). Nhà cải tạo lớn (thay mái, thay cửa chính, sửa toàn bộ) thì được xem như đổi sang vận mới.</div>
+</div></details>
+
+<details><summary>4. 24 sơn và âm dương (quyết định bay thuận / nghịch)</summary><div>
+<p>La bàn chia 360° thành 8 cung, mỗi cung 45° gồm 3 sơn, mỗi sơn 15°. Ba sơn trong một cung là <b>Địa nguyên – Thiên nguyên – Nhân nguyên</b>.</p>
+<div id="tbl24"></div>
+<div class="key"><b>Quy tắc âm dương (cần thuộc):</b><br>
+Cung <b>Khảm, Chấn, Ly, Đoài</b> (cung chính) có 3 sơn mang dấu: <b>+ − −</b><br>
+Cung <b>Khôn, Tốn, Càn, Cấn</b> (cung góc) có 3 sơn mang dấu: <b>− + +</b><br>
+Dương (+) thì bay thuận, âm (−) thì bay nghịch.</div>
+</div></details>
+
+<details><summary>5. Các bước lập tinh bàn</summary><div>
+<ol class="lst">
+<li><b>Vận bàn:</b> đặt số vận vào Trung cung, bay <b>thuận</b> ra 8 cung.</li>
+<li>Xác định <b>tọa</b> (sau lưng nhà) và <b>hướng</b> (mặt tiền), biết sơn tọa / hướng là sơn thứ mấy (1, 2, 3) trong cung.</li>
+<li><b>Sơn tinh:</b> lấy số vận bàn tại cung <b>tọa</b> đưa vào Trung cung.</li>
+<li><b>Hướng tinh:</b> lấy số vận bàn tại cung <b>hướng</b> đưa vào Trung cung.</li>
+<li><b>Thuận hay nghịch:</b> lấy số vừa đưa vào trung cung (ví dụ 4), tra cung gốc của nó trong Lạc Thư (4 là Tốn). Xem sơn ở <b>cùng vị trí</b> với sơn tọa (hoặc hướng) trong cung đó mang dấu + hay −. Dấu + thì bay thuận, dấu − thì bay nghịch.</li>
+<li><b>Số 5 vào trung cung</b> thì không có cung gốc, nên mượn âm dương của cung ứng với <b>số vận</b> (vận 9 mượn cung Ly).</li></ol>
+<p><b>Ví dụ, vận 9, tọa Tý hướng Ngọ:</b> vận bàn có Khảm = 5, Ly = 4. Sơn tinh 5 mượn Ly; Tý là sơn thứ 2, ở Ly sơn thứ 2 là Ngọ (−) nên bay nghịch. Hướng tinh 4 thuộc Tốn; sơn thứ 2 của Tốn là Tốn (+) nên bay thuận. Kết quả: cả sơn tinh 9 lẫn hướng tinh 9 đều về Khảm, tức cách <b>Song tinh đáo tọa</b>.</p>
+<div class="tip">Cách đọc ô: <b>số trái = sơn tinh</b> (quản nhân đinh, sức khỏe), <b>số phải = hướng tinh</b> (quản tài lộc), <b>số dưới = vận tinh</b>.</div>
+</div></details>
+
+<details><summary>6. Cách cục quan trọng</summary><div>
+<table>
+<tr><th>Cách cục</th><th>Dấu hiệu</th><th>Ý nghĩa và cách dùng</th></tr>
+<tr><td><b>Vượng sơn vượng hướng</b></td><td>Sơn tinh vượng ở tọa, hướng tinh vượng ở hướng</td><td>Tốt nhất. Phía sau cần cao, vững (núi, nhà cao); phía trước cần thoáng, có thủy.</td></tr>
+<tr><td><b>Thượng sơn hạ thủy</b></td><td>Sơn tinh vượng chạy ra hướng, hướng tinh vượng chạy về tọa</td><td>Xấu nếu hình thế thông thường. Hóa giải: trước cao, sau có thủy/khoảng trống (ngược hình thế).</td></tr>
+<tr><td><b>Song tinh đáo hướng</b></td><td>Cả 2 sao vượng ở cung hướng</td><td>Lợi tài. Trước nhà cần có thủy, và xa hơn có vật cao để thu sơn tinh.</td></tr>
+<tr><td><b>Song tinh đáo tọa</b></td><td>Cả 2 sao vượng ở cung tọa</td><td>Lợi nhân đinh. Sau nhà cần có núi/vật cao, và sau nữa có thủy để thu hướng tinh.</td></tr>
+<tr><td><b>Phục ngâm</b></td><td>Sơn hoặc hướng tinh bàn trùng hệt Lạc Thư (5 vào giữa bay thuận)</td><td>Xấu: trì trệ, đau khổ “như rên rỉ”.</td></tr>
+<tr><td><b>Phản ngâm</b></td><td>Mỗi cung = 10 − số Lạc Thư (5 vào giữa bay nghịch)</td><td>Xấu: đảo lộn, tan vỡ.</td></tr>
+<tr><td><b>Hợp thập</b></td><td>Vận tinh + sơn (hoặc hướng) tinh = 10 ở mọi cung</td><td>Rất tốt, thông khí, có thể bù cho cách cục xấu.</td></tr>
+<tr><td><b>Liên châu tam ban quái</b></td><td>3 số mỗi cung liên tiếp (vd 7-8-9)</td><td>Thông khí cả 3 nguyên, phát lâu dài.</td></tr>
+<tr><td><b>Phụ mẫu tam ban quái</b></td><td>Mỗi cung chứa đủ bộ 1-4-7, 2-5-8 hoặc 3-6-9</td><td>Cát, thông khí.</td></tr></table>
+<div class="key"><b>Câu then chốt:</b> “Sơn quản nhân đinh, thủy quản tài lộc.” Sao vượng của sơn tinh cần gặp <b>sơn</b> (vật cao, tường đặc). Sao vượng của hướng tinh cần gặp <b>thủy</b> (nước, cửa, lối đi, khoảng trống). Lý khí phải khớp với hình thế.</div>
+</div></details>
+
+<details><summary>7. Tổ hợp sao thường gặp</summary><div>
+<p class="mut">Đọc cặp sơn tinh và hướng tinh trong một cung. Tổ hợp chỉ ứng mạnh khi sao đang vượng / suy và cung đó bị kích hoạt (cửa, phòng dùng nhiều, động thổ).</p>
+<div id="tblCombo"></div>
+</div></details>
+
+<details><summary>8. Lưu niên phi tinh và hóa giải</summary><div>
+<p><b>Niên tinh:</b> mỗi năm một sao vào trung cung, bay <b>thuận</b>. Sao đó giảm 1 mỗi năm: 2024 → 3, 2025 → 2, <b>2026 → 1</b>, 2027 → 9, 2028 → 8…</p>
+<p>Năm nào niên tinh 2 hoặc 5 trùng vào cung có sơn/hướng tinh 2, 5 thì hung lực tăng mạnh. Không động thổ, khoan đục ở cung Ngũ Hoàng của năm.</p>
+<table><tr><th>Sao cần hóa</th><th>Hành</th><th>Hóa bằng</th></tr>
+<tr><td>2, 5</td><td>Thổ</td><td>Kim tiết khí thổ: chuông gió kim loại, hồ lô đồng, vật đồng</td></tr>
+<tr><td>3</td><td>Mộc</td><td>Hỏa tiết mộc: màu đỏ, đèn sáng (tránh cây xanh, nước)</td></tr>
+<tr><td>7</td><td>Kim</td><td>Thủy tiết kim: nước tĩnh, màu xanh đen/đen</td></tr>
+<tr><td>6, 7 bị 9 khắc</td><td>Hỏa khắc Kim</td><td>Thêm Thổ thông quan: đá, gốm, màu vàng nâu</td></tr>
+<tr><td>Kích hoạt sao vượng 9</td><td>Hỏa</td><td>Đèn sáng, màu đỏ/tím, hoạt động nhiều; với hướng tinh thì mở thoáng</td></tr></table>
+<div class="tip">Ưu tiên <b>bố cục</b> (đặt cửa, phòng, bếp, giường đúng cung) hơn vật phẩm. Vật phẩm chỉ hỗ trợ.</div>
+</div></details>
+
+<details><summary>9. Những lỗi người mới hay mắc</summary><div>
+<ul class="lst">
+<li>Đo hướng sai: đo ở giữa nhà, đứng tránh xa sắt thép, xe, điện. Nhà phố lấy mặt tiền tiếp đường làm hướng.</li>
+<li>Rơi vào <b>Đại không vong</b> (ranh giới 2 cung, ví dụ 22,5°) hoặc <b>Tiểu không vong</b> (ranh giới 2 sơn): khí tạp, rất kỵ.</li>
+<li>Hướng <b>kiêm</b> lệch quá 3° khỏi giữa sơn mà vẫn dùng hạ quái: phải dùng <b>Thế quái</b> (xem bài 10).</li>
+<li>Tính sai vận do lấy năm khởi công thay vì năm hoàn thiện/nhập trạch.</li>
+<li>Chỉ nhìn số mà quên hình thế: sao vượng gặp sai hình (sơn tinh vượng gặp hồ nước) thì không phát.</li></ul>
+</div></details>
+<details><summary>10. Thế quái (kiêm hướng)</summary><div>
+<p>Mỗi sơn rộng 15°. Trong vòng <b>3°</b> quanh giữa sơn là <b>chính hướng</b>, dùng <b>Hạ quái</b> (cách lập bàn ở bài 5). Lệch quá 3° về phía sơn bên cạnh gọi là <b>kiêm hướng</b>, khí bị pha tạp, nên dùng <b>Thế quái</b>, tức là thay sao đưa vào trung cung bằng “thế tinh”. Sát ranh giới (≤1,5°) là không vong, không nên dùng.</p>
+<p><b>Khẩu quyết thế tinh (Thẩm thị):</b></p>
+<table><tr><th>Thế tinh</th><th>Các sơn</th></tr>
+<tr><td><b>1</b> Tham Lang</td><td>Tý, Quý, Giáp, Thân</td></tr>
+<tr><td><b>2</b> Cự Môn</td><td>Nhâm, Mão, Ất, Mùi, Khôn</td></tr>
+<tr><td><b>6</b> Vũ Khúc</td><td>Càn, Hợi, Thìn, Tốn, Tỵ, Tuất</td></tr>
+<tr><td><b>7</b> Phá Quân</td><td>Dậu, Tân, Sửu, Cấn, Bính</td></tr>
+<tr><td><b>9</b> Hữu Bật</td><td>Dần, Ngọ, Canh, Đinh</td></tr></table>
+<p class="mut">Không có sơn nào cho thế tinh 3, 4, 8 (và 5).</p>
+<p><b>Cách làm:</b></p>
+<ol class="lst">
+<li>Lập vận bàn như thường, lấy sao ở cung tọa (sơn tinh) và cung hướng (hướng tinh).</li>
+<li>Với mỗi sao, tìm cung gốc Lạc Thư của nó, lấy sơn <b>cùng vị trí</b> (1, 2, 3) với sơn tọa/hướng. Số 5 thì mượn cung của vận.</li>
+<li>Tra khẩu quyết ra thế tinh, đưa <b>thế tinh</b> vào trung cung thay cho sao gốc.</li>
+<li>Thuận/nghịch <b>vẫn theo âm dương của sơn gốc</b> (y như hạ quái), rồi bay ra 8 cung.</li></ol>
+<p><b>Ví dụ, vận 9, hướng Ngọ kiêm Đinh (tọa Tý kiêm Quý):</b> vận bàn có Khảm = 5, Ly = 4. Sơn tinh 5 mượn Ly; sơn thứ 2 của Ly là Ngọ, thế tinh là 9, bay nghịch (Ngọ −). Hướng tinh 4 thuộc Tốn; sơn thứ 2 là Tốn, thế tinh là 6, bay thuận (Tốn +).</p>
+<div class="tip">Nếu thế tinh trùng sao gốc (ví dụ sao 1 ở sơn Tý thì thế tinh vẫn là 1) thì bàn thế quái giống hạ quái. Một số phái khác có lệ riêng cho số 5 hoặc chiều bay; ở đây theo phổ biến của Thẩm thị.</div>
+</div></details>
+<details><summary>11. Bát trạch – cung phi và 8 du niên</summary><div>
+<p>Bát trạch xét sự hợp nhau giữa <b>mệnh người</b> (cung phi) và <b>nhà</b> (trạch quái theo tọa), không xét thời vận như Huyền Không. Hai phép bổ trợ nhau: Bát trạch chọn hướng hợp người, Huyền Không chọn thời điểm và bố cục theo sao.</p>
+<p><b>Tính cung phi</b> (theo năm âm lịch, lấy tiết Lập Xuân ~4/2 làm ranh giới năm):</p>
+<ol class="lst"><li>Cộng các chữ số của năm sinh đến khi còn 1 chữ số, gọi là S (vd 1985 → 23 → 5).</li>
+<li><b>Nam:</b> 11 − S, nếu lớn hơn 9 thì trừ 9; ra 5 thì lấy <b>2 (Khôn)</b>.</li>
+<li><b>Nữ:</b> 4 + S, nếu lớn hơn 9 thì trừ 9; ra 5 thì lấy <b>8 (Cấn)</b>.</li></ol>
+<p>Kết quả: 1 Khảm, 2 Khôn, 3 Chấn, 4 Tốn, 6 Càn, 7 Đoài, 8 Cấn, 9 Ly.</p>
+<ul class="lst"><li><b>Đông tứ mệnh / Đông tứ trạch:</b> Khảm, Ly, Chấn, Tốn.</li><li><b>Tây tứ mệnh / Tây tứ trạch:</b> Càn, Khôn, Cấn, Đoài.</li></ul>
+<div id="tblDN"></div>
+<div id="tblBT"></div>
+<div class="key"><b>Cách dùng:</b> người Đông tứ mệnh hợp nhà Đông tứ trạch, Tây hợp Tây. Cửa chính, bàn làm việc, đầu giường nên nhìn về hướng cát. Bếp theo lệ <b>“tọa hung hướng cát”</b>: thân bếp đặt ở phương hung, miệng bếp hướng về phương cát. Nhà vệ sinh, kho đặt ở phương hung.</div>
+</div></details>
+
+<details><summary>12. Hoàng tuyền và Bát sát</summary><div>
+<p><b>1) Bát sát hoàng tuyền (Long thượng bát sát)</b>, xét theo <b>cung tọa</b>. Khẩu quyết: <i>“Khảm Long, Khôn Thố, Chấn Sơn Hầu, Tốn Kê, Càn Mã, Đoài Xà đầu, Cấn Hổ, Ly Trư vi sát diệu.”</i></p>
+<table><tr><th>Tọa cung</th><th>Kỵ phương</th></tr>
+<tr><td>Khảm (Nhâm Tý Quý)</td><td>Thìn (Rồng)</td></tr><tr><td>Khôn (Mùi Khôn Thân)</td><td>Mão (Mèo)</td></tr>
+<tr><td>Chấn (Giáp Mão Ất)</td><td>Thân (Khỉ)</td></tr><tr><td>Tốn (Thìn Tốn Tỵ)</td><td>Dậu (Gà)</td></tr>
+<tr><td>Càn (Tuất Càn Hợi)</td><td>Ngọ (Ngựa)</td></tr><tr><td>Đoài (Canh Dậu Tân)</td><td>Tỵ (Rắn)</td></tr>
+<tr><td>Cấn (Sửu Cấn Dần)</td><td>Dần (Hổ)</td></tr><tr><td>Ly (Bính Ngọ Đinh)</td><td>Hợi (Lợn)</td></tr></table>
+<p>Kỵ: mở cửa, nước chảy đến, đường đâm thẳng, góc nhọn từ phương đó. Gốc lý là địa chi “quan quỷ” trong nạp giáp của quẻ tọa khắc quẻ. Một số phái xét thêm theo cung hướng.</p>
+<p><b>2) Tứ lộ hoàng tuyền (Hoàng tuyền thủy)</b>, xét theo <b>sơn hướng</b>. Khẩu quyết: <i>“Canh Đinh Khôn thượng thị hoàng tuyền, Ất Bính tu phòng Tốn thủy tiên, Giáp Quý hướng trung ưu kiến Cấn, Tân Nhâm thủy lộ phạ đương Càn.”</i></p>
+<table><tr><th>Hướng</th><th>Kỵ phương</th><th>Hướng (chiều ngược)</th><th>Kỵ phương</th></tr>
+<tr><td>Canh, Đinh</td><td>Khôn</td><td>Khôn</td><td>Canh, Đinh</td></tr>
+<tr><td>Ất, Bính</td><td>Tốn</td><td>Tốn</td><td>Ất, Bính</td></tr>
+<tr><td>Giáp, Quý</td><td>Cấn</td><td>Cấn</td><td>Giáp, Quý</td></tr>
+<tr><td>Tân, Nhâm</td><td>Càn</td><td>Càn</td><td>Tân, Nhâm</td></tr></table>
+<div class="tip">Nhiều sách phân biệt: nước <b>chảy đến</b> từ phương hoàng tuyền là <b>sát nhân hoàng tuyền</b> (hung); nước <b>chảy đi</b> ra phương đó gọi là <b>cứu bần hoàng tuyền</b>, không hại, có khi còn cát. Với nhà ở, thường lấy nước là đường, lối đi, cửa phụ, rãnh thoát nước.</div>
+</div></details>
+<details><summary>13. Tam yếu – Cửa, Phòng chủ, Bếp</summary><div>
+<p>Sách <b>Bát Trạch Minh Kính</b> coi ba thứ quan trọng nhất của dương trạch là <b>Môn</b> (cửa chính), <b>Chủ</b> (phòng ngủ chủ nhà) và <b>Táo</b> (bếp). Lấy cung của từng thứ tính từ tâm nhà rồi phối với nhau theo bảng du niên ở bài 11, giống cách phối mệnh với hướng.</p>
+<ul class="lst"><li><b>Trạch phối Môn:</b> cung tọa so với cung cửa, nên được du niên cát.</li>
+<li><b>Môn phối Chủ:</b> cửa so với phòng chủ, cát thì nhà yên, người khỏe.</li>
+<li><b>Môn phối Táo:</b> cửa so với bếp, cát thì tài lộc, ăn uống tốt.</li>
+<li><b>Theo mệnh:</b> cửa và phòng chủ ở phương cát của chủ; <b>bếp đặt ở phương hung</b> để đè hung, <b>miệng bếp nhìn về phương cát</b>.</li></ul>
+<div class="tip">Khi cửa, phòng, bếp đều cùng nhóm Đông hoặc Tây tứ trạch với nhau thì gọi là “thuần”, tốt nhất. Lẫn lộn hai nhóm là “tạp”.</div>
+</div></details>
+
+<details><summary>14. Bát tự (Tứ trụ) – nhập môn</summary><div>
+<p>Bát tự gồm 4 trụ <b>Năm – Tháng – Ngày – Giờ</b>, mỗi trụ một thiên can và một địa chi, tổng cộng 8 chữ.</p>
+<ul class="lst"><li><b>Trụ năm</b> đổi vào lúc <b>Lập Xuân</b> (~4/2), không phải Tết âm lịch.</li>
+<li><b>Trụ tháng</b> đổi theo 12 <b>tiết</b>: Lập Xuân mở tháng Dần, Kinh Trập tháng Mão, Thanh Minh tháng Thìn… Can tháng theo “Ngũ hổ độn”: năm Giáp/Kỷ khởi Bính Dần, Ất/Canh khởi Mậu Dần, Bính/Tân khởi Canh Dần, Đinh/Nhâm khởi Nhâm Dần, Mậu/Quý khởi Giáp Dần.</li>
+<li><b>Trụ ngày</b> đếm liên tục theo vòng 60 Giáp Tý.</li>
+<li><b>Trụ giờ</b>: chi theo 12 canh giờ (Tý 23–1h…), can theo “Ngũ thử độn”: ngày Giáp/Kỷ khởi Giáp Tý, Ất/Canh khởi Bính Tý, Bính/Tân khởi Mậu Tý, Đinh/Nhâm khởi Canh Tý, Mậu/Quý khởi Nhâm Tý.</li></ul>
+<p><b>Nhật chủ</b> (can ngày) đại diện cho bản thân. Các can khác so với nhật chủ ra <b>Thập thần</b>:</p>
+<table><tr><th>Quan hệ với nhật chủ</th><th>Cùng âm dương</th><th>Khác âm dương</th></tr>
+<tr><td>Cùng hành</td><td>Tỷ kiên</td><td>Kiếp tài</td></tr>
+<tr><td>Nhật chủ sinh</td><td>Thực thần</td><td>Thương quan</td></tr>
+<tr><td>Nhật chủ khắc</td><td>Thiên tài</td><td>Chính tài</td></tr>
+<tr><td>Khắc nhật chủ</td><td>Thất sát</td><td>Chính quan</td></tr>
+<tr><td>Sinh nhật chủ</td><td>Thiên ấn</td><td>Chính ấn</td></tr></table>
+<p><b>Đại vận:</b> nam sinh năm can dương và nữ sinh năm can âm thì đi thuận; ngược lại thì đi nghịch. Đếm số ngày từ lúc sinh đến tiết kế tiếp (thuận) hoặc tiết vừa qua (nghịch), cứ <b>3 ngày = 1 năm</b> để ra tuổi khởi vận. Mỗi đại vận 10 năm.</p>
+<div class="key"><b>Trình tự luận cơ bản:</b> 1) Nhật chủ thuộc hành gì; 2) sinh tháng nào, có đắc lệnh không; 3) đếm lực sinh trợ và khắc tiết để định thân vượng hay nhược; 4) chọn hỷ dụng thần cân bằng; 5) xét hợp, xung, thần sát; 6) xem đại vận, lưu niên gặp hỷ hay kỵ thần.</div>
+</div></details>
+<details><summary>15. Vật phẩm phong thủy – nguyên tắc dùng</summary><div>
+<p>Vật phẩm có hai việc: <b>hóa sát</b> (giảm khí xấu từ hình thế hoặc sao xấu) và <b>kích hoạt</b> (tăng khí tốt cho tài, danh, sức khỏe, tình cảm, học hành). Trang trí thuần túy không tính là phong thủy.</p>
+<p><b>Chọn vật phẩm cho người</b> có 4 cách, xếp từ dễ đến đúng nhất:</p>
+<ol class="lst"><li>Theo con giáp (tuổi địa chi).</li><li>Theo ngũ hành nạp âm (cách dân gian hay dùng nhưng kém chính xác nhất).</li><li>Theo cung phi Bát trạch.</li><li><b>Theo dụng thần Bát tự</b>: bổ sung hành mà lá số cần. Đây là cách cá nhân hóa, sát nhất.</li></ol>
+<p><b>Chọn vật phẩm cho nhà:</b> lấy tinh bàn Huyền Không làm gốc. Cung có 2, 5 thì dùng kim khí (chuông đồng 6 ống, hồ lô đồng); cung có sao vượng thì kích (cửa, đèn, nước với hướng tinh; vật cao, đá với sơn tinh); các vị trí Văn xương, Đào hoa, Dịch mã, Nghênh lộc dùng cho mục đích riêng.</p>
+<div class="key"><b>Ba nguyên tắc:</b> 1) Hóa sát trước, kích hoạt sau. 2) Vật phẩm theo ngũ hành của cung và của sao, không đặt bừa. 3) Ít mà đúng chỗ hơn nhiều mà sai chỗ: gương, bát quái, vật hung (đao, kiếm, đại bàng vồ mồi) đặt sai dễ phản tác dụng.</div>
+<p>Tab <b>🧿 Vật phẩm</b> tự lập bản đồ bố trí cho nhà đang chọn và tra cứu toàn bộ phần này.</p>
+</div></details>
+<p class="mut" style="text-align:center">Nội dung tổng hợp từ học thuật Huyền Không truyền thống (Thẩm thị Huyền Không), để tham khảo và học tập.</p>
+</section>
+
+<!-- ================= LẬP BÀN ================= -->
+<section id="lap">
+<div class="card">
+<div class="row">
+<div><label>Năm hoàn thiện / nhập trạch</label><input id="inYear" type="number" value="2026"></div>
+<div><label>Vận (tự tính từ năm, có thể chọn lại)</label><select id="inVan"></select></div>
+</div>
+<div class="row">
+<div><label>Độ hướng (mặt tiền), 0–359,9°</label><input id="inDeg" type="number" step="0.1" placeholder="vd 180"></div>
+<div><label>Hoặc chọn sơn hướng</label><select id="inSon"></select></div>
+</div>
+<div class="row">
+<div><label>Năm lưu niên</label><input id="inLN" type="number" value="2026"></div>
+<div><label>Hiển thị</label><select id="inOri"><option value="S">Nam ở trên</option><option value="N">Bắc ở trên</option></select></div>
+</div>
+<label>Loại quái</label>
+<select id="inQuai"><option value="auto">Tự động theo độ (kiêm &gt; 3° thì dùng Thế quái)</option><option value="ha">Hạ quái (chính hướng)</option><option value="the">Thế quái (kiêm hướng)</option></select>
+</div>
+<div class="card">
+<div id="title" style="text-align:center;font-weight:700"></div>
+<div id="warn"></div>
+<div class="grid" id="grid"></div>
+<div class="legend">Trái: sơn tinh · Phải: hướng tinh · Dưới: vận tinh · Góc vàng: niên tinh<br>
+Khung đỏ: cung hướng · Khung xám: cung tọa ·
+<span class="s-vuong">vượng</span> · <span class="s-sinh">sinh</span> · <span class="s-thoai">thoái</span> · <span class="s-tu">suy/tử</span></div>
+</div>
+<div class="card"><b>📐 Áp tinh bàn lên ảnh thửa đất</b>
+<label>Tải ảnh: trích lục, sổ đỏ, bản vẽ mặt bằng, ảnh vệ tinh</label><input id="lotFile" type="file" accept="image/*">
+<div id="lotBox" style="display:none">
+<div style="margin:6px 0"><button class="btn" data-lm="pts">1. Chấm góc thửa</button><button class="btn alt" data-lm="arrow">2a. Chấm mũi tên Bắc</button><button class="btn alt" data-lm="front">2b. Chấm mặt tiền</button></div>
+<p class="mut" id="lotHint">Chạm lần lượt các góc thửa đất (theo vòng).</p>
+<canvas id="lotCv" style="width:100%;border-radius:10px;border:1px solid var(--line);touch-action:manipulation;cursor:crosshair"></canvas>
+<div class="row"><div><label>Bắc lệch so với phía trên ảnh (độ, chiều kim đồng hồ)</label><input id="lotN" type="number" step="0.5" value="0"></div>
+<div><label>Cách chia</label><select id="lotMethod"><option value="grid">Cửu cung 3×3 theo thửa</option><option value="sector">Bát quái 8 phương 45° từ tâm</option></select></div></div>
+<div><button class="btn alt" id="lotUndo">Bỏ điểm cuối</button><button class="btn alt" id="lotClear">Xóa các góc</button><button class="btn" id="lotSave">Xuất ảnh</button></div>
+<p class="mut" id="lotInfo"></p>
+<div id="lotImgBox" style="display:none"><p class="mut">Nhấn giữ (điện thoại) hoặc chuột phải vào ảnh để lưu. <a id="lotDl" download="tinh-ban-thua-dat.jpg" href="#">Tải ảnh về máy</a></p><img id="lotImg" style="width:100%;border-radius:10px"></div>
+<div class="tip">Hướng Bắc lấy theo một trong hai cách: chấm mũi tên Bắc có trên trích lục/sổ đỏ (chính xác nhất), hoặc chấm mặt tiền để trang tự xoay theo độ hướng đã nhập ở trên. Cửu cung 3×3 chia theo trục nhà (ô giữa mặt tiền là cung hướng), hợp nhà phố; Bát quái 45° chia theo la bàn từ tâm thửa, có thêm vạch 24 sơn. Ảnh chỉ xử lý trong trình duyệt, không gửi đi đâu.</div>
+</div></div>
+<div class="card"><b>Cách cục</b><div id="cuc"></div><div id="steps" class="mut" style="margin-top:8px"></div></div>
+<div class="card"><b>Luận từng cung</b> <span class="mut">(chạm vào ô để xem nhanh)</span><div id="luan"></div></div>
+</section>
+
+<!-- ================= BÁT TRẠCH ================= -->
+<section id="bt">
+<div class="card">
+<div class="row">
+<div><label>Năm sinh chủ nhà (dương lịch)</label><input id="btYear" type="number" value="1985"></div>
+<div><label>Giới tính</label><select id="btSex"><option value="nam">Nam</option><option value="nu">Nữ</option></select></div>
+</div>
+<label><input type="checkbox" id="btLX" style="width:auto"> Sinh trước Lập Xuân (trước khoảng 4/2), tính theo năm trước</label>
+<label>Hướng nhà (đồng bộ với tab Lập bàn)</label><select id="btSon"></select>
+</div>
+<div class="card"><b>Cung phi chủ nhà</b><div id="btMenh"></div>
+<div class="grid" id="btGrid"></div>
+<div class="legend">Xanh: hướng cát · Đỏ: hướng hung · Khung đỏ: cung hướng nhà</div></div>
+<div class="card"><b>Nhà và chủ nhà</b><div id="btNha"></div></div>
+<div class="card"><b>Tam yếu (Bát Trạch Minh Kính): Cửa – Phòng chủ – Bếp</b>
+<p class="mut">Chọn vị trí trong nhà, tính từ tâm nhà.</p>
+<div class="row"><div><label>Cửa chính nằm ở cung</label><select id="tyDoor"></select></div>
+<div><label>Phòng chủ (ngủ) ở cung</label><select id="tyRoom"></select></div></div>
+<div class="row"><div><label>Bếp đặt ở cung</label><select id="tyKit"></select></div>
+<div><label>Miệng bếp (lưng người nấu) nhìn về</label><select id="tyStove"></select></div></div>
+<div id="tyOut"></div></div>
+<div class="card"><b>Hoàng tuyền · Bát sát</b><div id="btHT"></div></div>
+</section>
+
+<!-- ================= BÁT TỰ ================= -->
+<section id="tu">
+<div class="card">
+<div class="row"><div><label>Ngày sinh (dương lịch)</label><input id="tuDate" type="date" value="1985-06-15"></div>
+<div><label>Giờ sinh</label><input id="tuTime" type="time" value="08:30"></div></div>
+<div class="row"><div><label>Giới tính</label><select id="tuSex"><option value="nam">Nam</option><option value="nu">Nữ</option></select></div>
+<div><label>Múi giờ (UTC+)</label><input id="tuTz" type="number" step="0.5" value="7"></div></div>
+<label><input type="checkbox" id="tuTy" style="width:auto" checked> Sinh từ 23h trở đi thì tính sang ngày hôm sau (giờ Tý đầu ngày)</label>
+<p class="mut">Miền Nam trước 1975 dùng UTC+8. Năm âm lịch và tháng được tính theo tiết khí thật (Lập Xuân, Kinh Trập…), không theo ngày mùng 1 âm lịch.</p>
+</div>
+<div class="card"><b>Tứ trụ</b><div id="tuTiet" class="mut"></div><div style="overflow-x:auto"><div id="tuTable"></div></div></div>
+<div class="card"><b>Đổi lịch âm – dương</b>
+<label>Chọn một ngày dương lịch để xem âm lịch, can chi, hoàng/hắc đạo, trực</label><input id="cnCheck" type="date">
+<div id="cnAD"></div></div>
+<div class="card"><b>Chọn ngày theo lá số</b>
+<div class="row"><div><label>Từ ngày</label><input id="cnFrom" type="date"></div>
+<div><label>Số ngày xét (tối đa 120)</label><input id="cnDays" type="number" value="30"></div></div>
+<div class="row"><div><label>Việc cần làm</label><select id="cnViec"><option value="chung">Việc chung</option><option value="cuoi">Cưới hỏi</option><option value="xay">Động thổ, xây nhà, đổ mái</option><option value="nhap">Nhập trạch, chuyển nhà</option><option value="kt">Khai trương, ký hợp đồng</option><option value="di">Xuất hành, đi xa</option></select></div>
+<div><label>&nbsp;</label><label><input type="checkbox" id="cnGood" style="width:auto"> Chỉ hiện ngày tốt</label></div></div>
+<div id="cnOut"></div>
+<div class="tip">Cách chấm: Hoàng đạo +2 / Hắc đạo −2; trực hợp việc +2, trực kỵ −2; Tam nương −3, Nguyệt kỵ −2, Dương công kỵ −3; xung tuổi −4, xung chi ngày sinh −2 (thiên khắc địa xung thêm −2); lục hợp tuổi +2, tam hợp +1; can chi ngày là hỷ thần +1 đến +2. Tốt khi từ +4 trở lên và là ngày Hoàng đạo. Thần trực nhật và trực tính theo tháng tiết khí. Đây là cách chọn ngày phổ thông; việc lớn nên xem thêm giờ hoàng đạo và tuổi những người liên quan.</div></div>
+<div class="card"><b>Ngũ hành và thân vượng/nhược</b><div id="tuHanh"></div></div>
+<div class="card"><b>Hợp, xung và thần sát</b><div id="tuSat"></div></div>
+<div class="card"><b>Đại vận</b><div id="tuVan"></div></div>
+<div class="card"><b>📜 Luận giải sơ bộ</b> <button class="btn alt" id="tuCopy" style="float:right;margin:0">Sao chép</button>
+<div id="tuLuan" style="clear:both"></div></div>
+<div class="card"><b>Liên hệ Bát trạch</b><div id="tuBT"></div></div>
+</section>
+
+<!-- ================= VẬT PHẨM ================= -->
+<section id="vp">
+<div class="card"><b>Bản đồ bố trí vật phẩm cho nhà đang chọn</b>
+<div id="vpHead" class="mut"></div>
+<div class="grid" id="vpGrid" style="max-width:520px"></div>
+<div class="legend">Mỗi ô: sơn·hướng tinh, số vàng là niên tinh. Nền xanh: cung tốt để kích; đỏ: cần hóa; vàng: vừa có sao tốt vừa có sát. Chạm vào ô để xem chi tiết từng cung. Dữ liệu lấy từ tab Lập bàn (hướng, vận, năm) và tab Bát trạch (năm sinh chủ nhà).</div>
+<div id="vpCell"></div></div>
+<div class="card"><b>Vị trí kích hoạt theo hướng nhà và tuổi</b><div id="vpPos"></div></div>
+<div class="card"><input id="vpQ" placeholder="Tìm nhanh: gương, tỳ hưu, ngã ba, thạch anh…"></div>
+<details open><summary>Hóa giải sát khí loan đầu (bên ngoài nhà)</summary><div id="vpSat"></div></details>
+<details><summary>Lỗi bố trí trong nhà thường gặp</summary><div id="vpIn"></div></details>
+<details><summary>Pháp khí hóa sát và kích hoạt</summary><div id="vpItem"></div></details>
+<details><summary>Linh vật: đặt ở đâu, kiêng gì</summary><div id="vpLinh"></div></details>
+<details><summary>Màu sắc và đá theo ngũ hành</summary><div id="vpDa"></div></details>
+<details><summary>Đá theo tuổi, Phật bản mệnh</summary><div id="vpTuoi"></div></details>
+<details><summary>Thần tài, bể cá, non bộ, cây xanh</summary><div id="vpKhac"></div></details>
+<p class="mut" style="text-align:center">Tổng hợp, viết lại ngắn gọn từ bộ “Ứng dụng vật phẩm phong thủy” tập 1–2 (Học viện Phong thủy Minh Việt), có đối chiếu với lý Huyền Không trong trang này. Chỉ để học và tham khảo.</p>
+</section>
+
+<!-- ================= ÔN TẬP ================= -->
+<section id="on">
+<div class="card">
+<b>Thẻ ghi nhớ</b> <span class="mut">(chạm thẻ để lật)</span>
+<div class="card fc" id="fc"></div>
+<button class="btn alt" id="fcPrev">◀ Trước</button><button class="btn" id="fcNext">Tiếp ▶</button><span class="mut" id="fcN"></span>
+</div>
+<div class="card">
+<b>Luyện lập bàn</b>
+<p class="mut">Nhà ngẫu nhiên, hãy tự lập bàn ra giấy rồi chọn cách cục chính.</p>
+<div id="qz"></div>
+<button class="btn" id="qzNew">Câu mới</button> <span class="mut" id="qzScore"></span>
+</div>
+</section>
+</main>
+
+<script>
+(function(){
+// ---------- dữ liệu ----------
+const STARS={
+1:{ten:'Nhất Bạch',tinh:'Tham Lang',hanh:'Thủy',cung:'Khảm',cat:'Văn chương, danh tiếng, nhân duyên, quan lộc',hung:'Thận, tai, ly tán, đào hoa xấu'},
+2:{ten:'Nhị Hắc',tinh:'Cự Môn',hanh:'Thổ',cung:'Khôn',cat:'Điền sản, phát nông nghiệp (khi vượng)',hung:'Bệnh phù: bệnh tật, bất lợi phụ nữ chủ nhà'},
+3:{ten:'Tam Bích',tinh:'Lộc Tồn',hanh:'Mộc',cung:'Chấn',cat:'Hưng nghiệp, con trưởng phát',hung:'Thị phi, cãi vã, kiện tụng, trộm cắp'},
+4:{ten:'Tứ Lục',tinh:'Văn Khúc',hanh:'Mộc',cung:'Tốn',cat:'Văn xương: học hành, thi cử, văn nghệ',hung:'Đào hoa xấu, phong thấp, bất lợi phụ nữ trưởng'},
+5:{ten:'Ngũ Hoàng',tinh:'Liêm Trinh',hanh:'Thổ',cung:'Trung',cat:'Chỉ cát khi vượng ở vận 5',hung:'Tai họa lớn, bệnh nặng, tổn thương, phá sản'},
+6:{ten:'Lục Bạch',tinh:'Vũ Khúc',hanh:'Kim',cung:'Càn',cat:'Quyền lực, võ chức, tài lộc, quý nhân',hung:'Cô độc, tổn thương đầu, bất lợi người cha'},
+7:{ten:'Thất Xích',tinh:'Phá Quân',hanh:'Kim',cung:'Đoài',cat:'Ăn nói, tài lộc (vượng ở vận 7)',hung:'Khẩu thiệt, trộm cướp, máu, dao kéo'},
+8:{ten:'Bát Bạch',tinh:'Tả Phù',hanh:'Thổ',cung:'Cấn',cat:'Tài lộc, điền sản, con trẻ',hung:'Bất lợi trẻ nhỏ, bệnh tay chân (khi suy)'},
+9:{ten:'Cửu Tử',tinh:'Hữu Bật',hanh:'Hỏa',cung:'Ly',cat:'Hỷ sự, danh tiếng, vượng khí của vận 9',hung:'Hỏa hoạn, bệnh mắt, tim, thị phi'}};
+const PNAME={1:'Khảm',2:'Khôn',3:'Chấn',4:'Tốn',5:'Trung cung',6:'Càn',7:'Đoài',8:'Cấn',9:'Ly'};
+const PDIR={1:'Bắc',2:'Tây Nam',3:'Đông',4:'Đông Nam',5:'',6:'Tây Bắc',7:'Tây',8:'Đông Bắc',9:'Nam'};
+const ORDER=[5,6,7,8,9,1,2,3,4];
+const SON=['Nhâm','Tý','Quý','Sửu','Cấn','Dần','Giáp','Mão','Ất','Thìn','Tốn','Tỵ','Bính','Ngọ','Đinh','Mùi','Khôn','Thân','Canh','Dậu','Tân','Tuất','Càn','Hợi'];
+const SONP=[1,8,3,4,9,2,7,6];
+const YY={1:'+--',3:'+--',7:'+--',9:'+--',2:'-++',4:'-++',6:'-++',8:'-++'};
+const NGUYEN=['Địa nguyên','Thiên nguyên','Nhân nguyên'];
+// Thế tinh của 24 sơn (khẩu quyết Thẩm thị), theo thứ tự SON
+const TQ=[2,1,1,7,7,9,1,2,2,6,6,6,7,9,9,2,2,1,9,7,7,6,6,6];
+const HANH={1:'Thủy',2:'Thổ',3:'Mộc',4:'Mộc',5:'Thổ',6:'Kim',7:'Kim',8:'Thổ',9:'Hỏa'};
+const COMBO={
+'1-1':'Song Nhất Bạch: văn tài, đào hoa đều tăng.','1-2':'Thổ khắc Thủy: bệnh thận, bất hòa vợ chồng, bất lợi con thứ.','1-3':'Thủy sinh Mộc: hưng thịnh, có danh; suy thì thị phi.','1-4':'Tứ nhất đồng cung (văn xương): học hành, thi cử, danh tiếng; suy thì đào hoa, tửu sắc.','1-5':'Ngũ Hoàng khắc Thủy: bệnh thận, tai ách.','1-6':'Kim sinh Thủy, Hà Đồ hợp: quan lộc, thông minh, quyền chức.','1-7':'Kim sinh Thủy: tài nhỏ, đào hoa; suy thì khẩu thiệt.','1-8':'Thổ khắc Thủy nhưng 8 cát: tài lộc khá; suy thì bệnh tai, thận.','1-9':'Thủy Hỏa ký tế: khi vượng có hôn nhân, danh vọng; suy thì bất hòa, bệnh mắt/tim.',
+'2-2':'Song Bệnh phù: bệnh tật kéo dài.','2-3':'Đấu ngưu sát: cãi vã, kiện tụng, mẹ chồng nàng dâu bất hòa.','2-4':'Mộc khắc Thổ: bất hòa mẹ chồng nàng dâu, bệnh dạ dày.','2-5':'Bệnh phù gặp Ngũ Hoàng: bệnh nặng, tai họa, tổn người. Cần hóa bằng kim gấp.','2-6':'Thổ sinh Kim: giàu có, vững vàng; suy thì cô quả.','2-7':'Hà Đồ hợp Hỏa (tiên thiên hỏa): dễ hỏa hoạn; khi vượng thì có tài.','2-8':'Thổ thổ: điền sản, bất động sản khi vượng; suy thì bệnh tỳ vị.','2-9':'Hỏa sinh Thổ: 9 vượng mang tài, nhưng kích bệnh khí 2, dễ ốm, u mê.',
+'3-3':'Song Tam Bích: thị phi, kiện tụng tăng.','3-4':'Mộc mộc: hưng vượng; suy thì phiêu bạt, phong thấp.','3-5':'Mộc khắc Ngũ Hoàng: kích động hung tinh, bệnh gan, tai nạn.','3-6':'Kim khắc Mộc: tổn thương, bất lợi con trưởng.','3-7':'Kim khắc Mộc: trộm cắp, tổn thương tay chân, kiện cáo.','3-8':'Hà Đồ hợp Mộc nhưng Mộc khắc Thổ: bất lợi trẻ nhỏ; vượng thì ổn.','3-9':'Mộc sinh Hỏa: thông minh, sinh quý tử; suy thì nóng nảy, thưa kiện.',
+'4-4':'Song Tứ Lục: văn xương mạnh, cũng mạnh đào hoa.','4-5':'Ngũ Hoàng gặp 4: bệnh tật, đào hoa xấu.','4-6':'Kim khắc Mộc: bất lợi phụ nữ trưởng, đau gan, tổn thương.','4-7':'Kim khắc Mộc: phụ nữ bị tổn hại, đào hoa xấu.','4-8':'Mộc khắc Thổ: bất lợi con nhỏ, bệnh tay chân.','4-9':'Hà Đồ hợp Kim, Mộc sinh Hỏa: văn chương, danh tiếng.',
+'5-5':'Song Ngũ Hoàng: đại hung, tuyệt đối không động thổ.','5-6':'Thổ sinh Kim nhưng có 5: bệnh đầu, bất lợi người cha.','5-7':'Ngũ Hoàng gặp Phá Quân: ngộ độc, bệnh miệng, kiện tụng.','5-8':'Thổ thổ có 5: bệnh tay chân, bất lợi con trẻ.','5-9':'Hỏa sinh Ngũ Hoàng: tai họa, hỏa hoạn, ngộ độc.',
+'6-6':'Song Lục Bạch: quyền lực; suy thì cô độc.','6-7':'Giao kiếm sát: tranh đấu, dao kéo, trộm cướp.','6-8':'Võ quyền, phú quý, tài lộc dồi dào.','6-9':'Hỏa thiêu Thiên môn: bất lợi người cha, bệnh phổi, đầu.',
+'7-7':'Song Thất Xích: khẩu thiệt, trộm cắp.','7-8':'Thổ sinh Kim: tài lộc, hôn nhân tốt khi vượng.','7-9':'Hồi lộc chi tai: hỏa hoạn, thị phi.',
+'8-8':'Song Bát Bạch: điền sản, tài lộc (vận 9 là thoái khí, tốt nhẹ).','8-9':'Hỏa sinh Thổ: hỷ sự, cưới hỏi, tài lộc (rất tốt ở vận 9).','9-9':'Song Cửu Tử: vận 9 cực vượng, hỷ khánh; cẩn thận hỏa.'};
+const key=(a,b)=>a<b?a+'-'+b:b+'-'+a;
+const LAST={};
+const wrap=n=>((n-1)%9+9)%9+1;
+const $=id=>document.getElementById(id);
+
+// ---------- bảng tĩnh ----------
+let h='<table><tr><th>Sao</th><th>Hành</th><th>Cát (khi vượng)</th><th>Hung (khi suy)</th></tr>';
+for(let i=1;i<=9;i++){const s=STARS[i];h+=`<tr><td><b>${i} ${s.ten}</b><br><span class="mut">${s.tinh} · ${s.cung}</span></td><td>${s.hanh}</td><td>${s.cat}</td><td>${s.hung}</td></tr>`}
+$('tblStars').innerHTML=h+'</table>';
+h='<table><tr><th>Cung</th><th>Sơn (độ giữa)</th><th>Âm dương</th></tr>';
+for(let g=0;g<8;g++){const p=SONP[g];let ss=[];for(let k=0;k<3;k++){const i=g*3+k;ss.push(`${SON[i]} ${(345+15*i)%360}°`)}
+h+=`<tr><td>${PNAME[p]} (${p})<br><span class="mut">${PDIR[p]}</span></td><td>${ss.join('<br>')}</td><td>${YY[p].split('').join(' ')}</td></tr>`}
+$('tbl24').innerHTML=h+'</table>';
+h='<table><tr><th>Cặp</th><th>Ý nghĩa</th></tr>';
+['1-4','1-6','6-8','8-9','2-8','3-9','4-9','2-5','2-3','3-7','6-7','7-9','6-9','2-7','5-9','4-6','2-9'].forEach(k=>h+=`<tr><td><b>${k}</b></td><td>${COMBO[k]}</td></tr>`);
+$('tblCombo').innerHTML=h+'</table>';
+
+// ---------- tính toán ----------
+function vanFromYear(y){return ((Math.floor((y-1864)/20)%9)+9)%9+1}
+function nienTinh(y){return ((11-(y%9))-1+90)%9+1}
+function fly(c,fw){const r={};ORDER.forEach((p,i)=>r[p]=fw?wrap(c+i):wrap(c-i));return r}
+function status(n,v){if(n===v)return'vuong';if(n===wrap(v+1)||n===wrap(v+2))return'sinh';if(n===wrap(v-1))return'thoai';return'tu'}
+function chart(van,huongIdx,the){
+ const toaIdx=(huongIdx+12)%24, pos=huongIdx%3;
+ const hP=SONP[Math.floor(huongIdx/3)], tP=SONP[Math.floor(toaIdx/3)];
+ const V=fly(van,true);
+ const palOf=star=>{const p=star===5?van:star;return p===5?null:p};
+ const mtn=star=>{const p=palOf(star);return p?SONP.indexOf(p)*3+pos:null};
+ const dirOf=star=>{const p=palOf(star);if(!p)return true;return YY[p][pos]==='+'};
+ const sub=star=>{if(!the)return star;const m=mtn(star);return m===null?star:TQ[m]};
+ const s0=V[tP], h0=V[hP], sf=dirOf(s0), hf=dirOf(h0), sc=sub(s0), hc=sub(h0);
+ return{van,huongIdx,toaIdx,pos,hP,tP,V,S:fly(sc,sf),H:fly(hc,hf),s0,h0,sc,hc,sf,hf,the,
+  sM:mtn(s0),hM:mtn(h0)};
+}
+function cachCuc(c){
+ const v=c.van,out=[];const P=[1,2,3,4,6,7,8,9];
+ const sT=c.S[c.tP]===v,hH=c.H[c.hP]===v,sH=c.S[c.hP]===v,hT=c.H[c.tP]===v;
+ if(sT&&hH)out.push(['g','Vượng sơn vượng hướng']);
+ else if(sH&&hT)out.push(['b','Thượng sơn hạ thủy']);
+ else if(sH&&hH)out.push(['g','Song tinh đáo hướng']);
+ else if(sT&&hT)out.push(['g','Song tinh đáo tọa']);
+ const all=f=>P.every(f);
+ if(all(p=>c.S[p]===p))out.push(['b','Phục ngâm (sơn tinh)']);
+ if(all(p=>c.H[p]===p))out.push(['b','Phục ngâm (hướng tinh)']);
+ if(all(p=>c.S[p]===10-p))out.push(['b','Phản ngâm (sơn tinh)']);
+ if(all(p=>c.H[p]===10-p))out.push(['b','Phản ngâm (hướng tinh)']);
+ if(all(p=>c.V[p]+c.S[p]===10))out.push(['g','Hợp thập (vận + sơn)']);
+ if(all(p=>c.V[p]+c.H[p]===10))out.push(['g','Hợp thập (vận + hướng)']);
+ const all9=[...P,5];
+ if(all9.every(p=>{const a=[c.V[p],c.S[p],c.H[p]];return a.some(x=>a.includes(wrap(x+1))&&a.includes(wrap(x+2)))}))out.push(['g','Liên châu tam ban quái']);
+ if(all9.every(p=>{const a=[c.V[p],c.S[p],c.H[p]];return new Set(a).size===3&&a.every(x=>x%3===a[0]%3)}))out.push(['g','Phụ mẫu tam ban quái']);
+ return out;
+}
+function mainCuc(c){const r=cachCuc(c);const m=r.find(x=>/Vượng sơn|Thượng sơn|Song tinh/.test(x[1]));return m?m[1]:'Không thuộc 4 cách chính'}
+
+// ---------- giao diện Lập bàn ----------
+for(let i=1;i<=9;i++)$('inVan').innerHTML+=`<option value="${i}">Vận ${i}</option>`;
+SON.forEach((s,i)=>{const p=SONP[Math.floor(i/3)];$('inSon').innerHTML+=`<option value="${i}">Hướng ${s} (${(345+15*i)%360}°, cung ${PNAME[p]})</option>`});
+$('inVan').value=vanFromYear(2026);$('inSon').value=13;
+$('inYear').oninput=()=>{const y=+$('inYear').value;if(y>1000){$('inVan').value=vanFromYear(y)}render()};
+$('inDeg').oninput=()=>{const d=parseFloat($('inDeg').value);if(!isNaN(d)){$('inSon').value=Math.floor((((d-337.5)%360+360)%360)/15)}render()};
+['inVan','inLN','inOri','inQuai'].forEach(id=>$(id).oninput=()=>render());
+$('inSon').onchange=()=>{$('inDeg').value='';render()};
+
+function render(){
+ const van=+$('inVan').value,hi=+$('inSon').value;
+ const ln=+$('inLN').value||2026,nt=nienTinh(ln),N=fly(nt,true);
+ // cảnh báo độ + quyết định thế quái
+ let w='',kiem=false;const d=parseFloat($('inDeg').value);
+ if(!isNaN(d)){const dd=((d%360)+360)%360,off=(((dd-337.5)%15)+15)%15;const fromC=Math.abs(off-7.5);
+  const side=off<7.5?SON[(hi+23)%24]:SON[(hi+1)%24];
+  const edge=Math.min(off,15-off), palaceEdge=((((dd-22.5)%45)+45)%45);const pe=Math.min(palaceEdge,45-palaceEdge);
+  if(fromC>3)kiem=true;
+  if(pe<=1.5)w+='<div class="tip">⚠️ Gần <b>Đại không vong</b> (ranh giới 2 cung). Khí tạp, không nên dùng hướng này; nếu bắt buộc thì đo lại thật kỹ.</div>';
+  else if(edge<=1.5)w+='<div class="tip">⚠️ Gần <b>Tiểu không vong</b> (ranh giới 2 sơn). Nên đo lại.</div>';
+  else if(fromC>3)w+=`<div class="tip">Hướng ${SON[hi]} kiêm ${side} ${fromC.toFixed(1)}° (vượt 3°), nên tính theo <b>Thế quái</b>.</div>`;
+  else w+=`<div class="mut" style="text-align:center">Lệch ${fromC.toFixed(1)}° khỏi giữa sơn, trong 3°, là chính hướng (hạ quái).</div>`;}
+ const q=$('inQuai').value, the=q==='the'||(q==='auto'&&kiem);
+ const c=chart(van,hi,the), ha=chart(van,hi,false);LAST.c=c;LAST.N=N;LAST.ln=ln;
+ if(the){const same=[1,2,3,4,5,6,7,8,9].every(p=>c.S[p]===ha.S[p]&&c.H[p]===ha.H[p]);
+  w+=same?'<div class="key">Thế quái của nhà này <b>trùng hạ quái</b> (thế tinh bằng chính sao gốc), tinh bàn không đổi.</div>'
+   :'<div class="key">Đang hiển thị <b>Thế quái</b>. Chọn “Hạ quái” ở mục Loại quái để so sánh.</div>';}
+ $('title').textContent=`Vận ${van} · Tọa ${SON[c.toaIdx]} – Hướng ${SON[hi]} (${NGUYEN[c.pos]}) · ${the?'Thế quái':'Hạ quái'}`;
+ $('warn').innerHTML=w;
+ const layout=$('inOri').value==='S'?[4,9,2,3,5,7,8,1,6]:[6,1,8,7,5,3,2,9,4];
+ $('grid').innerHTML=layout.map(p=>{
+  const cls=p===c.hP?' huong':p===c.tP?' toa':'';
+  return `<div class="cell${cls}" data-p="${p}"><div class="nm">${PNAME[p]}${PDIR[p]?' · '+PDIR[p]:''}</div>
+  <div class="sh"><span class="s-${status(c.S[p],van)}">${c.S[p]}</span><span class="s-${status(c.H[p],van)}">${c.H[p]}</span></div>
+  <div class="v">${c.V[p]}</div><span class="ln">${N[p]}</span></div>`}).join('');
+ document.querySelectorAll('.cell').forEach(el=>el.onclick=()=>{const t=$('lc'+el.dataset.p);if(t){t.scrollIntoView({behavior:'smooth',block:'center'});t.style.outline='2px solid var(--acc)';setTimeout(()=>t.style.outline='',1500)}});
+ const cc=cachCuc(c);
+ $('cuc').innerHTML=(cc.length?cc.map(x=>`<span class="tag ${x[0]}">${x[1]}</span>`).join(''):'<span class="tag n">Không có cách cục đặc biệt</span>');
+ const dn=f=>f?'thuận':'nghịch';
+ const b5=x=>x===5?' (5 mượn cung của vận '+van+')':'';
+ const tq=(o,n,m)=>!c.the?'':(m===null?' Không có sơn để tra thế tinh, giữ nguyên.':` Tra sơn ${SON[m]} được thế tinh <b>${n}</b>${n===o?' (trùng sao gốc)':''}.`);
+ $('steps').innerHTML=`Vận bàn: ${van} vào giữa, bay thuận.<br>`+
+ `Sơn tinh: tọa cung ${PNAME[c.tP]} có ${c.s0}${b5(c.s0)}.${tq(c.s0,c.sc,c.sM)} Đưa <b>${c.sc}</b> vào giữa, bay ${dn(c.sf)}.<br>`+
+ `Hướng tinh: hướng cung ${PNAME[c.hP]} có ${c.h0}${b5(c.h0)}.${tq(c.h0,c.hc,c.hM)} Đưa <b>${c.hc}</b> vào giữa, bay ${dn(c.hf)}.<br>`+
+ (c.the?'Thuận/nghịch vẫn lấy theo âm dương của sơn gốc, giống hạ quái.<br>':'')+`Niên tinh ${ln}: ${nt} vào giữa.`;
+ const st={vuong:'vượng',sinh:'sinh',thoai:'thoái',tu:'suy/tử'};
+ $('luan').innerHTML=[c.hP,c.tP,...[9,1,3,7,4,2,8,6,5].filter(p=>p!==c.hP&&p!==c.tP)].map(p=>{
+  const s=c.S[p],hh=c.H[p];let notes=[];
+  if(p===c.hP)notes.push('<b>Cung hướng</b>');if(p===c.tP)notes.push('<b>Cung tọa</b>');
+  if(hh===van||hh===wrap(van+1))notes.push('Hướng tinh tốt: nên mở cửa, để thoáng, đặt thủy, lối đi.');
+  if(s===van||s===wrap(van+1))notes.push('Sơn tinh tốt: nên có tường đặc, vật cao, phòng ngủ.');
+  if([2,5].includes(hh)||[2,5].includes(s))notes.push('Có hung tinh thổ, nên hóa bằng kim, tránh động thổ.');
+  if(N[p]===5||N[p]===2)notes.push(`Năm ${ln} niên tinh ${N[p]} bay tới, cần cẩn trọng.`);
+  return `<div class="card" id="lc${p}" style="margin:8px 0;padding:10px"><b>${PNAME[p]}${PDIR[p]?' ('+PDIR[p]+')':''}</b>: sơn ${s} <span class="mut">(${st[status(s,van)]})</span> · hướng ${hh} <span class="mut">(${st[status(hh,van)]})</span> · vận ${c.V[p]} · niên ${N[p]}<br>
+  <span>${COMBO[key(s,hh)]||''}</span>${notes.length?'<br><span class="mut">'+notes.join(' ')+'</span>':''}</div>`}).join('');
+}
+// ---------- Bát trạch & Hoàng tuyền ----------
+const DN=[
+ {t:'Sinh khí',s:'Tham Lang · Mộc',g:1,y:'Đại cát: tài lộc, danh tiếng, phát đạt'},
+ {t:'Thiên y',s:'Cự Môn · Thổ',g:1,y:'Cát: sức khỏe, quý nhân, chữa bệnh'},
+ {t:'Diên niên',s:'Vũ Khúc · Kim',g:1,y:'Cát: hôn nhân, hòa thuận, sống lâu'},
+ {t:'Phục vị',s:'Tả Phù · Mộc',g:1,y:'Tiểu cát: bình an, ổn định, học hành'},
+ {t:'Họa hại',s:'Lộc Tồn · Thổ',g:0,y:'Tiểu hung: thị phi, thất bại nhỏ'},
+ {t:'Lục sát',s:'Văn Khúc · Thủy',g:0,y:'Hung: kiện tụng, tình cảm rối, tổn hại'},
+ {t:'Ngũ quỷ',s:'Liêm Trinh · Hỏa',g:0,y:'Hung: hỏa hoạn, bệnh, mất trộm, tai tiếng'},
+ {t:'Tuyệt mệnh',s:'Phá Quân · Kim',g:0,y:'Đại hung: bệnh nặng, phá tài, tổn người'}];
+// thứ tự cung cho [SK,TY,DN,PV,HH,LS,NQ,TM]
+const BT={1:[4,3,9,1,7,6,8,2],9:[3,4,1,9,8,2,7,6],3:[9,1,4,3,2,8,6,7],4:[1,9,3,4,6,7,2,8],
+ 6:[7,8,2,6,4,1,3,9],2:[8,7,6,2,3,9,4,1],8:[2,6,7,8,9,3,1,4],7:[6,2,8,7,1,4,9,3]};
+const DONG=[1,3,4,9];
+const grp=p=>DONG.includes(p)?'Đông tứ':'Tây tứ';
+const dnAt=(menh,p)=>BT[menh].indexOf(p);
+const sonInfo=i=>`${SON[i]} (${(345+15*i)%360}°, ${PDIR[SONP[Math.floor(i/3)]]}, cung ${PNAME[SONP[Math.floor(i/3)]]})`;
+function cungPhi(y,sex){const dr=((y-1)%9+9)%9+1;let r=sex==='nam'?wrap(11-dr):wrap(4+dr);if(r===5)r=sex==='nam'?2:8;return r}
+// Bát sát: cung tọa -> sơn kỵ
+const BATSAT={1:9,2:7,3:17,4:19,6:13,7:11,8:5,9:23};
+// Tứ lộ hoàng tuyền: sơn hướng -> các sơn kỵ
+const TULO={18:[16],14:[16],8:[10],12:[10],6:[4],2:[4],20:[22],0:[22],16:[18,14],10:[8,12],4:[6,2],22:[20,0]};
+function hoangTuyen(hi){
+ const toa=(hi+12)%24,tP=SONP[Math.floor(toa/3)],hP=SONP[Math.floor(hi/3)],out=[];
+ out.push({k:'Bát sát hoàng tuyền (theo tọa)',txt:`Tọa ${SON[toa]} thuộc cung ${PNAME[tP]}: kỵ phương <b>${sonInfo(BATSAT[tP])}</b>. Tránh mở cửa, nước chảy đến, đường đâm, góc nhọn từ phương này.`,m:BATSAT[tP]});
+ out.push({k:'Bát sát theo hướng (một số phái)',txt:`Hướng thuộc cung ${PNAME[hP]}: kỵ phương ${sonInfo(BATSAT[hP])}.`,m:BATSAT[hP],ref:1});
+ if(TULO[hi])out.push({k:'Tứ lộ hoàng tuyền (theo hướng)',txt:`Hướng ${SON[hi]}: kỵ <b>nước chảy đến</b> từ ${TULO[hi].map(sonInfo).join(' và ')}. Nước chảy đi ra phương đó (cứu bần hoàng tuyền) thì không hại.`,m:TULO[hi][0]});
+ else out.push({k:'Tứ lộ hoàng tuyền',txt:`Hướng ${SON[hi]} không thuộc 12 hướng phạm Tứ lộ hoàng tuyền.`,ok:1});
+ return out;
+}
+// bảng tĩnh bài 11
+(function(){let h='<table><tr><th>Du niên</th><th>Sao · hành</th><th>Ý nghĩa</th></tr>';
+ DN.forEach(d=>h+=`<tr><td><b class="${d.g?'s-vuong':'s-tu'}">${d.t}</b></td><td>${d.s}</td><td>${d.y}</td></tr>`);
+ $('tblDN').innerHTML=h+'</table>';
+ h='<table><tr><th>Mệnh</th>'+DN.map(d=>`<th>${d.t}</th>`).join('')+'</tr>';
+ [1,9,3,4,6,2,8,7].forEach(m=>h+=`<tr><td><b>${PNAME[m]}</b></td>`+BT[m].map((p,i)=>`<td class="${i<4?'s-vuong':'s-tu'}">${PDIR[p]}</td>`).join('')+'</tr>');
+ $('tblBT').innerHTML='<p class="mut">Hướng cát/hung theo cung mệnh:</p>'+h+'</table>';})();
+
+SON.forEach((s,i)=>{$('btSon').innerHTML+=`<option value="${i}">Hướng ${s} (${(345+15*i)%360}°, ${PDIR[SONP[Math.floor(i/3)]]})</option>`});
+$('btSon').onchange=()=>{$('inSon').value=$('btSon').value;$('inDeg').value='';render()};
+['btYear','btSex','btLX'].forEach(id=>$(id).oninput=renderBT);
+// Tam yếu
+const P8=[1,8,3,4,9,2,7,6];
+P8.forEach(p=>{const o=`<option value="${p}">${PNAME[p]} (${PDIR[p]})</option>`;['tyRoom','tyKit','tyStove'].forEach(id=>$(id).innerHTML+=o);$('tyDoor').innerHTML+=o});
+$('tyDoor').innerHTML='<option value="auto">Theo hướng nhà</option>'+$('tyDoor').innerHTML;
+$('tyRoom').value=1;$('tyKit').value=2;$('tyStove').value=8;
+['tyDoor','tyRoom','tyKit','tyStove'].forEach(id=>$(id).oninput=renderBT);
+function renderTY(m,tP,hP){
+ const door=$('tyDoor').value==='auto'?hP:+$('tyDoor').value,room=+$('tyRoom').value,kit=+$('tyKit').value,stove=+$('tyStove').value;
+ const row=(a,b,want,lab)=>{const d=DN[dnAt(a,b)],ok=want==='cat'?d.g:!d.g;
+  return `<tr><td>${lab}</td><td><b class="${d.g?'s-vuong':'s-tu'}">${d.t}</b></td><td><span class="tag ${ok?'g':'b'}">${ok?'Đạt':'Chưa đạt'}</span></td></tr>`};
+ let h='<table><tr><th>Phối</th><th>Du niên</th><th>Đánh giá</th></tr>';
+ h+=row(tP,door,'cat',`Trạch (tọa ${PNAME[tP]}) với Cửa (${PNAME[door]})`);
+ h+=row(door,room,'cat',`Cửa với Phòng chủ (${PNAME[room]})`);
+ h+=row(door,kit,'cat',`Cửa với Bếp (${PNAME[kit]})`);
+ if(m){h+=row(m,door,'cat',`Mệnh ${PNAME[m]} với Cửa`);h+=row(m,room,'cat',`Mệnh với Phòng chủ`);
+  h+=row(m,kit,'hung',`Mệnh với vị trí Bếp (nên hung)`);h+=row(m,stove,'cat',`Mệnh với miệng bếp nhìn về ${PDIR[stove]}`);}
+ h+='</table>';
+ const g=[door,room,kit].map(grp);const thuan=g.every(x=>x===g[0]);
+ h+=`<p><span class="tag ${thuan?'g':'n'}">${thuan?'Cửa, phòng, bếp cùng nhóm '+g[0]+': thuần':'Cửa, phòng, bếp lẫn hai nhóm: tạp'}</span></p>`;
+ $('tyOut').innerHTML=h;
+}
+function renderBT(){
+ const hi=+$('inSon').value;$('btSon').value=hi;
+ let y=+$('btYear').value;if($('btLX').checked)y--;
+ const sex=$('btSex').value,m=y>1000?cungPhi(y,sex):null;
+ const toa=(hi+12)%24,tP=SONP[Math.floor(toa/3)],hP=SONP[Math.floor(hi/3)];
+ if(m){
+  $('btMenh').innerHTML=`<p>${sex==='nam'?'Nam':'Nữ'} sinh năm âm lịch ${y}: cung <b>${PNAME[m]} (${m})</b>, <b>${grp(m)} mệnh</b>.</p>`;
+  const layout=$('inOri').value==='S'?[4,9,2,3,5,7,8,1,6]:[6,1,8,7,5,3,2,9,4];
+  $('btGrid').innerHTML=layout.map(p=>{
+   if(p===5)return `<div class="cell"><div class="nm">Mệnh</div><div class="v" style="font-size:1.1rem;color:var(--ink)">${PNAME[m]}</div><div class="nm">${grp(m)}</div></div>`;
+   const d=DN[dnAt(m,p)];
+   return `<div class="cell${p===hP?' huong':''}"><div class="nm">${PNAME[p]} · ${PDIR[p]}</div><div class="v ${d.g?'s-vuong':'s-tu'}" style="font-size:.95rem">${d.t}</div><div class="nm">${d.s.split(' · ')[0]}</div></div>`}).join('');
+  const dH=DN[dnAt(m,hP)],same=grp(m)===grp(tP);
+  const good=BT[m].slice(0,4).map((p,i)=>`${DN[i].t}: ${PDIR[p]}`).join(' · ');
+  $('btNha').innerHTML=`<p>Nhà tọa ${SON[toa]} hướng ${SON[hi]}: trạch quái <b>${PNAME[tP]}</b>, <b>${grp(tP)} trạch</b>.</p>
+  <p><span class="tag ${same?'g':'b'}">${same?'Mệnh và trạch cùng nhóm, hợp':'Mệnh và trạch khác nhóm, không hợp'}</span>
+  <span class="tag ${dH.g?'g':'b'}">Hướng nhà là ${dH.t} của chủ</span></p>
+  <p class="mut">${dH.y}.</p>
+  <p class="mut">4 hướng tốt của chủ nhà, dùng cho cửa, bàn làm việc, đầu giường, miệng bếp: ${good}.</p>
+  ${same?'':'<div class="tip">Nhà khác nhóm với mệnh: ưu tiên đặt cửa phòng, giường, bàn làm việc, miệng bếp theo 4 hướng tốt của chủ; đặt bếp, vệ sinh ở phương hung.</div>'}`;
+ }else{$('btMenh').innerHTML='<p class="mut">Nhập năm sinh để tính cung phi.</p>';$('btGrid').innerHTML='';$('btNha').innerHTML=''}
+ renderTY(m,tP,hP);
+ if(window.VPREADY)setTimeout(renderVP,0);
+ $('btHT').innerHTML=hoangTuyen(hi).map(x=>`<div class="${x.ok?'key':x.ref?'card':'tip'}" style="margin:8px 0;${x.ref?'padding:8px':''}"><b>${x.k}</b><br>${x.txt}</div>`).join('');
+}
+const _render=render;
+render=function(){_render();renderBT();
+ const hi=+$('inSon').value;const ht=hoangTuyen(hi).filter(x=>!x.ok&&!x.ref);
+ $('cuc').innerHTML+='<div class="mut" style="margin-top:8px">Hoàng tuyền: '+ht.map(x=>`${x.k.split(' (')[0]} kỵ ${SON[x.m]} (${PDIR[SONP[Math.floor(x.m/3)]]})`).join(' · ')+'. Xem chi tiết ở tab Bát trạch.</div>';};
+render();
+
+// ---------- Bát tự ----------
+const CAN=['Giáp','Ất','Bính','Đinh','Mậu','Kỷ','Canh','Tân','Nhâm','Quý'];
+const CHI=['Tý','Sửu','Dần','Mão','Thìn','Tỵ','Ngọ','Mùi','Thân','Dậu','Tuất','Hợi'];
+const CANH=[0,0,1,1,2,2,3,3,4,4],CHIH=[4,2,0,0,2,1,1,2,3,3,2,4];
+const EN=['Mộc','Hỏa','Thổ','Kim','Thủy'],ECOL=['#2f855a','#c53030','#b7791f','#8a8f98','#3182ce'];
+const TANG=[[9],[5,9,7],[0,2,4],[1],[4,1,9],[2,4,6],[3,5],[5,3,1],[6,8,4],[7],[4,7,3],[8,0]],TW=[1,.5,.3];
+const NAPAM=['Hải trung Kim','Lô trung Hỏa','Đại lâm Mộc','Lộ bàng Thổ','Kiếm phong Kim','Sơn đầu Hỏa','Giản hạ Thủy','Thành đầu Thổ','Bạch lạp Kim','Dương liễu Mộc','Tuyền trung Thủy','Ốc thượng Thổ','Tích lịch Hỏa','Tùng bách Mộc','Trường lưu Thủy','Sa trung Kim','Sơn hạ Hỏa','Bình địa Mộc','Bích thượng Thổ','Kim bạch Kim','Phú đăng Hỏa','Thiên hà Thủy','Đại dịch Thổ','Thoa xuyến Kim','Tang đố Mộc','Đại khê Thủy','Sa trung Thổ','Thiên thượng Hỏa','Thạch lựu Mộc','Đại hải Thủy'];
+const TIET=['Xuân phân','Thanh minh','Cốc vũ','Lập hạ','Tiểu mãn','Mang chủng','Hạ chí','Tiểu thử','Đại thử','Lập thu','Xử thử','Bạch lộ','Thu phân','Hàn lộ','Sương giáng','Lập đông','Tiểu tuyết','Đại tuyết','Đông chí','Tiểu hàn','Đại hàn','Lập xuân','Vũ thủy','Kinh trập'];
+const TS=['Trường sinh','Mộc dục','Quan đới','Lâm quan','Đế vượng','Suy','Bệnh','Tử','Mộ','Tuyệt','Thai','Dưỡng'];
+const TSSTART=[11,6,2,9,2,9,5,0,8,3];
+const md=(a,n)=>((a%n)+n)%n;
+const gz=i=>CAN[i%10]+' '+CHI[i%12];
+const idx60=(c,b)=>md(6*c-5*b,60);
+function sunLon(jd){const T=(jd-2451545)/36525,r=Math.PI/180;
+ const L0=280.46646+36000.76983*T+.0003032*T*T,M=(357.52911+35999.05029*T-.0001537*T*T)*r;
+ const C=(1.914602-.004817*T-.000014*T*T)*Math.sin(M)+(.019993-.000101*T)*Math.sin(2*M)+.000289*Math.sin(3*M);
+ const om=(125.04-1934.136*T)*r;return md(L0+C-.00569-.00478*Math.sin(om),360)}
+function findTerm(jd,target){for(let i=0;i<8;i++){const d=md(target-sunLon(jd)+180,360)-180;jd+=d*365.2422/360}return jd}
+function thapThan(D,X){const d=md(CANH[X]-CANH[D],5),same=D%2===X%2;return[['Tỷ kiên','Kiếp tài'],['Thực thần','Thương quan'],['Thiên tài','Chính tài'],['Thất sát','Chính quan'],['Thiên ấn','Chính ấn']][d][same?0:1]}
+function truongSinh(D,b){const s=TSSTART[D];return TS[D%2===0?md(b-s,12):md(s-b,12)]}
+function batTu(y,mo,d,h,mi,tz,tyMuon){
+ const ms=Date.UTC(y,mo-1,d,h,mi)-tz*3600e3,jd=ms/864e5+2440587.5,lam=sunLon(jd);
+ let Y=y;if(mo<=2&&lam>=270&&lam<315)Y=y-1;
+ const ys=md(Y-4,10),yb=md(Y-4,12);
+ const m=Math.floor(md(lam-315,360)/30),mb=(2+m)%12,mc=((ys%5)*2+2+m)%10;
+ let dn=Date.UTC(y,mo-1,d)/864e5+2440588;if(h>=23&&tyMuon)dn+=1;
+ const di=md(dn-2451545+54,60),dc=di%10,db=di%12;
+ const hb=Math.floor((h+1)/2)%12,hc=((dc%5)*2+hb)%10;
+ const prev=findTerm(jd-15,md(315+30*m,360)),next=findTerm(jd+15,md(345+30*m,360));
+ return{Y,jd,lam,prev,next,p:[[ys,yb],[mc,mb],[dc,db],[hc,hb]],m};
+}
+const jdStr=(jd,tz)=>{const t=new Date((jd-2440587.5)*864e5+tz*3600e3);const z=n=>String(n).padStart(2,'0');
+ return `${z(t.getUTCDate())}/${z(t.getUTCMonth()+1)}/${t.getUTCFullYear()} ${z(t.getUTCHours())}:${z(t.getUTCMinutes())}`};
+const ec=e=>`style="color:${ECOL[e]};font-weight:700"`;
+function renderTu(){
+ const dv=$('tuDate').value,tv=$('tuTime').value||'12:00';if(!dv)return;
+ const [y,mo,d]=dv.split('-').map(Number),[h,mi]=tv.split(':').map(Number),tz=parseFloat($('tuTz').value)||7,sex=$('tuSex').value;
+ const R=batTu(y,mo,d,h,mi,tz,$('tuTy').checked),D=R.p[2][0];
+ const dd0=new Date(Date.UTC(y,mo-1,d+(h>=23&&$('tuTy').checked?1:0))),LB=solar2lunar(dd0.getUTCDate(),dd0.getUTCMonth()+1,dd0.getUTCFullYear(),tz);
+ const tPrev=TIET[Math.round(md(315+30*R.m,360)/15)%24],tNext=TIET[Math.round(md(345+30*R.m,360)/15)%24];
+ $('tuTiet').innerHTML=`Dương lịch <b>${d}/${mo}/${y} ${tv}</b> · Âm lịch <b>${lunarStr(LB)}</b>, giờ ${CHI[R.p[3][1]]}.<br>Sau tiết <b>${tPrev}</b> (${jdStr(R.prev,tz)}), trước tiết <b>${tNext}</b> (${jdStr(R.next,tz)}). Năm tính theo Lập Xuân: <b>${R.Y}</b>.${Math.min(Math.abs(R.jd-R.prev),Math.abs(R.next-R.jd))*1440<40?' <span style="color:var(--bad)">⚠️ Sinh sát giờ giao tiết (giờ tiết tính sai số khoảng ±10 phút), nên đối chiếu lịch vạn niên.</span>':''}`;
+ const names=['Năm','Tháng','Ngày','Giờ'];
+ let t='<table><tr><th></th>'+names.map(n=>`<th>${n}</th>`).join('')+'</tr>';
+ t+='<tr><td class="mut">Thập thần</td>'+R.p.map((x,i)=>`<td>${i===2?'<b>Nhật chủ</b>':thapThan(D,x[0])}</td>`).join('')+'</tr>';
+ t+='<tr><td class="mut">Thiên can</td>'+R.p.map(x=>`<td ${ec(CANH[x[0]])}>${CAN[x[0]]}<br><span class="mut">${x[0]%2?'Âm':'Dương'} ${EN[CANH[x[0]]]}</span></td>`).join('')+'</tr>';
+ t+='<tr><td class="mut">Địa chi</td>'+R.p.map(x=>`<td ${ec(CHIH[x[1]])}>${CHI[x[1]]}<br><span class="mut">${EN[CHIH[x[1]]]}</span></td>`).join('')+'</tr>';
+ t+='<tr><td class="mut">Tàng can</td>'+R.p.map(x=>`<td>${TANG[x[1]].map(c=>`<span ${ec(CANH[c])}>${CAN[c]}</span> <span class="mut">${thapThan(D,c)}</span>`).join('<br>')}</td>`).join('')+'</tr>';
+ t+='<tr><td class="mut">Nạp âm</td>'+R.p.map(x=>`<td>${NAPAM[Math.floor(idx60(x[0],x[1])/2)]}</td>`).join('')+'</tr>';
+ t+='<tr><td class="mut">Trường sinh</td>'+R.p.map(x=>`<td>${truongSinh(D,x[1])}</td>`).join('')+'</tr></table>';
+ $('tuTable').innerHTML=t;
+ // ngũ hành
+ const W=[0,0,0,0,0],S=[0,0,0,0,0];
+ R.p.forEach((x,i)=>{W[CANH[x[0]]]+=1;if(i!==2)S[CANH[x[0]]]+=1;
+  TANG[x[1]].forEach((c,k)=>{const w=TW[k]*(i===1?2:1);W[CANH[c]]+=TW[k];S[CANH[c]]+=w})});
+ const eD=CANH[D],sup=S[eD]+S[md(eD-1,5)],tot=S.reduce((a,b)=>a+b,0),ratio=sup/tot;
+ const dl=[eD,md(eD-1,5)].includes(CHIH[R.p[1][1]]);
+ const st=ratio>=.55?'vượng':ratio<=.45?'nhược':'trung hòa (cần xét kỹ)';
+ const hy=ratio>=.5?[md(eD+1,5),md(eD+2,5),md(eD+3,5)]:[md(eD-1,5),eD];
+ const mx=Math.max(...W);
+ $('tuHanh').innerHTML=`<p>Nhật chủ <b ${ec(eD)}>${CAN[D]} ${EN[eD]}</b>, sinh tháng ${CHI[R.p[1][1]]} (${EN[CHIH[R.p[1][1]]]}): ${dl?'<b>đắc lệnh</b>':'không đắc lệnh'}.</p>`+
+  EN.map((n,i)=>`<div style="display:flex;align-items:center;gap:6px;margin:3px 0"><span style="width:44px">${n}</span><div style="flex:1;background:var(--neu-bg);border-radius:6px"><div style="width:${W[i]/mx*100}%;background:${ECOL[i]};height:14px;border-radius:6px"></div></div><span style="width:34px;text-align:right">${W[i].toFixed(1)}</span></div>`).join('')+
+  `<p class="mut">Điểm: can 1, tàng can chính/trung/dư 1/0,5/0,3.</p><p>Lực sinh trợ nhật chủ (Ấn và Tỷ kiếp, tháng nhân đôi): <b>${Math.round(ratio*100)}%</b>, nên thân <b>${st}</b>.</p>
+  <p>Hỷ dụng thần sơ bộ: ${hy.map(e=>`<span class="tag n" ${ec(e)}>${EN[e]}</span>`).join('')}</p>
+  <div class="tip">Đây chỉ là ước lượng bằng cách đếm lực. Luận dụng thần thật cần xét thêm điều hậu (nóng lạnh), cách cục, hợp hóa, xung khắc.</div>`;
+ // hợp xung, thần sát
+ const C=R.p.map(x=>x[0]),B=R.p.map(x=>x[1]),out=[];
+ const HOA={0:'Thổ',1:'Kim',2:'Thủy',3:'Mộc',4:'Hỏa'};
+ for(let i=0;i<4;i++)for(let j=i+1;j<4;j++){
+  if(Math.abs(C[i]-C[j])===5)out.push(`Can ${names[i]}–${names[j]}: ${CAN[C[i]]} hợp ${CAN[C[j]]} (hóa ${HOA[Math.min(C[i],C[j])]})`);
+  if(md(B[i]-B[j],12)===6)out.push(`Chi ${names[i]}–${names[j]}: ${CHI[B[i]]} <b>xung</b> ${CHI[B[j]]}`);
+  if((B[i]+B[j])%12===1)out.push(`Chi ${names[i]}–${names[j]}: ${CHI[B[i]]} lục hợp ${CHI[B[j]]}`);}
+ [[8,0,4,'Thủy'],[2,6,10,'Hỏa'],[5,9,1,'Kim'],[11,3,7,'Mộc']].forEach(g=>{const n=g.slice(0,3).filter(b=>B.includes(b)).length;
+  if(n===3)out.push(`Tam hợp ${g.slice(0,3).map(b=>CHI[b]).join('–')} thành <b>${g[3]} cục</b>`);
+  else if(n===2&&B.includes(g[1]))out.push(`Bán hợp ${g[3]} cục (có ${CHI[g[1]]})`)});
+ const QN={0:[1,7],4:[1,7],6:[1,7],1:[0,8],5:[0,8],2:[11,9],3:[11,9],8:[3,5],9:[3,5],7:[2,6]};
+ const VX=[5,6,8,9,8,9,11,0,2,3];
+ const tamHop=b=>[[8,0,4],[2,6,10],[5,9,1],[11,3,7]].findIndex(g=>g.includes(b));
+ const DAO=[9,3,6,0],MA=[2,8,11,5];
+ const has=(b,from)=>B.map((x,i)=>x===b?names[i]:null).filter(Boolean).join(', ');
+ const ss=[];
+ QN[D].forEach(b=>{const w=has(b);if(w)ss.push(`Thiên ất quý nhân (${CHI[b]}) ở trụ ${w}`)});
+ if(has(VX[D]))ss.push(`Văn xương (${CHI[VX[D]]}) ở trụ ${has(VX[D])}`);
+ const seen=new Set();[B[0],B[2]].forEach(base=>{const g=tamHop(base);if(seen.has(g))return;seen.add(g);
+  if(has(DAO[g]))ss.push(`Đào hoa ${CHI[DAO[g]]} (theo ${CHI[base]}) ở trụ ${has(DAO[g])}`);
+  if(has(MA[g]))ss.push(`Dịch mã ${CHI[MA[g]]} (theo ${CHI[base]}) ở trụ ${has(MA[g])}`)});
+ const di=idx60(C[2],B[2]),st0=di-di%10,kv=[(st0+10)%12,(st0+11)%12];
+ $('tuSat').innerHTML=`<p><b>Hợp xung:</b></p><ul class="lst">${out.length?out.map(x=>`<li>${x}</li>`).join(''):'<li>Không có hợp, xung nổi bật.</li>'}</ul>
+ <p><b>Thần sát:</b></p><ul class="lst">${ss.length?ss.map(x=>`<li>${x}</li>`).join(''):'<li>Không gặp Quý nhân, Văn xương, Đào hoa, Dịch mã.</li>'}</ul>
+ <p><b>Tuần không (theo ngày ${gz(di)}):</b> ${kv.map(b=>CHI[b]).join(', ')}${kv.some(b=>B.includes(b))?' (có trong tứ trụ)':''}.</p>`;
+ // đại vận
+ const yang=R.p[0][0]%2===0,thuan=(yang&&sex==='nam')||(!yang&&sex==='nu');
+ const days=thuan?R.next-R.jd:R.jd-R.prev,yrs=days/3,yI=Math.floor(yrs),mI=Math.round((yrs-yI)*12);
+ const mi60=idx60(R.p[1][0],R.p[1][1]),now=new Date().getFullYear();
+ let v=`<p>Năm can ${yang?'dương':'âm'}, ${sex==='nam'?'nam':'nữ'}: đại vận đi <b>${thuan?'thuận':'nghịch'}</b>. Cách tiết ${thuan?'kế tiếp':'vừa qua'} ${days.toFixed(1)} ngày, nên khởi vận lúc <b>${yI} tuổi ${mI} tháng</b>.</p><table><tr><th>Tuổi</th><th>Năm</th><th>Đại vận</th><th>Thập thần</th></tr>`;
+ for(let k=1;k<=8;k++){const i=md(mi60+(thuan?k:-k),60),a=yrs+10*(k-1),yy=y+Math.round(a);
+  const cur=now>=yy&&now<yy+10;
+  v+=`<tr${cur?' style="background:var(--good-bg)"':''}><td>${Math.round(a)}–${Math.round(a)+9}</td><td>${yy}</td><td><span ${ec(CANH[i%10])}>${CAN[i%10]}</span> <span ${ec(CHIH[i%12])}>${CHI[i%12]}</span></td><td>${thapThan(D,i%10)} / ${thapThan(D,TANG[i%12][0])}</td></tr>`}
+ const ly=md(now-4,60);
+ v+=`</table><p>Lưu niên ${now}: <b>${gz(ly)}</b>, can là ${thapThan(D,ly%10)}, chi là ${thapThan(D,TANG[ly%12][0])}. Dòng tô xanh là đại vận hiện tại.</p>`;
+ $('tuVan').innerHTML=v;
+ luanGiai({R,D,eD,W,ratio,hy,B,C,sex,thuan,yrs,mi60,y,out,ss,kv,now,dl});
+ TUCTX={hy,B,C};if(window.renderChon)renderChon();
+ const cp=cungPhi(R.Y,sex);
+ $('tuBT').innerHTML=`<p>Năm âm lịch ${R.Y}, cung phi <b>${PNAME[cp]}</b> (${grp(cp)} mệnh).</p><button class="btn" id="tuApply">Dùng cho tab Bát trạch</button>`;
+ $('tuApply').onclick=()=>{$('btYear').value=R.Y;$('btLX').checked=false;$('btSex').value=sex;renderBT();document.querySelector('nav button[data-t=bt]').click()};
+}
+// ---------- Âm lịch (thuật toán Hồ Ngọc Đức, UTC+7) ----------
+const INT=Math.floor;
+function jdFromDate(dd,mm,yy){const a=INT((14-mm)/12),y=yy+4800-a,m=mm+12*a-3;let jd=dd+INT((153*m+2)/5)+365*y+INT(y/4)-INT(y/100)+INT(y/400)-32045;if(jd<2299161)jd=dd+INT((153*m+2)/5)+365*y+INT(y/4)-32083;return jd}
+function newMoon(k){const T=k/1236.85,T2=T*T,T3=T2*T,dr=Math.PI/180;let Jd1=2415020.75933+29.53058868*k+0.0001178*T2-0.000000155*T3;Jd1+=0.00033*Math.sin((166.56+132.87*T-0.009173*T2)*dr);
+ const M=359.2242+29.10535608*k-0.0000333*T2-0.00000347*T3,Mpr=306.0253+385.81691806*k+0.0107306*T2+0.00001236*T3,F=21.2964+390.67050646*k-0.0016528*T2-0.00000239*T3;
+ let C1=(0.1734-0.000393*T)*Math.sin(M*dr)+0.0021*Math.sin(2*dr*M)-0.4068*Math.sin(Mpr*dr)+0.0161*Math.sin(dr*2*Mpr)-0.0004*Math.sin(dr*3*Mpr)+0.0104*Math.sin(dr*2*F)-0.0051*Math.sin(dr*(M+Mpr))-0.0074*Math.sin(dr*(M-Mpr))+0.0004*Math.sin(dr*(2*F+M))-0.0004*Math.sin(dr*(2*F-M))-0.0006*Math.sin(dr*(2*F+Mpr))+0.0010*Math.sin(dr*(2*F-Mpr))+0.0005*Math.sin(dr*(2*Mpr+M));
+ const dt=T<-11?0.001+0.000839*T+0.0002261*T2-0.00000845*T3-0.000000081*T*T3:-0.000278+0.000265*T+0.000262*T2;return Jd1+C1-dt}
+const nmDay=(k,tz)=>INT(newMoon(k)+0.5+tz/24);
+function sunLong(jdn,tz){const T=(jdn-2451545.5-tz/24)/36525,T2=T*T,dr=Math.PI/180,M=357.5291+35999.0503*T-0.0001559*T2-0.00000048*T*T2,L0=280.46645+36000.76983*T+0.0003032*T2;
+ let DL=(1.9146-0.004817*T-0.000014*T2)*Math.sin(dr*M)+(0.019993-0.000101*T)*Math.sin(dr*2*M)+0.00029*Math.sin(dr*3*M);let L=(L0+DL)*dr;L-=Math.PI*2*INT(L/(Math.PI*2));return INT(L/Math.PI*6)}
+function lunarM11(yy,tz){const off=jdFromDate(31,12,yy)-2415021,k=INT(off/29.530588853);let nm=nmDay(k,tz);if(sunLong(nm,tz)>=9)nm=nmDay(k-1,tz);return nm}
+function leapOff(a11,tz){const k=INT((a11-2415021.076998695)/29.530588853+0.5);let last=0,i=1,arc=sunLong(nmDay(k+i,tz),tz);do{last=arc;i++;arc=sunLong(nmDay(k+i,tz),tz)}while(arc!=last&&i<14);return i-1}
+function solar2lunar(dd,mm,yy,tz=7){const dn=jdFromDate(dd,mm,yy),k=INT((dn-2415021.076998695)/29.530588853);let ms=nmDay(k+1,tz);if(ms>dn)ms=nmDay(k,tz);
+ let a11=lunarM11(yy,tz),b11=a11,ly;if(a11>=ms){ly=yy;a11=lunarM11(yy-1,tz)}else{ly=yy+1;b11=lunarM11(yy+1,tz)}
+ const ld=dn-ms+1,diff=INT((ms-a11)/29);let leap=0,lm=diff+11;
+ if(b11-a11>365){const lo=leapOff(a11,tz);if(diff>=lo){lm=diff+10;if(diff==lo)leap=1}}
+ if(lm>12)lm-=12;if(lm>=11&&diff<4)ly-=1;return{d:ld,m:lm,y:ly,leap}}
+const lunarStr=L=>`${L.d}/${L.m}${L.leap?' nhuận':''}/${L.y} (${gz(md(L.y-4,60))})`;
+
+// ---------- Chọn ngày ----------
+const THAN12=[['Thanh Long',1],['Minh Đường',1],['Thiên Hình',0],['Chu Tước',0],['Kim Quỹ',1],['Bảo Quang',1],['Bạch Hổ',0],['Ngọc Đường',1],['Thiên Lao',0],['Huyền Vũ',0],['Tư Mệnh',1],['Câu Trận',0]];
+const TRUC=['Kiến','Trừ','Mãn','Bình','Định','Chấp','Phá','Nguy','Thành','Thu','Khai','Bế'];
+const DUONGCONG={'1-13':1,'2-11':1,'3-9':1,'4-7':1,'5-5':1,'6-3':1,'7-8':1,'7-29':1,'8-27':1,'9-25':1,'10-23':1,'11-21':1,'12-19':1};
+const VIEC={
+ chung:{n:'Việc chung',tot:[1,4,5,8,10],xau:[6,11]},
+ cuoi:{n:'Cưới hỏi',tot:[4,8,10,2],xau:[6,11,0,9]},
+ xay:{n:'Động thổ, xây nhà, đổ mái',tot:[1,4,8,10,5],xau:[6,11,0]},
+ nhap:{n:'Nhập trạch, chuyển nhà',tot:[4,8,10,2],xau:[6,11,9]},
+ kt:{n:'Khai trương, ký hợp đồng',tot:[2,8,10,4,5],xau:[6,11,9]},
+ di:{n:'Xuất hành, đi xa',tot:[8,10,4,7],xau:[6,11]}};
+let TUCTX=null;
+function dayInfo(dt){
+ const y=dt.getUTCFullYear(),mo=dt.getUTCMonth()+1,d=dt.getUTCDate();
+ const jdn=jdFromDate(d,mo,y),di=md(jdn-2451545+54,60),dc=di%10,db=di%12;
+ const lam=sunLon(jdn-0.5+(12-7)/24),m=Math.floor(md(lam-315,360)/30),mb=(2+m)%12;
+ const L=solar2lunar(d,mo,y),than=THAN12[md(db-((mb-2+12)%6)*2,12)],truc=md(db-mb,12);
+ return{y,mo,d,jdn,di,dc,db,mb,L,than,truc,wd:dt.getUTCDay()}}
+function danhGia(I,viec){
+ const T=TUCTX,V=VIEC[viec],notes=[];let sc=0;
+ if(I.than[1]){sc+=2;notes.push(['g','Hoàng đạo '+I.than[0]])}else{sc-=2;notes.push(['b','Hắc đạo '+I.than[0]])}
+ if(V.tot.includes(I.truc)){sc+=2;notes.push(['g','Trực '+TRUC[I.truc]])}else if(V.xau.includes(I.truc)){sc-=2;notes.push(['b','Trực '+TRUC[I.truc]])}else notes.push(['n','Trực '+TRUC[I.truc]]);
+ if([3,7,13,18,22,27].includes(I.L.d)){sc-=3;notes.push(['b','Tam nương'])}
+ if([5,14,23].includes(I.L.d)){sc-=2;notes.push(['b','Nguyệt kỵ'])}
+ if(DUONGCONG[I.L.m+'-'+I.L.d]){sc-=3;notes.push(['b','Dương công kỵ'])}
+ if(T){
+  const yb=T.B[0],dbB=T.B[2];
+  if(md(I.db-yb,12)===6){sc-=4;notes.push(['b','Xung tuổi '+CHI[yb]])}
+  if(md(I.db-dbB,12)===6){sc-=2;notes.push(['b','Xung chi ngày sinh'])}
+  if(md(I.db-dbB,12)===6&&grpOf(T.C[2],I.dc)===3){sc-=2;notes.push(['b','Thiên khắc địa xung nhật trụ'])}
+  if((I.db+yb)%12===1){sc+=2;notes.push(['g','Lục hợp tuổi'])}
+  if(md(I.db-yb,4)===0&&I.db!==yb){sc+=1;notes.push(['g','Tam hợp tuổi'])}
+  const hc=T.hy.includes(CANH[I.dc]),hb=T.hy.includes(CHIH[I.db]);
+  if(hc&&hb){sc+=2;notes.push(['g','Can chi đều hỷ thần'])}else if(hc||hb){sc+=1;notes.push(['n',(hb?'Chi':'Can')+' hỷ thần'])}else{sc-=1;notes.push(['n','Can chi kỵ thần'])}
+ }
+ return{sc,notes,r:sc>=4&&I.than[1]?['g','Tốt']:sc>=1?['n','Khá']:sc>=-2?['n','Bình']:['b','Xấu']}}
+function renderChon(){
+ const v=$('cnFrom').value;if(!v)return;
+ const n=Math.min(+$('cnDays').value||30,120),viec=$('cnViec').value,only=$('cnGood').checked;
+ const [y,mo,d]=v.split('-').map(Number),WD=['CN','T2','T3','T4','T5','T6','T7'];
+ let rows='',cnt=0;
+ for(let k=0;k<n;k++){const dt=new Date(Date.UTC(y,mo-1,d+k)),I=dayInfo(dt),E=danhGia(I,viec);
+  if(only&&E.r[1]!=='Tốt')continue;cnt++;
+  rows+=`<tr${E.r[0]==='g'?' style="background:var(--good-bg)"':E.r[0]==='b'?' style="background:var(--bad-bg)"':''}><td>${WD[I.wd]} ${I.d}/${I.mo}</td><td>${I.L.d}/${I.L.m}${I.L.leap?'n':''}</td><td><span ${ec(CANH[I.dc])}>${CAN[I.dc]}</span> <span ${ec(CHIH[I.db])}>${CHI[I.db]}</span></td><td><span class="tag ${E.r[0]}">${E.r[1]}</span> <span class="mut">${E.sc>0?'+':''}${E.sc}</span></td><td style="font-size:.78rem">${E.notes.map(x=>`<span class="${x[0]==='g'?'s-vuong':x[0]==='b'?'s-tu':''}">${x[1]}</span>`).join(' · ')}</td></tr>`}
+ $('cnOut').innerHTML=(TUCTX?`<p class="mut">Đối chiếu với lá số đang lập: tuổi ${CHI[TUCTX.B[0]]}, nhật trụ ${CAN[TUCTX.C[2]]} ${CHI[TUCTX.B[2]]}, hỷ thần ${TUCTX.hy.map(e=>EN[e]).join(', ')}. Việc: <b>${VIEC[viec].n}</b>.</p>`:'')+
+  (cnt?`<div style="overflow-x:auto"><table><tr><th>Dương</th><th>Âm</th><th>Ngày</th><th>Đánh giá</th><th>Chi tiết</th></tr>${rows}</table></div>`:'<p class="mut">Không có ngày đạt mức Tốt trong khoảng này. Bỏ chọn “chỉ ngày tốt” hoặc kéo dài số ngày.</p>');
+}
+function renderAmDuong(){
+ const v=$('cnCheck').value;if(!v)return;const [y,mo,d]=v.split('-').map(Number);
+ const I=dayInfo(new Date(Date.UTC(y,mo-1,d)));
+ $('cnAD').innerHTML=`<table><tr><th>Dương lịch</th><td>${d}/${mo}/${y}</td><th>Âm lịch</th><td>${lunarStr(I.L)}</td></tr>
+ <tr><th>Ngày</th><td>${gz(I.di)} (${NAPAM[Math.floor(I.di/2)]})</td><th>Tháng tiết</th><td>${CHI[I.mb]}</td></tr>
+ <tr><th>Thần trực nhật</th><td class="${I.than[1]?'s-vuong':'s-tu'}">${I.than[0]} (${I.than[1]?'Hoàng đạo':'Hắc đạo'})</td><th>Trực</th><td>${TRUC[I.truc]}</td></tr></table>`;
+}
+
+window.renderChon=renderChon;
+// ---------- Luận giải ----------
+const NC=['<b>Giáp Mộc</b>, như cây đại thụ: ngay thẳng, có chí tiến thủ, nhân hậu, thích đứng đầu. Nhược điểm: cứng nhắc, khó uốn, trọng sĩ diện.',
+'<b>Ất Mộc</b>, như hoa cỏ, dây leo: mềm mỏng, khéo léo, thích nghi giỏi, biết dựa thế. Nhược điểm: hay lo, thiếu quyết đoán.',
+'<b>Bính Hỏa</b>, như mặt trời: nhiệt tình, hào phóng, sôi nổi, thích thể hiện. Nhược điểm: nóng vội, phô trương.',
+'<b>Đinh Hỏa</b>, như ngọn đèn: tinh tế, chu đáo, sâu sắc, sáng suốt. Nhược điểm: đa nghi, cảm xúc dễ dao động.',
+'<b>Mậu Thổ</b>, như núi lớn: vững vàng, trọng chữ tín, bao dung. Nhược điểm: bảo thủ, chậm thay đổi.',
+'<b>Kỷ Thổ</b>, như ruộng vườn: chịu khó, tỉ mỉ, biết vun đắp. Nhược điểm: hay tính toán, thiếu tự tin.',
+'<b>Canh Kim</b>, như sắt thép: quyết đoán, nghĩa khí, cương trực. Nhược điểm: cứng rắn, dễ va chạm.',
+'<b>Tân Kim</b>, như châu ngọc: thanh tú, tinh tế, có óc thẩm mỹ, trọng thể diện. Nhược điểm: nhạy cảm, hay so bì.',
+'<b>Nhâm Thủy</b>, như sông biển: thông minh, năng động, phóng khoáng, nhiều mưu lược. Nhược điểm: thiếu kiên định, ngại gò bó.',
+'<b>Quý Thủy</b>, như mưa móc: trầm tĩnh, sâu sắc, giàu trực giác, kiên nhẫn. Nhược điểm: hay suy nghĩ, thiếu chủ động.'];
+const GN=['Tỷ kiếp','Thực thương','Tài tinh','Quan sát','Ấn tinh'];
+const GT=['tự lập, cá tính mạnh, trọng bạn bè; quá nhiều thì hay cạnh tranh, hao tài, khó hợp tác',
+'tài năng, sáng tạo, giỏi ăn nói và biểu đạt; quá nhiều thì phóng túng, dễ phạm thượng, khắc chế quan chức',
+'thực tế, nhạy bén tiền bạc, giỏi kinh doanh và quản lý; quá nhiều mà thân nhược thì “tài đa thân nhược”, vì tiền mà vất vả',
+'kỷ luật, trách nhiệm, có chí công danh; quá nhiều (nhất là Thất sát) thì áp lực lớn, thị phi, sức khỏe hao',
+'ham học, nhân hậu, được che chở, có quý nhân; quá nhiều thì ỷ lại, chậm hành động'];
+const GJ=['tự kinh doanh, hợp tác, thể thao, môi giới','nghệ thuật, kỹ thuật, giảng dạy, truyền thông, ẩm thực, sáng tạo nội dung','kinh doanh, tài chính, thương mại, quản lý tài sản','công chức, quản lý, pháp luật, quân đội, công an','giáo dục, nghiên cứu, y tế, văn hóa, tư vấn'];
+const GV=['bạn bè, đối tác, cạnh tranh; dễ hao tài, nên giữ tiền cẩn thận','sáng tạo, thể hiện tài năng, học thêm kỹ năng; dễ bất đồng với cấp trên','tiền bạc, kinh doanh, cơ hội tài chính; nam dễ có chuyện tình cảm, hôn nhân','công việc, chức vụ, trách nhiệm, áp lực; nữ dễ có chuyện tình cảm, hôn nhân','học hành, bằng cấp, giấy tờ, nhà cửa, quý nhân giúp đỡ'];
+const EJOB=['giáo dục, xuất bản, lâm nghiệp, nội thất gỗ, thời trang, dược liệu','điện, điện tử, năng lượng, ẩm thực, truyền thông, làm đẹp','bất động sản, xây dựng, vật liệu, nông nghiệp, tư vấn, bảo hiểm','cơ khí, kim loại, tài chính, ngân hàng, pháp luật, ô tô','vận tải, thủy sản, du lịch, thương mại, công nghệ thông tin, logistics'];
+const ECOLN=['xanh lá','đỏ, hồng, tím','vàng, nâu, be','trắng, xám, bạc','đen, xanh dương'];
+const EDIR=['Đông, Đông Nam','Nam','Đông Bắc, Tây Nam, trung tâm','Tây, Tây Bắc','Bắc'];
+const ENUM=['3, 8','2, 7','5, 0','4, 9','1, 6'];
+const EDA=['lục bảo, khổng tước, phỉ thúy, peridot','thạch anh tím, thạch anh hồng, garnet, ruby','thạch anh vàng, mắt hổ, pyrite, topaz vàng','thạch anh trắng, đá mặt trăng, kim cương','obsidian, hải lam, sapphire, ngọc trai'];
+const EORG=['gan, mật, gân cơ, mắt','tim, huyết áp, mạch máu, ruột non','dạ dày, tỳ, tiêu hóa, cơ bắp','phổi, hô hấp, da, đại tràng','thận, bàng quang, tiết niệu, xương, tai'];
+const EPAL=[[3,4],[9],[8,2],[7,6],[1]];
+const TSL={'Trường sinh':'nền tảng tốt, được nâng đỡ, lạc quan','Mộc dục':'đa tình, thích cái mới, dễ thay đổi','Quan đới':'trọng hình thức, có ý chí vươn lên','Lâm quan':'tự lực tự cường, làm nên bằng sức mình','Đế vượng':'bản lĩnh mạnh, cái tôi lớn, dễ cực đoan','Suy':'ôn hòa, thận trọng, thiếu bứt phá','Bệnh':'hay lo nghĩ, cần chăm sức khỏe','Tử':'trầm lặng, sâu sắc, hướng nội','Mộ':'kín đáo, giỏi tích lũy, giữ của','Tuyệt':'nền tảng yếu, phải tự lập sớm, hay biến động','Thai':'nhiều ý tưởng, chưa ổn định','Dưỡng':'được nuôi dưỡng, che chở, phát muộn mà bền'};
+const grpOf=(D,c)=>md(CANH[c]-CANH[D],5);
+function rate(hy,ec,eb){const f=e=>hy.includes(e)?1:-1;const sc=f(ec)+1.5*f(eb);
+ return sc>=1?['g','Thuận lợi']:sc<=-1?['b','Trắc trở']:['n','Thăng trầm']}
+function luanGiai(o){
+ const {R,D,eD,W,ratio,hy,B,C,sex,thuan,yrs,mi60,y,out,ss,kv,now,dl}=o;
+ const G=[0,0,0,0,0];
+ R.p.forEach((x,i)=>{if(i!==2)G[grpOf(D,x[0])]+=1;TANG[x[1]].forEach((c,k)=>G[grpOf(D,c)]+=TW[k]*(i===1?1.5:1))});
+ const ord=[0,1,2,3,4].sort((a,b)=>G[b]-G[a]),miss=[0,1,2,3,4].filter(g=>G[g]<.3);
+ const ky=[0,1,2,3,4].filter(e=>!hy.includes(e));
+ const avg=W.reduce((a,b)=>a+b,0)/5,weak=[0,1,2,3,4].filter(e=>W[e]<.6),strong=[0,1,2,3,4].filter(e=>W[e]>avg*1.7);
+ const sec=(t,h)=>`<details open><summary>${t}</summary><div>${h}</div></details>`;
+ let H='';
+ // 1 Tính cách
+ const tsD=truongSinh(D,B[2]);
+ H+=sec('1. Bản mệnh và tính cách',`<p>Nhật chủ ${NC[D]}</p>
+ <p>Thân <b>${ratio>=.55?'vượng':ratio<=.45?'nhược':'gần trung hòa'}</b> (${Math.round(ratio*100)}%), ${dl?'đắc lệnh':'thất lệnh'}. ${ratio>=.55?'Người có nội lực, chủ kiến, chịu được áp lực, hợp tự mình gánh vác; cần nơi để “xả” năng lượng (Thực thương, Tài, Quan).':ratio<=.45?'Người cần môi trường hỗ trợ, quý nhân, tổ chức vững; nên học thêm, rèn sức khỏe, tránh ôm việc quá sức.':'Mệnh khá cân bằng, thuận nghịch tùy vận.'}</p>
+ <p>Nhật chủ ngồi trên ${CHI[B[2]]} ở thế <b>${tsD}</b>: ${TSL[tsD]}.</p>`);
+ // 2 Thập thần
+ H+=sec('2. Thập thần nổi bật',`<p>Mạnh nhất là <b>${GN[ord[0]]}</b> (${G[ord[0]].toFixed(1)}), kế đến <b>${GN[ord[1]]}</b> (${G[ord[1]].toFixed(1)}).</p>
+ <ul class="lst"><li><b>${GN[ord[0]]}:</b> ${GT[ord[0]]}.</li><li><b>${GN[ord[1]]}:</b> ${GT[ord[1]]}.</li></ul>
+ ${miss.length?`<p>Thiếu hoặc rất yếu: <b>${miss.map(g=>GN[g]).join(', ')}</b>. ${miss.includes(2)?'Thiếu Tài: tiền đến chậm, nên đi theo chuyên môn hơn đầu cơ. ':''}${miss.includes(3)?'Thiếu Quan: tự do, ít bị ràng buộc, khó theo nghề cần thăng tiến trong bộ máy. ':''}${miss.includes(4)?'Thiếu Ấn: ít được che chở, phải tự học, tự lo. ':''}${miss.includes(1)?'Thiếu Thực thương: ít bộc lộ, nên rèn kỹ năng trình bày. ':''}${miss.includes(0)?'Thiếu Tỷ kiếp: ít anh em bạn bè trợ giúp, làm việc nhóm cần chủ động. ':''}</p>`:''}`);
+ // 3 Nghề, màu, hướng
+ const cp=cungPhi(R.Y,sex),good=BT[cp].slice(0,4),hyP=[].concat(...hy.map(e=>EPAL[e])),both=good.filter(p=>hyP.includes(p));
+ H+=sec('3. Hỷ dụng thần: nghề, màu, hướng, số',`<p>Hỷ dụng: ${hy.map(e=>`<b ${ec(e)}>${EN[e]}</b>`).join(', ')} · Kỵ: ${ky.map(e=>`<span ${ec(e)}>${EN[e]}</span>`).join(', ')}.</p>
+ <table><tr><th>Hành</th><th>Ngành nghề</th><th>Màu</th><th>Hướng</th><th>Số</th><th>Đá</th></tr>${hy.map(e=>`<tr><td ${ec(e)}>${EN[e]}</td><td>${EJOB[e]}</td><td>${ECOLN[e]}</td><td>${EDIR[e]}</td><td>${ENUM[e]}</td><td>${EDA[e]}</td></tr>`).join('')}</table><p class="mut">Vòng đá, trang sức, vật phẩm nên chọn theo hỷ dụng thần ở trên (cách sách đánh giá là sát nhất). Đá hợp tuổi và Phật bản mệnh xem ở tab Vật phẩm.</p>
+ <p>Theo thập thần mạnh, hợp với: ${GJ[ord[0]]}${ord[0]!==ord[1]?'; hoặc '+GJ[ord[1]]:''}.</p>
+ <p>Kết hợp Bát trạch (cung phi ${PNAME[cp]}): ${both.length?`hướng vừa là hướng cát của mệnh vừa thuộc hỷ thần: <b>${both.map(p=>PDIR[p]).join(', ')}</b>. Nên ưu tiên cho bàn làm việc, đầu giường, cửa phòng.`:'không có hướng trùng giữa 4 hướng cát Bát trạch và hướng hỷ thần; ưu tiên 4 hướng cát Bát trạch, bổ sung màu sắc theo hỷ thần.'}</p>`);
+ // 4 Sức khỏe
+ H+=sec('4. Sức khỏe cần lưu ý',`<ul class="lst">${weak.map(e=>`<li><b ${ec(e)}>${EN[e]}</b> yếu: chú ý ${EORG[e]}.</li>`).join('')}${strong.map(e=>`<li><b ${ec(e)}>${EN[e]}</b> quá vượng: ${EORG[e]} dễ quá tải; hành bị nó khắc là ${EN[md(e+2,5)]} (${EORG[md(e+2,5)]}) cũng cần để ý.</li>`).join('')}${!weak.length&&!strong.length?'<li>Ngũ hành tương đối đủ, không có hành quá lệch.</li>':''}</ul>`);
+ // 5 Lục thân
+ const spG=sex==='nam'?2:3,chG=sex==='nam'?3:1;
+ const pos=g=>{const r=[];R.p.forEach((x,i)=>{if(i!==2&&grpOf(D,x[0])===g)r.push(['Năm','Tháng','Ngày','Giờ'][i]+' (can)');if(grpOf(D,TANG[x[1]][0])===g)r.push(['Năm','Tháng','Ngày','Giờ'][i]+' (chi)')});return r};
+ const sp=pos(spG),dayMain=thapThan(D,TANG[B[2]][0]);
+ const xungDay=B.some((b,i)=>i!==2&&md(b-B[2],12)===6),hopDay=B.some((b,i)=>i!==2&&(b+B[2])%12===1);
+ const ch=pos(chG);
+ H+=sec('5. Lục thân: cha mẹ, hôn nhân, con cái',`<ul class="lst">
+ <li><b>Tổ nghiệp, cha mẹ</b> (trụ năm, tháng): trụ tháng là ${thapThan(D,C[1])}/${thapThan(D,TANG[B[1]][0])}. ${[grpOf(D,C[1]),grpOf(D,TANG[B[1]][0])].includes(4)?'Có Ấn ở tháng: được cha mẹ nâng đỡ, học hành thuận.':[grpOf(D,C[1]),grpOf(D,TANG[B[1]][0])].includes(0)?'Tỷ kiếp ở tháng: anh em đông, phải tự lập.':'Tự thân lập nghiệp là chính.'}</li>
+ <li><b>Hôn nhân:</b> sao phối ngẫu của ${sex==='nam'?'nam là Tài (Chính tài là vợ)':'nữ là Quan (Chính quan là chồng)'}: ${sp.length?'xuất hiện ở '+sp.join(', '):'không lộ rõ, duyên thường đến muộn hoặc phải chủ động tìm'}. Cung phu thê (chi ngày ${CHI[B[2]]}) chứa ${dayMain}. ${xungDay?'<b>Chi ngày bị xung</b>: hôn nhân dễ biến động, vợ chồng nên dành thời gian cho nhau, tránh xa cách lâu.':''}${hopDay?' Chi ngày được lục hợp: gắn bó, có duyên.':''}${kv.includes(B[2])?' Chi ngày rơi tuần không: duyên muộn hoặc ít gần gũi.':''}${[2,3].includes(grpOf(D,TANG[B[2]][0]))&&grpOf(D,TANG[B[2]][0])===spG?' Sao phối ngẫu nằm ngay cung phu thê: chủ được người bạn đời hỗ trợ.':''}</li>
+ <li><b>Con cái</b> (trụ giờ, sao ${sex==='nam'?'Quan sát':'Thực thương'}): ${ch.length?'xuất hiện ở '+ch.join(', '):'không lộ rõ'}. Trụ giờ là ${thapThan(D,C[3])}, ${truongSinh(D,B[3])}: ${['Trường sinh','Lâm quan','Đế vượng','Quan đới','Dưỡng'].includes(truongSinh(D,B[3]))?'hậu vận khá, con cái có chí.':'hậu vận cần tích lũy từ sớm.'}</li></ul>`);
+ // 6 Thần sát & hợp xung
+ const sm=[];
+ if(ss.some(x=>x.includes('Thiên ất')))sm.push('<b>Thiên ất quý nhân:</b> hay gặp người giúp lúc khó, hóa giải tai ương.');
+ if(ss.some(x=>x.includes('Văn xương')))sm.push('<b>Văn xương:</b> thông minh, học nhanh, hợp thi cử, viết lách.');
+ if(ss.some(x=>x.includes('Đào hoa')))sm.push('<b>Đào hoa:</b> duyên dáng, giao tiếp giỏi, dễ được yêu mến; cẩn thận chuyện tình cảm.');
+ if(ss.some(x=>x.includes('Dịch mã')))sm.push('<b>Dịch mã:</b> hay di chuyển, đi xa, hợp nghề lưu động, xuất ngoại.');
+ if(out.some(x=>x.includes('xung')))sm.push('<b>Có lục xung:</b> đời nhiều thay đổi; trụ bị xung là lĩnh vực hay biến động (năm: gốc gác; tháng: công việc, cha mẹ; ngày: hôn nhân; giờ: con cái).');
+ if(out.some(x=>x.includes('Tam hợp')||x.includes('Bán hợp')))sm.push('<b>Có tam hợp/bán hợp:</b> dễ được tập thể, đồng nghiệp ủng hộ; hành của cục làm thay đổi cân bằng ngũ hành.');
+ H+=sec('6. Thần sát và hợp xung',sm.length?'<ul class="lst">'+sm.map(x=>`<li>${x}</li>`).join('')+'</ul>':'<p>Không có thần sát hay hợp xung nổi bật.</p>');
+ // 7 Đại vận
+ let dv='<table><tr><th>Tuổi</th><th>Vận</th><th>Đánh giá</th><th>Chủ về</th></tr>';
+ for(let k=1;k<=8;k++){const i=md(mi60+(thuan?k:-k),60),a=Math.round(yrs+10*(k-1)),yy=y+a,cur=now>=yy&&now<yy+10;
+  const rt=rate(hy,CANH[i%10],CHIH[i%12]),g1=grpOf(D,i%10),g2=grpOf(D,TANG[i%12][0]);
+  const xd=md(i%12-B[2],12)===6?' Xung chi ngày: biến động gia đạo, nơi ở.':'';
+  dv+=`<tr${cur?' style="background:var(--good-bg)"':''}><td>${a}–${a+9}<br><span class="mut">${yy}</span></td><td>${gz(i)}</td><td><span class="tag ${rt[0]}">${rt[1]}</span></td><td>${GV[g2]}${g1!==g2?'; '+GV[g1].split(';')[0]:''}.${xd}</td></tr>`}
+ H+=sec('7. Đại vận 10 năm',dv+'</table><p class="mut">Đánh giá dựa trên can/chi của vận là hỷ hay kỵ thần (chi tính nặng hơn can).</p>');
+ // 8 Lưu niên
+ let ln='<table><tr><th>Năm</th><th>Can chi</th><th>Đánh giá</th><th>Chủ về</th></tr>';
+ for(let k=0;k<5;k++){const yy=now+k,i=md(yy-4,60),rt=rate(hy,CANH[i%10],CHIH[i%12]);
+  const notes=[];if(md(i%12-B[2],12)===6)notes.push('xung chi ngày (gia đạo, sức khỏe)');if(md(i%12-B[0],12)===6)notes.push('xung Thái Tuế bản mệnh');if(i%12===B[0])notes.push('năm tuổi (phạm Thái Tuế)');
+  ln+=`<tr><td>${yy}</td><td>${gz(i)}</td><td><span class="tag ${rt[0]}">${rt[1]}</span></td><td>${GV[grpOf(D,TANG[i%12][0])].split(';')[0]}${notes.length?'. <b>Lưu ý:</b> '+notes.join(', '):''}.</td></tr>`}
+ H+=sec('8. Lưu niên 5 năm tới',ln+'</table>');
+ H+='<div class="tip">Bản luận do chương trình sinh tự động theo quy tắc phổ biến của Tử Bình, chỉ để tham khảo và học tập. Lá số thật cần xét thêm điều hậu, cách cục, hợp hóa và trải nghiệm thực tế.</div>';
+ $('tuLuan').innerHTML=H;
+}
+$('tuCopy').onclick=()=>{const t=$('tuLuan').innerText;try{navigator.clipboard.writeText(t).then(()=>{$('tuCopy').textContent='Đã chép';setTimeout(()=>$('tuCopy').textContent='Sao chép',1500)},()=>{$('tuCopy').textContent='Không chép được'})}catch(e){$('tuCopy').textContent='Không chép được'}};
+['tuDate','tuTime','tuSex','tuTz','tuTy'].forEach(id=>$(id).oninput=renderTu);
+{const t=new Date(),z=n=>String(n).padStart(2,'0'),iso=`${t.getFullYear()}-${z(t.getMonth()+1)}-${z(t.getDate())}`;$('cnFrom').value=iso;$('cnCheck').value=iso;}
+['cnFrom','cnDays','cnViec','cnGood'].forEach(id=>$(id).oninput=renderChon);$('cnCheck').oninput=renderAmDuong;
+renderTu();renderAmDuong();
+
+// ---------- Vật phẩm phong thủy ----------
+const SONOFCHI=c=>2*c+1;
+const palOfSon=i=>SONP[Math.floor(i/3)];
+const CHI_IDX=n=>CHI.indexOf(n);
+// vị trí theo cung hướng (lấy theo sách tập 1)
+const VX_BY_H={9:8,1:3,3:2,7:6,8:7,2:1,4:3,6:9};
+const DH_BY_H={1:3,9:7,3:9,7:1,4:9,6:1,8:3,2:7};
+const DM_BY_H={9:8,1:2,3:6,7:4,8:2,2:8,4:6,6:4};
+// Nghênh lộc theo sơn hướng (index SON) -> chi
+const NL={6:2,7:2,8:3,9:3,10:5,11:5,12:5,13:5,14:6,15:6,16:8,17:8,18:8,19:8,20:9,21:9,22:11,23:11,0:11,1:11,2:0,3:0,4:0,5:0};
+const LOCTON=[2,3,5,6,5,6,8,9,11,0];
+const TAMHOP=[[8,0,4],[2,6,10],[5,9,1],[11,3,7]];
+const DH_TUOI=[[9,3],[3,9],[6,0],[0,6]]; // [đào hoa, đào hoa sát] theo nhóm tam hợp
+const DM_TUOI=[2,8,11,5];
+const chiPal=c=>palOfSon(SONOFCHI(c));
+const chiTxt=c=>`${CHI[c]} (${PDIR[chiPal(c)]})`;
+
+const SAT=[
+ ['Phi nhận sát','Góc tường hoặc cạnh nhà bên cạnh chĩa thẳng vào nhà mình.','Làm ăn trắc trở, sức khỏe kém.','Gương bát quái phẳng treo ngoài nhà hướng về góc đó; đôi kỳ lân hoặc nghê; trồng cây che.'],
+ ['Tiễn xạ / Tiêm xạ sát','Vật nhọn, góc nhà cao đối diện chĩa vào cửa chính; hoặc hai con đường giao nhau thành góc nhọn trước nhà.','Gặp họa, tiền không tụ, hao tài vì bệnh hoặc bị lừa.','Đặt chén liên hoa ở phương bị chiếu trong nhà kèm tiền cổ ngũ đế; bình phong chắn sau cửa.'],
+ ['Phản quang sát','Nhà đối diện ốp kính, hồ bơi, đèn đường hắt ánh sáng vào; nhà đối diện treo bát quái.','Nóng giận, bất an, hay mơ ác mộng, hòa khí kém.','Dán phim mờ, rèm cửa nơi ánh sáng chiếu vào; treo hai xâu hồ lô (minh chú) hai góc cửa sổ; sát mạnh thì thêm tiền ngũ đế.'],
+ ['Thám đầu sát','Nhà phía sau ló cao lên như người ngó trộm sang.','Dễ mất trộm, tài vận kém.','Thường dùng gương bát quái phẳng hoặc đôi kỳ lân hướng về phía đó.'],
+ ['Đoạn hổ sát','Mái nhà lớn hình chữ L ngược phía trước bên phải, như lưỡi máy chém.','Tài khó tụ, bị đố kỵ, tiểu nhân, thị phi.','Đôi kỳ lân hoặc sư tử hướng về phía sát; giảm mở cửa về phía đó.'],
+ ['Kiệu sát','Ngay trước nhà là tòa nhà đồ sộ, lớn hơn nhiều.','Dễ bị lừa, việc khó thành, kinh doanh ít khách.','Sư tử hoặc kỳ lân trước cửa; tăng sáng, mở thoáng phía trước trong nhà.'],
+ ['Cô dương sát','Ở sát đình, chùa, miếu, nhà thờ. Câu cổ: trước miếu thì nghèo, sau miếu thì giàu.','Khí bị hút về nơi thờ tự, gia vận kém.','Tránh mở cửa chính nhìn thẳng vào nơi thờ; tăng dương khí (đèn, người ra vào).'],
+ ['Độc âm sát','Gần nhà xác, bệnh viện, nghĩa trang, nhà vệ sinh công cộng, bãi rác, phế liệu.','Bệnh kín, ngủ mơ kinh dị, tài không tụ.','Sát từ ngoài: hồ lô gỗ và tiền ngũ đế trong nhà. Sát từ trong (nhà vệ sinh): treo hồ lô ở phòng giáp vệ sinh.'],
+ ['Xung thiên sát','Mở cửa thấy ống khói nhà máy, lò luyện đang phun khói lửa.','Trọc khí, người trong nhà hay đau ốm.','Tránh mở cửa sổ về phía đó; cây xanh, rèm dày chắn.'],
+ ['Kình quyền sát','Phần lồi của tòa nhà đối diện chiếu thẳng vào cửa hoặc cửa sổ.','Huyết quang, bệnh vùng ngực, hao tài.','Gương bát quái phẳng ngoài nhà, hoặc rèm và cây che.'],
+ ['Kim tự sát','Đối diện thấy mái/nóc hình tam giác.','Tai họa, hao tài, khó tụ tiền.','Tiền ngũ đế, kỳ lân hướng về phía sát; giảm cửa mở về hướng đó.'],
+ ['Hổ cường long nhược','Nhà bên phải (Bạch hổ) to hơn bên trái (Thanh long).','Nhiều thị phi, tiểu nhân. Ngược lại Long cường hổ nhược là tốt: được người sang giúp.','Tăng bên trái: đèn, tượng rồng, cây cao bên trái; giảm động bên phải.'],
+ ['Long hổ bức áp','Hai bên có nhà cao quá lớn ép nhà mình. Hai bên vừa phải ôm lấy nhà (Long hổ bão) là tốt.','Bị chèn ép, tiểu nhân hại.','Tăng chiều cao phía sau, đèn sáng trong nhà, kỳ lân hai bên cửa.'],
+ ['Cắt cước sát','Nhà sát bờ biển không có đường đệm; sát xa lộ, đường sắt, sân bay.','Vận khí đảo điên, tiền đến rồi đi, dễ tai tiếng.','Tường rào, cây xanh tạo vùng đệm; cửa chính không mở thẳng ra luồng xe.'],
+ ['Liêm đao sát','Vật hoặc đường, sông cong hình lưỡi liềm quay lưng cong chém vào nhà.','Hao tài, người nhà dễ bị thương; ở phía Đông/Tây càng nặng.','Đôi ngựa đồng và ngũ đế bạch ngọc đặt ở phương bị sát.'],
+ ['Đao trảm sát','Đường hình chữ L như lưỡi đao chém vào nhà.','Tổn hại người, nhiều chuyện phiền, hao tài.','Đôi kỳ lân hoặc ngựa đồng hướng ra đường; bình phong sau cửa.'],
+ ['Tà thương sát','Đường đâm xéo vào nhà.','Đâm bên trái cửa thì nam bị hại; bên phải thì nữ; chính giữa thì cả nhà hao tài.','Bình phong, cây chắn; kỳ lân hoặc nghê hướng về con đường.'],
+ ['Thiên trảm sát','Khe hẹp giữa hai tòa nhà cao chĩa thẳng vào nhà.','Tai nạn, bệnh có mổ xẻ.','Ngựa đồng hoặc đôi kỳ lân đặt ở chỗ sát xông đến.'],
+ ['Xung bối sát','Đường đâm thẳng vào lưng nhà.','Tiểu nhân quấy nhiễu, bị lừa, không được cấp trên đỡ.','Tường đặc, tủ cao phía sau; Huyền vũ (rùa) phía sau.'],
+ ['Lộ xung sát (ngã ba chữ T)','Đường đâm thẳng vào cửa chính.','Họa ập đến nhanh, hao tài, tai nạn.','Bình phong hoặc cây sau cửa; đôi nghê/kỳ lân; sát mạnh dùng gương bát quái phẳng ngoài nhà.'],
+ ['Tỉnh tự sát','Bốn phía nhà đều là đường như chữ “tỉnh”.','Vận khí đảo điên, tiền đến rồi đi.','Tường rào, cây xanh bao quanh để giữ khí.'],
+ ['Cầu vượt sát','Nhà sát cầu vượt, đường trên cao.','Cảm giác bị đè nén, thiếu năng lượng.','Đèn sáng hướng lên, tránh mở cửa sổ ngang tầm cầu.'],
+ ['Thủy tinh sát (đất trũng)','Đất thấp ẩm, nền trong nhà thấp hơn ngưỡng cửa, hay ngập.','Âm thấp, bệnh tật, khí suy.','Nâng nền, chống ẩm, tăng sáng và thông gió.'],
+ ['Cô phong sát','Nhà hoặc cao ốc đứng trơ trọi trên chỗ cao, xung quanh dốc thấp.','Mệt mỏi, đau đầu, cô độc.','Trồng cây bao quanh, tường rào chắn gió.'],
+ ['Tuyệt mệnh sát','Nhà thấp hơn hẳn mặt đường hoặc nằm dưới xa lộ trên cao.','Khí đến đi gấp, tai nạn bất ngờ.','Nâng nền, bậc thềm, bình phong sau cửa.'],
+ ['Thích diện sát','Trước nhà có gò đồi, núi đá lởm chởm.','Dễ dính kiện tụng, trộm cướp.','Hai xâu hồ lô minh chú hoặc voi đồng trước cửa, cửa sổ.'],
+ ['Quyển liêm thủy','Đất trước nhà thấp dần, nước và đường chảy tuột đi.','Tài thoát ra ngoài. (Ngược lại Ngự nhai thủy: nước, đường dẫn tới nhà thì giàu.)','Bậc thềm, bồn cây trước cửa giữ khí; cửa lệch không đón thẳng dốc.'],
+ ['Khai khẩu sát','Cửa chính đối thẳng cửa thang máy.','Như miệng lớn muốn nuốt, hao tài, bất an.','Rèm có minh chú; tiền ngũ đế đặt kín ở chốt cửa.'],
+ ['Huyền nhai ốc','Nhà ở vách núi, vách dốc cheo leo.','Làm ăn suy dần, dễ gặp họa.','Tường chắn, cây giữ đất; nếu được thì tránh ở.'],
+ ['Pháo đài sát','Kiến trúc như hai khẩu pháo chĩa vào nhà.','Tính khí cục cằn, vì lợi mà mất tình.','Hai bên cửa sổ treo đôi chuông gió kỳ lân; giữa cửa đặt tiền cổ ngũ đế và 5 xâu hồ lô.'],
+ ['Bạch hổ sát (động thổ bên phải)','Bên phải nhà đang đào đất, xây hoặc phá nhà.','Ốm đau, tai nạn, nhất là năm sao xấu tới.','Cạnh tường bị xung đặt ngũ đế bạch ngọc hoặc đôi kỳ lân kèm hồ lô.'],
+ ['Thanh sát','Tiếng ồn thường xuyên: xưởng, lò rèn, độ xe.','Bệnh tai, tì khí rối, cáu gắt.','Hồ lô để hút hung khí; cách âm, rèm dày.'],
+ ['Xuyên tâm sát','Cột điện, cột biển báo, cây lớn án ngay giữa cửa chính (cây chết càng xấu).','Huyết quang, bệnh tật, kiện tụng, làm ăn kém.','Dời cửa nếu được; gương bát quái phẳng ngoài nhà; bình phong sau cửa.'],
+ ['Ngô công sát','Dây điện, đường ống chằng chịt như con rết chĩa vào bếp, giường, phòng trẻ.','Bệnh tật, bất an.','Đôi gà trống đồng (tối đa 2), mỏ hướng về phía sát.'],
+ ['Cần trời xung xạ sát','Mở cửa thấy cần cẩu công trường lớn.','Bệnh mắt, dễ bị thương.','Long thần tọa và tiền cổ ngũ đế phối bạch ngọc đặt ở phía bị xung.']
+];
+const NOITHAT=[
+ ['Cầu thang đổ thẳng ra cửa','Tiền bạc trôi ra ngoài như thác.','Gương ở chân cầu thang (tạo cặp âm dương), bình phong, đổi hướng bậc cuối.'],
+ ['Nhà thông suốt trước sau','Cửa trước nhìn thẳng cửa sau, khí xuyên tâm không tụ.','Bình phong, tủ, rèm hoặc gương để ngắt dòng.'],
+ ['Gương trong phòng ngủ','Gương, bàn trang điểm, màn hình TV soi vào giường.','Không để gương chiếu giường; lỡ có thì kéo rèm khi ngủ.'],
+ ['Hai gương đối nhau','Gây rối, bất an như luôn có người.','Bỏ bớt một tấm hoặc xoay lệch.'],
+ ['Gương phòng khách nhìn ra đường lớn','Đem luồng xe vào nhà, hoảng hốt, hại tim mạch.','Bỏ gương hoặc chuyển vị trí; không treo sau ghế sofa.'],
+ ['Gương ghép, nứt, mờ, treo thấp','Hình ảnh gãy, mất đầu, đau đầu, chóng mặt.','Thay gương nguyên tấm, treo cao hơn đầu người, bỏ gương nứt.'],
+ ['Góc khuyết, góc lồi, chỗ chật tối','Thiếu một cung bát quái, góc nhọn như lưỡi dao.','Gương làm đầy góc khuyết; ốp gương hai mặt vách để mất cạnh; đèn sáng chỗ tối.'],
+ ['Bóng đèn hỏng, nhấp nháy','Cung đó bị suy, có vấn đề.','Thay ngay bằng bóng sáng bằng hoặc hơn; kiểm tra cung bát quái đó.'],
+ ['Xà ngang, dầm đè trên giường, bàn','Áp lực, đau đầu, bất an.','Làm trần che; voi gốm hoặc hồ lô dưới xà; dời giường, bàn.'],
+ ['Gương bát quái treo trong nhà','Đại kỵ: tự chuốc hung.','Chỉ treo ngoài nhà, tối đa 3 cái, mỗi hướng 1 cái, không soi vào người nhà.'],
+ ['Cửa sổ quá lớn so với cửa chính','Dương quá thịnh: tiền đến tiền đi, con cái sớm rời nhà.','Rèm, giảm kích thước; cửa chính phải lớn nhất.']
+];
+const ITEM=[
+ ['Chuông gió đồng 6 ống','Kim','Hóa sao 2 (Bệnh phù) và 5 (Ngũ hoàng): Thổ sinh Kim nên tiết khí xấu. Treo ở cung có 2, 5 (tinh bàn hoặc niên tinh).','Ống phải là kim loại, kêu được mới có tác dụng; không treo trên đầu giường, chỗ ngồi lâu.'],
+ ['Chuông gió 5 thanh','Kim','Giảm “mũi tên độc” (góc nhọn, vật nhọn) nhắm vào cửa trước.','Treo trước cửa phía bị chiếu.'],
+ ['Chuông gió 8 ống','Kim','Kích quý nhân ở góc Tây Bắc.','Không đặt đèn chùm, lửa ở góc Tây Bắc (Hỏa khắc Kim).'],
+ ['Chuông gió tre','Mộc','Góc Đông, Đông Nam (Mộc).','Không treo chuông kim loại ở Đông, Đông Nam, Tây Nam theo ngũ hành phương vị.'],
+ ['Hồ lô đồng','Kim','Hóa 2, 5; giữ sức khỏe. Treo đầu giường người bệnh (3 quả), cạnh nôi trẻ hay khóc đêm, phương Thiên y.','Vợ chồng lạnh nhạt: hồ lô đồng ở đầu giường.'],
+ ['Hồ lô gỗ / minh chú','Mộc','Hút độc âm sát, phản quang sát, thanh sát.','Treo thành đôi hai bên cửa sổ bị sát.'],
+ ['Tiền cổ ngũ đế','Kim','Hóa sát ở cửa, chặn khí xấu vào nhà, kích tài.','Đặt dưới thảm cửa, chốt cửa, hoặc phối với bạch ngọc, hồ lô.'],
+ ['Gương bát quái phẳng','Kim','Đẩy sát của góc nhọn, mái nhà, đường nhỏ đâm vào.','Chỉ ngoài nhà; Tiên thiên bát quái dùng hóa sát; tối đa 3, mỗi hướng 1.'],
+ ['Gương bát quái lồi','Kim','Chỉ khi nhà đối diện có vật hóa sát chĩa vào mình: trả lại.','Không đặt trước cửa, không chiếu vào người; dùng sai thì biến cát thành hung.'],
+ ['Gương bát quái lõm','Kim','Thu hút, gom khí; ít dùng.','Cần thầy tính trước khi dùng.'],
+ ['Đèn','Hỏa','Bổ Hỏa cho cung, làm đầy góc khuyết ngoài nhà, cân bằng Long/Hổ, xua u ám. Đèn ở Tây Nam kích quan hệ, tình cảm (2 đèn, cao khoảng 1,5 m, màu đỏ/vàng/cam).','Phòng ngủ ánh sáng dịu; không đặt đèn mạnh ở Tây Bắc.'],
+ ['Chén liên hoa','—','Chế tiễn xạ sát, vật nhọn chĩa vào.','Đặt ở phương bị sát trong nhà, kèm ngũ đế.'],
+ ['Kiếm gỗ đào','Mộc','Trấn trạch, trừ tà.','Không treo đầu giường, không chĩa vào người.'],
+ ['Thạch cảm đương','Thổ','Trấn ngã ba, đường đâm.','Đặt ngoài nhà, đối diện chỗ bị đâm.'],
+ ['Ngọc Bát Bạch','Thổ','Giữ và tăng khí sao 8 (tài, điền sản), cũng tốt cho cung có 6, 9.','Đặt bàn làm việc, két sắt, cung có sao 8.'],
+ ['Thuyền buồm vàng','Kim','Kích tài cho kinh doanh, văn phòng, cửa hàng.','Mũi thuyền hướng vào trong nhà/văn phòng (chở tài vào), không hướng ra cửa.'],
+ ['Cá chép (ngậm ngọc)','Thủy','Công danh, thi cử (cá chép vượt vũ môn), tài lộc.','Phòng khách, bàn làm việc, bàn học.'],
+ ['La bàn','—','Định vị, trấn khí, đổi vận khi chưa thể chuyển nhà.','Tránh đặt gần đồ điện, vật từ tính.'],
+ ['Quả cầu thạch anh / pha lê','Thổ/Kim','Tụ khí, điều hòa; pha lê tròn ở góc Tây Nam bàn làm việc giúp hòa đồng.','Lau rửa, tẩy năng lượng định kỳ.'],
+ ['Bình hoa tươi','Mộc','Dương khí, hăng say làm việc; kích Đào hoa.','Thay ngay khi hoa héo; không để hoa khô.']
+];
+const LINH=[
+ ['Kỳ lân','Tiêu tai, trừ tà, hóa sát; chiêu tài, thêm nhân đinh.','Đặt đôi ở cổng/cửa, đầu hướng ra ngoài để đón sát.','—'],
+ ['Tỳ hưu','Chiêu tài, giữ của, ổn định vận thế.','Đầu quay ra cửa chính hoặc cửa sổ; đặt đôi hoặc 1 con.','Kỵ đặt 3 con cùng hướng.'],
+ ['Nghê','Trấn cửa, hóa góc nhọn, ngã ba, ngã tư, đường vòng chiếu vào; hóa sao xấu hằng năm.','Đôi nghê trên bệ vững hai bên cửa.','—'],
+ ['Tỵ tà (Tịch tà)','Chiêu tài, tránh tà, khắc thị phi.','Phòng khách, quầy thu ngân.','Không đặt phòng ngủ, phòng trẻ.'],
+ ['Cóc ba chân (Thiềm thừ)','Hút tài, giữ tiền.','Phòng khách, bàn thần tài; đầu hướng vào trong nhà (không cần xoay sáng ra tối vào).','Không đặt bếp, nhà tắm, vệ sinh, phòng ngủ.'],
+ ['Ngựa','Công danh, thành công nhanh; ngựa đồng (Kim) hóa sao 2, 5.','Hướng Nam hoặc phòng sinh hoạt; bàn làm việc, tài vị, mặt hướng ra cửa.','Không để phòng ngủ; không dùng ngựa lồng lên; không đặt ngay trước mặt mình.'],
+ ['Voi','Sức mạnh, hút tài (voi đồng nhìn ra ao hồ, sông); voi gốm hóa xà dầm đè.','Đôi voi hai bên cửa chính; góc Đông Nam.','—'],
+ ['Rồng','Quyền uy, chống tiểu nhân, hợp người làm quản lý, chính trị.','Bên trái (Thanh long) bàn làm việc, phía Đông; rồng hướng về nước, ra biển; 3 con ở Đông để trị tiểu nhân.','Không để phòng ngủ, bếp, nhà vệ sinh; tuổi Tuất, Mão không hợp.'],
+ ['Phượng hoàng','Cơ hội, danh tiếng (hướng Nam, Hỏa); vợ chồng hòa hợp khi đi cùng rồng.','Chỗ cao, phía Nam; phượng bên phải, rồng bên trái.','Không đặt 2 phượng cạnh nhau.'],
+ ['Hổ','Trấn sát, uy lực.','Góc Đông hoặc bên trái nhà, đối phương vị sát.','Không treo phòng ngủ, phòng làm việc cá nhân.'],
+ ['Huyền vũ / Rùa','Chỗ dựa, trường thọ, hóa sát; kích hướng Bắc (sự nghiệp).','Phía sau hoặc phương Bắc, sau ghế làm việc; nuôi rùa chỉ 1 con ở hướng Bắc.','Rùa đồng/đá hóa sát: đặt đầu hai con đối nhau; chỉ dùng khi sát mạnh.'],
+ ['Long quy','Hóa tai ương, giảm đôi co, thêm nhân duyên.','Nơi hay cãi vã, nơi có Thủy khí.','—'],
+ ['Tứ linh','Tăng cát khí, chống hung khí.','Rồng trái, Hổ phải, Phượng trước, Rùa sau phòng khách hoặc nhà.','—'],
+ ['Sư tử','Trấn các hình sát trước nhà, tăng uy cho cơ quan, công ty; hợp nghề ăn nói (luật sư, diễn viên).','Luôn đặt đôi đực cái, nhìn ra ngoài; nhà có người mệnh Thủy hợp sư tử đồng.','Không quay vào trong nhà.'],
+ ['Gà trống đồng','Hóa ngô công sát (dây điện, vật như con rết), chống lăng nhăng.','Tối đa 2 con, mỏ hướng về phía sát; trên kệ nhìn ra cửa.','—'],
+ ['Chó','Trấn trạch, giữ nhà.','Trước cửa nhà, công ty, mặt quay ra ngoài.','Không để phòng ngủ; tuổi Thìn, Dậu, Sửu, Mùi không hợp.'],
+ ['Chuột','Chiêu tài, linh hoạt.','Bàn làm việc, bàn đọc sách.','—'],
+ ['Cua','Thi cử đỗ đầu (giáp = số một).','Bàn học, quà cho người đi thi.','—'],
+ ['Đại bàng','Ý chí, vươn cao.','Văn phòng lãnh đạo.','Tuyệt đối không dùng hình đại bàng vồ mồi, dữ tợn.']
+];
+const MAU={
+ 'Mộc':['đen, xanh nước biển (Thủy sinh)','xanh lá, gỗ (cùng hành)','vàng, nâu đất (chế được)','trắng, bạc (Kim khắc Mộc)'],
+ 'Hỏa':['xanh lá (Mộc sinh)','đỏ, hồng, tím (cùng hành)','trắng, bạc (chế được)','đen, xanh nước biển (Thủy khắc Hỏa)'],
+ 'Thổ':['đỏ, hồng, tím (Hỏa sinh)','vàng sậm, nâu đất (cùng hành)','đen, xanh nước biển (chế được)','xanh lá (Mộc khắc Thổ)'],
+ 'Kim':['vàng sậm, nâu đất, mắt hổ (Thổ sinh)','trắng, bạc, vàng tươi (cùng hành)','xanh lá (chế được)','đỏ, hồng, tím (Hỏa khắc Kim)'],
+ 'Thủy':['trắng, bạc (Kim sinh)','đen, xanh nước biển (cùng hành)','đỏ, hồng, tím (chế được)','vàng, nâu đất (Thổ khắc Thủy)']};
+const DA=[
+ ['Thạch anh trắng','Kim','Tăng tập trung, trí nhớ, giữ năng lượng, linh tính.'],
+ ['Đá mặt trăng (Moonstone)','Kim','Quan hệ bền vững, hồi phục sau tổn thương tâm lý.'],
+ ['Kim cương','Kim','Bảo hộ, bền vững, uy lực.'],
+ ['Thạch anh tím (Amethyst)','Hỏa','An thần, ngủ ngon, sáng suốt, bớt nghiện.'],
+ ['Thạch anh hồng','Hỏa','Tình cảm, hòa hợp.'],
+ ['Ngọc hồng lựu (Garnet)','Hỏa','Sinh lực, thi cử, phỏng vấn, chống mệt mỏi, trầm uất.'],
+ ['Hồng ngọc (Ruby)','Hỏa','Sức khỏe, thăng tiến, dẫn đầu.'],
+ ['Spinel (đá tia lửa)','Hỏa','Muốn thay đổi bản thân, kiên trì lập trường.'],
+ ['Ngọc vân hồng (Rhodochrosite)','Hỏa','Tình duyên, hàn gắn sau đổ vỡ.'],
+ ['Thạch anh tóc (Rutil)','Hỏa/Kim','Quyết đoán, giảm tà khí.'],
+ ['Thạch anh vàng (Citrine)','Thổ','Tài lộc, quý nhân, thành công.'],
+ ['Mắt hổ (Tiger’s eye)','Thổ','Tự tin, giao tiếp, tẩy năng lượng xấu.'],
+ ['Pyrite','Thổ','Bổ Thổ, tập trung, sự nghiệp.'],
+ ['Topaz vàng','Thổ','Tự tin, vượt sợ hãi.'],
+ ['Hổ phách','Thổ','Ổn định, ấm áp.'],
+ ['Gỗ hóa thạch','Thổ/Mộc','Tăng ý chí, uy tín.'],
+ ['Ngọc lục bảo (Emerald)','Mộc','Thịnh vượng, minh bạch, giảm buồn bã.'],
+ ['Đá khổng tước (Malachite)','Mộc','Giảm căng thẳng kéo dài, hỗ trợ giải độc.'],
+ ['Phỉ thúy / ngọc bích','Mộc','Nhân duyên, cân bằng khi áp lực.'],
+ ['Peridot','Mộc','Hôn nhân, bớt ghen tị, đố kỵ.'],
+ ['Tùng thạch (Turquoise)','Mộc','Trấn tĩnh, bớt căng thẳng.'],
+ ['Đá núi lửa (Obsidian)','Thủy','Trừ năng lượng xấu, thay đổi triệt để.'],
+ ['Ngọc hải lam (Aquamarine)','Thủy','Bình ổn, đi xa, đi biển thuận lợi.'],
+ ['Lam ngọc (Sapphire)','Thủy','Sáng suốt, quyền lực lãnh đạo.'],
+ ['Thạch anh khói','Thủy/Thổ','Bất an, sợ hãi, thất tình.'],
+ ['Ngọc trai','Thủy','An tâm, bớt căng thẳng.']];
+const DATUOI=['Garnet (ngọc hồng lựu)','Aquamarine (hải lam)','Sapphire (lam ngọc)','Ngọc trai','Amethyst (thạch anh tím)','Opal','Topaz','Emerald (lục bảo)','Peridot','Citrine (thạch anh vàng)','Kim cương','Ruby (hồng ngọc)'];
+const PHAT=['Thiên thủ Quan Âm','Hư Không Tạng Bồ Tát','Hư Không Tạng Bồ Tát','Văn Thù Bồ Tát','Phổ Hiền Bồ Tát','Phổ Hiền Bồ Tát','Đại Thế Chí Bồ Tát','Như Lai Đại Nhật','Như Lai Đại Nhật','Bất Động Minh Vương','A Di Đà Phật','A Di Đà Phật'];
+const KHAC=[
+ ['Bàn thờ Thần tài – Thổ địa','Đặt sát đất, gần cửa để đón tài, sạch sẽ; có thể chọn cung tốt theo hướng chủ nhà. Lọ hoa bên trái; ngũ quả (tránh quả có gai); 5 chén nước xếp chữ thập; cóc để bên trái, quay vào trong. Mới lập thắp hương liên tục 100 ngày; giữ đèn thật, không tắt. Tránh xê dịch bát hương.'],
+ ['Bể cá','Đặt Bắc hoặc Đông Nam (Thủy sinh Mộc), hoặc cung có hướng tinh sinh vượng. Không đặt dưới tượng Phúc Lộc Thọ hay tượng thần, không đặt bếp và phòng ăn. Không dùng bể tam giác (Thủy Hỏa khắc). Cá chết thay ngay; chết hết thì thôi không nuôi.'],
+ ['Hòn non bộ','Nên đặt Bắc, Đông, Đông Nam của sân. Số hòn lẻ 3, 5, 7 và không bằng nhau; không làm hòn đơn độc hay số chẵn; không để nước tù đọng; phía lõm không quay ra ngoài. Non bộ là “sơn”, hợp cung có sơn tinh vượng.'],
+ ['Cây xanh','Hợp Đông, Đông Nam, Nam. Tránh cây gai (xương rồng), bonsai trong nhà; bỏ cây khô héo. Cây thủy sinh không đặt hướng Nam; không trồng cây ở Tây Nam theo phép bát quái phương vị (Mộc khắc Thổ). Ngoài nhà: cây lá to phía Bắc, Đông Bắc chắn gió lạnh; cây chịu nắng, giàn leo phía Tây, Tây Bắc.'],
+ ['Hương và mùi','Đốt trầm, đàn hương, tinh dầu thiên nhiên để tẩy uế khí; rửa tay trước sau khi làm.']];
+
+const SATKEY=SAT.map((x,i)=>i);
+function filt(t){const q=($('vpQ').value||'').toLowerCase().trim();return !q||t.toLowerCase().includes(q)}
+function renderVPLib(){
+ const tbl=(rows,head,fn)=>{const r=rows.filter(x=>filt(x.join(' ')));return r.length?`<table><tr>${head.map(h=>`<th>${h}</th>`).join('')}</tr>${r.map(fn).join('')}</table>`:'<p class="mut">Không có mục khớp.</p>'};
+ $('vpSat').innerHTML=tbl(SAT,['Sát khí','Nhận biết','Ảnh hưởng','Hóa giải'],x=>`<tr><td><b>${x[0]}</b></td><td>${x[1]}</td><td>${x[2]}</td><td>${x[3]}</td></tr>`);
+ $('vpIn').innerHTML=tbl(NOITHAT,['Lỗi','Vì sao xấu','Cách sửa'],x=>`<tr><td><b>${x[0]}</b></td><td>${x[1]}</td><td>${x[2]}</td></tr>`);
+ $('vpItem').innerHTML=tbl(ITEM,['Pháp khí','Hành','Tác dụng','Lưu ý'],x=>`<tr><td><b>${x[0]}</b></td><td>${x[1]}</td><td>${x[2]}</td><td>${x[3]}</td></tr>`);
+ $('vpLinh').innerHTML=tbl(LINH,['Linh vật','Tác dụng','Đặt ở đâu','Kiêng'],x=>`<tr><td><b>${x[0]}</b></td><td>${x[1]}</td><td>${x[2]}</td><td>${x[3]}</td></tr>`);
+ $('vpDa').innerHTML='<p><b>Màu theo mệnh</b> (dùng cho trang sức, vòng đá, màu sơn, vật phẩm):</p>'+
+  tbl(Object.entries(MAU).map(([k,v])=>[k,...v]),['Mệnh/hành cần bổ','Tương sinh (tốt nhất)','Hòa hợp','Chế khắc được','Kỵ'],x=>`<tr><td><b ${ec(EN.indexOf(x[0]))}>${x[0]}</b></td><td>${x[1]}</td><td>${x[2]}</td><td>${x[3]}</td><td style="color:var(--bad)">${x[4]}</td></tr>`)+
+  '<p class="mut">Sách khuyên ưu tiên chọn theo <b>dụng thần Bát tự</b> (xem tab Bát tự), sau đó mới đến cung phi, mệnh nạp âm.</p><p><b>Đá phong thủy theo hành</b>:</p>'+
+  tbl(DA,['Đá','Hành','Dùng khi'],x=>`<tr><td><b>${x[0]}</b></td><td>${x[1]}</td><td>${x[2]}</td></tr>`)+
+  '<div class="tip">Màu đá quyết định hành dùng trong phong thủy. Đá cần tẩy năng lượng định kỳ (động thạch anh, khói trầm, tinh dầu); nhiều loại kỵ ngâm nước muối và phơi nắng gắt (canxit, opal, ngọc trai, malachite…).</div>';
+ $('vpTuoi').innerHTML=tbl(CHI.map((c,i)=>[c,DATUOI[i],PHAT[i]]),['Tuổi','Đá hợp tuổi','Phật bản mệnh'],x=>`<tr><td><b>${x[0]}</b></td><td>${x[1]}</td><td>${x[2]}</td></tr>`);
+ $('vpKhac').innerHTML=tbl(KHAC,['Chủ đề','Nguyên tắc'],x=>`<tr><td><b>${x[0]}</b></td><td>${x[1]}</td></tr>`);
+}
+function starTips(p,c,N){
+ const v=c.van,s=c.S[p],h=c.H[p],n=N[p],out=[];
+ const has=x=>s===x||h===x;
+ if(has(5)||has(2)||n===5||n===2){const w=[s,h,n].filter(x=>x===2||x===5);
+  out.push(['b',`Có sao ${[...new Set(w)].join(', ')}${n===5||n===2?' (niên tinh '+n+')':''}: chuông gió đồng 6 ống hoặc hồ lô đồng; tránh đèn đỏ, lửa, động thổ.`]);}
+ if(h===v)out.push(['g','Hướng tinh vượng: mở cửa, lối đi, đèn sáng, giữ thoáng để thu tài'+(v===9?'; màu đỏ, tím.':'.')]);
+ else if(h===wrap(v+1)&&h!==2)out.push(['g',`Hướng tinh sinh khí ${h}: bể cá, nước động nhỏ${h===1?'':''}, giữ thoáng.`]);
+ if(s===v)out.push(['g','Sơn tinh vượng: tủ cao, tường đặc, đá, non bộ, phòng ngủ để vượng nhân đinh.']);
+ if(has(8)&&v===9)out.push(['n','Sao 8 (thoái khí): ngọc Bát Bạch, thạch anh vàng để giữ khí tài.']);
+ if(has(3)&&!(has(2)&&has(3)))out.push(['n','Có sao 3 (thị phi): màu đỏ, đèn, thảm đỏ; tránh cây xanh, nước.']);
+ if(has(2)&&has(3))out.push(['b','Đấu ngưu sát 2–3: màu đỏ, đèn để hóa, giảm cãi vã.']);
+ if(has(7)&&!has(9))out.push(['n','Có sao 7: nước tĩnh, màu đen, xanh đậm; tránh vật kim loại sắc nhọn.']);
+ if(has(6)&&has(7))out.push(['b','Giao kiếm sát 6–7: vật Thổ (đá, gốm) thông quan, nước tĩnh.']);
+ if(has(9)&&(has(7)||has(6)||has(2)&&has(7)))out.push(['b','Hỏa khắc Kim / dễ hỏa hoạn: nước tĩnh hoặc vật Thổ, cẩn thận điện lửa.']);
+ if(has(1)&&has(4))out.push(['g','Văn xương 1–4: bàn học, sách, cây trúc 4 cành, bút.']);
+ if(has(6)&&has(8))out.push(['g','6–8 võ quyền phú quý: két sắt, ngọc Bát Bạch, tỳ hưu.']);
+ return out;
+}
+function renderVP(){
+ if(!LAST.c)return;
+ const c=LAST.c,N=LAST.N,hi=c.huongIdx,hP=c.hP,tP=c.tP;
+ const tags={};const add=(p,t,k)=>{(tags[p]=tags[p]||[]).push([k,t])};
+ add(VX_BY_H[hP],'Văn xương','g');add(DH_BY_H[hP],'Đào hoa','n');add(DM_BY_H[hP],'Dịch mã','n');
+ const nl=NL[hi];add(chiPal(nl),'Nghênh lộc','g');
+ const yC=md(LAST.ln-4,10);add(chiPal(LOCTON[yC]),'Lộc tồn '+LAST.ln,'g');
+ add(palOfSon(BATSAT[tP]),'Bát sát hoàng tuyền','b');
+ let y=+$('btYear').value;if($('btLX').checked)y--;
+ let tuoiTxt='';
+ if(y>1000){const yb=md(y-4,12),g=TAMHOP.findIndex(x=>x.includes(yb));
+  add(chiPal(DH_TUOI[g][0]),'Đào hoa tuổi','n');add(chiPal(DH_TUOI[g][1]),'Đào hoa sát tuổi','b');
+  tuoiTxt=`<tr><td>Đào hoa theo tuổi chủ (${CHI[yb]})</td><td>${chiTxt(DH_TUOI[g][0])}</td><td>Kích trong phòng người cần: bình hoa tươi, hồ cá nhỏ. Đào hoa sát ở ${chiTxt(DH_TUOI[g][1])}: không kích, có thể đặt kéo, vật kim để “cắt”.</td></tr>
+  <tr><td>Dịch mã theo tuổi chủ</td><td>${chiTxt(DM_TUOI[g])}</td><td>Kích khi cần đi xa, đổi việc, mua bán nhà.</td></tr>
+  <tr><td>Đá hợp tuổi ${CHI[yb]}</td><td colspan="2">${DATUOI[yb]} · Phật bản mệnh: ${PHAT[yb]}</td></tr>`;}
+ $('vpHead').innerHTML=`Vận ${c.van} · Hướng ${SON[hi]} (${PDIR[hP]}) · Năm ${LAST.ln}${c.the?' · Thế quái':''}`;
+ const layout=$('inOri').value==='S'?[4,9,2,3,5,7,8,1,6]:[6,1,8,7,5,3,2,9,4];
+ $('vpGrid').innerHTML=layout.map(p=>{
+  if(p===5)return `<div class="cell" data-p="5"><div class="nm">Trung cung</div><div class="v" style="font-size:.8rem;color:var(--ink)">${c.S[5]} ${c.H[5]} · ${c.V[5]}</div><div class="nm">niên ${N[5]}</div></div>`;
+  const st=starTips(p,c,N),tg=tags[p]||[];
+  const bad=st.some(x=>x[0]==='b')||tg.some(x=>x[1].startsWith('Bát sát')),good=st.some(x=>x[0]==='g');
+  return `<div class="cell${p===hP?' huong':p===tP?' toa':''}" data-p="${p}" style="aspect-ratio:auto;min-height:96px;justify-content:flex-start;gap:3px;${bad&&good?'background:var(--warn-bg)':bad?'background:var(--bad-bg)':good?'background:var(--good-bg)':''}">
+  <div class="nm">${PNAME[p]} · ${PDIR[p]}<br><b>${c.S[p]}·${c.H[p]}</b> <span style="color:var(--acc2)">${N[p]}</span></div>
+  <div style="font-size:.66rem;line-height:1.25">${tg.map(t=>`<span class="tag ${t[0]}" style="font-size:.62rem;padding:1px 5px;margin:1px">${t[1]}</span>`).join('')}</div>
+  <div style="font-size:.64rem;color:var(--mut)">${st.length} gợi ý</div></div>`}).join('');
+ const showCell=p=>{if(p===5){$('vpCell').innerHTML='<p class="mut">Trung cung: giữ sạch, thoáng, không đặt vật nặng, bếp hay vệ sinh.</p>';return}
+  const st=starTips(p,c,N),tg=tags[p]||[];
+  $('vpCell').innerHTML=`<div class="card" style="margin-top:8px"><b>${PNAME[p]} (${PDIR[p]})</b> · sơn ${c.S[p]}, hướng ${c.H[p]}, niên ${N[p]}
+  <ul class="lst">${st.map(x=>`<li class="${x[0]==='b'?'s-tu':x[0]==='g'?'s-vuong':''}">${x[1]}</li>`).join('')}
+  ${tg.map(t=>`<li>${t[1]}: ${({'Văn xương':'treo bằng khen, đặt bàn học, chậu cây, mở cửa, quạt','Đào hoa':'hồ cá, bình hoa tươi, quạt, mở cửa sổ, ngồi làm việc ở đây','Dịch mã':'hồ nước, quạt, trồng cây nếu đất trống','Nghênh lộc':'két sắt, tủ tiền','Bát sát hoàng tuyền':'không mở cửa, không để nước chảy đến, tránh đường đâm, góc nhọn','Đào hoa tuổi':'bình hoa tươi trong phòng người cần kích','Đào hoa sát tuổi':'không kích; có thể đặt kéo, vật kim để cắt đào hoa xấu'})[t[1]]||(t[1].startsWith('Lộc tồn')?'kích tài năm nay: két sắt, tỳ hưu, đèn sáng':'')}</li>`).join('')}
+  ${!st.length&&!tg.length?'<li class="mut">Không có gì đặc biệt, bố trí bình thường.</li>':''}</ul></div>`};
+ document.querySelectorAll('#vpGrid .cell').forEach(el=>el.onclick=()=>showCell(+el.dataset.p));
+ showCell(hP);
+ $('vpPos').innerHTML=`<table><tr><th>Vị trí</th><th>Phương</th><th>Kích hoạt</th></tr>
+ <tr><td>Văn xương (theo hướng)</td><td>${PDIR[VX_BY_H[hP]]}</td><td>Học hành, thi cử, giấy tờ: bằng khen, bàn học, chậu cây, mở cửa, quạt.</td></tr>
+ <tr><td>Đào hoa (theo hướng)</td><td>${PDIR[DH_BY_H[hP]]}</td><td>Tình cảm, giao tế: hồ cá, bình hoa tươi, quạt, cửa sổ, ngồi làm việc.</td></tr>
+ <tr><td>Dịch mã (theo hướng)</td><td>${PDIR[DM_BY_H[hP]]}</td><td>Đi lại, mua bán nhà: hồ nước, quạt, cây.</td></tr>
+ <tr><td>Nghênh lộc (theo sơn hướng ${SON[hi]})</td><td>${chiTxt(nl)}</td><td>Chiêu tài: két sắt, tủ tiền.</td></tr>
+ <tr><td>Lộc tồn năm ${LAST.ln} (can ${CAN[yC]})</td><td>${chiTxt(LOCTON[yC])}</td><td>Kích thêm tài trong năm.</td></tr>
+ ${tuoiTxt}</table><p class="mut">Văn xương, Đào hoa, Dịch mã, Nghênh lộc theo bảng của sách tập 1. Nên kết hợp với tinh bàn: vị trí trùng sao 2, 5 thì hóa trước rồi mới kích.</p>`;
+}
+$('vpQ').oninput=renderVPLib;
+renderVPLib();
+window.VPREADY=true;renderVP();
+
+// ---------- Áp tinh bàn lên ảnh thửa đất ----------
+const LOT={img:null,pts:[],north:0,mode:'pts',arrow:[],method:'grid'};
+const lotCv=$('lotCv'),lotCtx=lotCv.getContext('2d');
+const rad=a=>a*Math.PI/180;
+function lotHeading(){const d=parseFloat($('inDeg').value);return isNaN(d)?(345+15*(+$('inSon').value))%360:((d%360)+360)%360}
+function lotDir(bearing){const t=rad(LOT.north+bearing);return[Math.sin(t),-Math.cos(t)]} // vector ảnh theo phương vị
+function centroid(P){let a=0,cx=0,cy=0;for(let i=0;i<P.length;i++){const[p,q]=[P[i],P[(i+1)%P.length]],f=p[0]*q[1]-q[0]*p[1];a+=f;cx+=(p[0]+q[0])*f;cy+=(p[1]+q[1])*f}
+ if(Math.abs(a)<1e-6){return[P.reduce((s,p)=>s+p[0],0)/P.length,P.reduce((s,p)=>s+p[1],0)/P.length]}return[cx/(3*a),cy/(3*a)]}
+const PCENT={1:0,8:45,3:90,4:135,9:180,2:225,7:270,6:315};
+const palAt=b=>{b=((b%360)+360)%360;return[1,8,3,4,9,2,7,6][Math.round(b/45)%8]};
+function lotStatus(){const n=LOT.pts.length;$('lotInfo').innerHTML=!LOT.img?'Chưa có ảnh.':
+ `Đã chấm ${n} góc${n<3?' (cần ít nhất 3)':''} · Bắc lệch ${LOT.north.toFixed(1)}° so với phía trên ảnh · Hướng nhà ${lotHeading().toFixed(1)}° (${SON[+$('inSon').value]})`}
+function drawLot(){
+ lotStatus();if(!LOT.img||!LAST.c)return;
+ const c=LAST.c,N=LAST.N,v=c.van,W=lotCv.width,H=lotCv.height,g=lotCtx,s=W/600;
+ g.clearRect(0,0,W,H);g.drawImage(LOT.img,0,0,W,H);
+ // mũi tên Bắc
+ const[nx,ny]=lotDir(0);g.save();g.translate(W-50*s,62*s);g.strokeStyle='#c53030';g.fillStyle='#c53030';g.lineWidth=3*s;
+ g.beginPath();g.moveTo(-nx*30*s,-ny*30*s);g.lineTo(nx*30*s,ny*30*s);g.stroke();
+ g.beginPath();g.arc(nx*30*s,ny*30*s,6*s,0,7);g.fill();g.font=`bold ${16*s}px sans-serif`;g.textAlign='center';g.textBaseline='middle';
+ g.fillText('B',nx*44*s,ny*44*s);g.restore();
+ const P=LOT.pts;
+ if(LOT.mode==='arrow'&&LOT.arrow.length===1){g.fillStyle='#3182ce';g.beginPath();g.arc(LOT.arrow[0][0],LOT.arrow[0][1],6*s,0,7);g.fill()}
+ P.forEach((p,i)=>{g.fillStyle='#b7791f';g.beginPath();g.arc(p[0],p[1],5*s,0,7);g.fill()});
+ if(P.length<3){if(P.length>1){g.strokeStyle='#b7791f';g.lineWidth=2*s;g.beginPath();P.forEach((p,i)=>i?g.lineTo(p[0],p[1]):g.moveTo(p[0],p[1]));g.stroke()}return}
+ const [cx,cy]=centroid(P),hd=lotHeading(),hc=PCENT[c.hP];
+ g.save();g.beginPath();P.forEach((p,i)=>i?g.lineTo(p[0],p[1]):g.moveTo(p[0],p[1]));g.closePath();
+ g.strokeStyle='#b7791f';g.lineWidth=2.5*s;g.stroke();g.clip();
+ const stCol=n=>({vuong:'#2f855a',sinh:'#3182ce',thoai:'#b7791f',tu:'#c53030'})[status(n,v)];
+ const LBL=[];const label=(p,x,y,fs)=>LBL.push([p,x,y,fs]);const drawLabel=(p,x,y,fs)=>{g.save();g.textAlign='center';g.textBaseline='middle';
+  g.fillStyle='rgba(255,255,255,.82)';g.beginPath();g.roundRect?g.roundRect(x-34*fs,y-26*fs,68*fs,54*fs,6*fs):g.rect(x-34*fs,y-26*fs,68*fs,54*fs);g.fill();
+  if(p===c.hP||p===c.tP){g.strokeStyle=p===c.hP?'#9b2c2c':'#7a6f66';g.lineWidth=2.5*fs;g.stroke()}
+  g.font=`${11*fs}px sans-serif`;g.fillStyle='#555';g.fillText(p===5?'Trung cung':`${PNAME[p]} ${PDIR[p]}`,x,y-16*fs);
+  g.font=`bold ${20*fs}px sans-serif`;g.fillStyle=stCol(c.S[p]);g.fillText(c.S[p],x-16*fs,y+3*fs);g.fillStyle=stCol(c.H[p]);g.fillText(c.H[p],x+16*fs,y+3*fs);
+  g.font=`${12*fs}px sans-serif`;g.fillStyle='#555';g.fillText(c.V[p],x,y+19*fs);g.fillStyle='#b7791f';g.fillText(N[p],x+26*fs,y+19*fs);g.restore()};
+ if(LOT.method==='grid'){
+  const u=lotDir(hd),r=[-u[1],u[0]];let a0=1e9,a1=-1e9,b0=1e9,b1=-1e9;
+  P.forEach(p=>{const dx=p[0]-cx,dy=p[1]-cy,a=dx*u[0]+dy*u[1],b=dx*r[0]+dy*r[1];a0=Math.min(a0,a);a1=Math.max(a1,a);b0=Math.min(b0,b);b1=Math.max(b1,b)});
+  const pt=(a,b)=>[cx+a*u[0]+b*r[0],cy+a*u[1]+b*r[1]];
+  g.strokeStyle='rgba(155,44,44,.85)';g.lineWidth=1.6*s;g.setLineDash([6*s,4*s]);
+  for(let k=1;k<3;k++){const a=a0+(a1-a0)*k/3,b=b0+(b1-b0)*k/3;let p1=pt(a,b0),p2=pt(a,b1);g.beginPath();g.moveTo(...p1);g.lineTo(...p2);g.stroke();p1=pt(a0,b);p2=pt(a1,b);g.beginPath();g.moveTo(...p1);g.lineTo(...p2);g.stroke()}
+  g.setLineDash([]);
+  const fs=Math.max(.55,Math.min(1.6,Math.min(a1-a0,b1-b0)/3/80));
+  for(let i=0;i<3;i++)for(let j=0;j<3;j++){const a=a1-(a1-a0)*(i+.5)/3,b=b0+(b1-b0)*(j+.5)/3,[x,y]=pt(a,b);
+   const p=(i===1&&j===1)?5:palAt(hc+Math.atan2(b,a)*180/Math.PI*(1)+0*0);label(p,x,y,fs)}
+ }else{
+  const R=Math.hypot(W,H);g.strokeStyle='rgba(155,44,44,.85)';g.lineWidth=1.6*s;
+  for(let k=0;k<8;k++){const[dx,dy]=lotDir(22.5+45*k);g.beginPath();g.moveTo(cx,cy);g.lineTo(cx+dx*R,cy+dy*R);g.stroke()}
+  g.strokeStyle='rgba(155,44,44,.4)';g.lineWidth=1*s;g.setLineDash([3*s,4*s]);
+  for(let k=0;k<24;k++){if(k%3===1)continue;const[dx,dy]=lotDir(7.5+15*k);g.beginPath();g.moveTo(cx,cy);g.lineTo(cx+dx*R,cy+dy*R);g.stroke()}
+  g.setLineDash([]);
+  const rr=Math.min(...P.map(p=>Math.hypot(p[0]-cx,p[1]-cy)));const fs=Math.max(.5,Math.min(1.4,rr/170));
+  [1,8,3,4,9,2,7,6].forEach(p=>{const[dx,dy]=lotDir(PCENT[p]);label(p,cx+dx*rr*.6,cy+dy*rr*.6,fs*.85)});
+  label(5,cx,cy,fs*.8);
+ }
+ g.restore();LBL.forEach(a=>drawLabel(...a));
+ // mũi tên hướng nhà
+ const[hx,hy]=lotDir(hd);g.strokeStyle='#9b2c2c';g.fillStyle='#9b2c2c';g.lineWidth=3*s;const L=60*s;
+ g.beginPath();g.moveTo(cx,cy);g.lineTo(cx+hx*L,cy+hy*L);g.stroke();g.beginPath();g.arc(cx+hx*L,cy+hy*L,5*s,0,7);g.fill();
+}
+// fix: góc atan2(b,a) đo từ trục mặt tiền, b dương là bên phải khi nhìn ra mặt tiền => phương vị tăng theo chiều kim đồng hồ
+$('lotFile').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{
+ const W=Math.min(1200,im.width),H=Math.round(im.height*W/im.width);lotCv.width=W;lotCv.height=H;LOT.img=im;LOT.pts=[];LOT.arrow=[];$('lotBox').style.display='block';drawLot()};im.src=r.result};r.readAsDataURL(f)};
+const setMode=m=>{LOT.mode=m;LOT.arrow=[];document.querySelectorAll('[data-lm]').forEach(b=>b.classList.toggle('alt',b.dataset.lm!==m));
+ $('lotHint').textContent={pts:'Chạm lần lượt các góc thửa đất (theo vòng).',arrow:'Chạm vào ĐUÔI rồi MŨI của mũi tên Bắc trên ảnh (sổ đỏ, bản đồ).',front:'Chạm vào giữa cạnh mặt tiền (phía cửa chính). Trang sẽ xoay hướng Bắc theo độ hướng nhà đã nhập.'}[m]};
+document.querySelectorAll('[data-lm]').forEach(b=>b.onclick=()=>setMode(b.dataset.lm));
+lotCv.onclick=e=>{const b=lotCv.getBoundingClientRect(),x=(e.clientX-b.left)*lotCv.width/b.width,y=(e.clientY-b.top)*lotCv.height/b.height;
+ if(LOT.mode==='pts')LOT.pts.push([x,y]);
+ else if(LOT.mode==='arrow'){LOT.arrow.push([x,y]);if(LOT.arrow.length===2){const[a,c2]=LOT.arrow;LOT.north=((Math.atan2(c2[0]-a[0],-(c2[1]-a[1]))*180/Math.PI)+360)%360;$('lotN').value=LOT.north.toFixed(1);setMode('pts')}}
+ else if(LOT.mode==='front'){if(LOT.pts.length<3){$('lotHint').textContent='Cần chấm góc thửa trước.';return}const[cx,cy]=centroid(LOT.pts);
+  const ang=(Math.atan2(x-cx,-(y-cy))*180/Math.PI+360)%360;LOT.north=((ang-lotHeading())%360+360)%360;$('lotN').value=LOT.north.toFixed(1);setMode('pts')}
+ drawLot()};
+$('lotN').oninput=()=>{LOT.north=parseFloat($('lotN').value)||0;drawLot()};
+$('lotUndo').onclick=()=>{LOT.pts.pop();drawLot()};$('lotClear').onclick=()=>{LOT.pts=[];drawLot()};
+$('lotMethod').oninput=()=>{LOT.method=$('lotMethod').value;drawLot()};
+$('lotSave').onclick=()=>{try{$('lotImg').src=lotCv.toDataURL('image/jpeg',.9);$('lotDl').href=$('lotImg').src;$('lotImgBox').style.display='block'}catch(e){$('lotImgBox').textContent='Không tạo được ảnh.'}};
+window.drawLot=drawLot;
+
+const _render2=render;render=function(){_render2();drawLot()};
+// ---------- tabs ----------
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{
+ document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('on',x===b));
+ document.querySelectorAll('section').forEach(s=>s.classList.toggle('on',s.id===b.dataset.t));window.scrollTo(0,0)});
+
+// ---------- thẻ ghi nhớ ----------
+const cards=[];
+for(let i=1;i<=9;i++){const s=STARS[i];cards.push([`Sao số ${i} tên gì, hành gì, cung nào?`,`${s.ten} (${s.tinh}) · ${s.hanh} · ${s.cung}`]);}
+cards.push(['Đường bay của phi tinh?','Trung → Càn → Đoài → Cấn → Ly → Khảm → Khôn → Chấn → Tốn'],
+['Âm dương 3 sơn của cung Khảm, Chấn, Ly, Đoài?','+ − −'],['Âm dương 3 sơn của cung Khôn, Tốn, Càn, Cấn?','− + +'],
+['Số 5 vào trung cung thì bay thuận hay nghịch?','Mượn âm dương cung của số vận, theo vị trí sơn tọa/hướng'],
+['Vận 9 kéo dài từ năm nào?','2024 – 2043'],['Vận 9: sao vượng, sinh, thoái?','Vượng 9 · Sinh 1, 2 · Thoái 8'],
+['Sơn tinh quản gì? Hướng tinh quản gì?','Sơn tinh: nhân đinh, sức khỏe · Hướng tinh: tài lộc'],
+['Niên tinh năm 2026?','Nhất Bạch (1) vào trung cung'],['Vượng sơn vượng hướng là gì?','Sơn tinh vượng ở cung tọa và hướng tinh vượng ở cung hướng'],
+['Thượng sơn hạ thủy là gì?','Sơn tinh vượng chạy ra hướng, hướng tinh vượng chạy về tọa'],
+['Phục ngâm là gì?','Tinh bàn trùng Lạc Thư: 5 vào giữa bay thuận'],['Phản ngâm là gì?','Mỗi cung = 10 − số Lạc Thư: 5 vào giữa bay nghịch'],
+['Hóa giải 2, 5 bằng gì?','Kim tiết Thổ: chuông gió, hồ lô đồng'],['Hóa giải 3 bằng gì?','Hỏa tiết Mộc: màu đỏ, đèn'],
+['Đấu ngưu sát là cặp nào?','2 – 3'],['Giao kiếm sát là cặp nào?','6 – 7'],['Cặp văn xương?','1 – 4'],['Hỏa thiêu Thiên môn?','6 – 9'],
+['Đại không vong là gì?','Hướng nằm trên ranh giới 2 cung (vd 22,5°, 67,5°…)'],
+['Khi nào dùng Thế quái?','Hướng kiêm lệch quá 3° khỏi giữa sơn'],
+['Thế tinh 1 (Tham Lang) ứng các sơn nào?','Tý, Quý, Giáp, Thân'],['Thế tinh 2 (Cự Môn) ứng các sơn nào?','Nhâm, Mão, Ất, Mùi, Khôn'],
+['Thế tinh 6 (Vũ Khúc) ứng các sơn nào?','Càn, Hợi, Thìn, Tốn, Tỵ, Tuất'],['Thế tinh 7 (Phá Quân) ứng các sơn nào?','Dậu, Tân, Sửu, Cấn, Bính'],
+['Thế tinh 9 (Hữu Bật) ứng các sơn nào?','Dần, Ngọ, Canh, Đinh'],['Thế quái bay thuận/nghịch theo gì?','Theo âm dương của sơn gốc, giống hạ quái'],
+['Cách tính cung phi Nam?','Rút gọn năm sinh thành S; 11 − S (quá 9 trừ 9); ra 5 lấy Khôn'],['Cách tính cung phi Nữ?','Rút gọn năm sinh thành S; 4 + S (quá 9 trừ 9); ra 5 lấy Cấn'],
+['Đông tứ mệnh gồm?','Khảm, Ly, Chấn, Tốn'],['Tây tứ mệnh gồm?','Càn, Khôn, Cấn, Đoài'],
+['4 du niên cát?','Sinh khí, Thiên y, Diên niên, Phục vị'],['4 du niên hung?','Họa hại, Lục sát, Ngũ quỷ, Tuyệt mệnh'],
+['Bếp đặt theo nguyên tắc nào?','Tọa hung hướng cát'],
+['Bát sát hoàng tuyền: tọa Khảm kỵ?','Thìn'],['Bát sát: tọa Khôn kỵ?','Mão'],['Bát sát: tọa Chấn kỵ?','Thân'],['Bát sát: tọa Tốn kỵ?','Dậu'],
+['Bát sát: tọa Càn kỵ?','Ngọ'],['Bát sát: tọa Đoài kỵ?','Tỵ'],['Bát sát: tọa Cấn kỵ?','Dần'],['Bát sát: tọa Ly kỵ?','Hợi'],
+['Tứ lộ hoàng tuyền: hướng Canh, Đinh kỵ?','Nước chảy đến từ Khôn'],['Tứ lộ hoàng tuyền: hướng Ất, Bính kỵ?','Nước chảy đến từ Tốn'],
+['Tứ lộ hoàng tuyền: hướng Giáp, Quý kỵ?','Nước chảy đến từ Cấn'],['Tứ lộ hoàng tuyền: hướng Tân, Nhâm kỵ?','Nước chảy đến từ Càn'],
+['Cứu bần hoàng tuyền là gì?','Nước chảy đi ra phương hoàng tuyền: không hại, có khi cát'],
+['Hóa sao 2, 5 dùng vật phẩm gì?','Kim khí: chuông gió đồng 6 ống, hồ lô đồng (Thổ sinh Kim, tiết khí)'],
+['Gương bát quái được treo ở đâu?','Chỉ ngoài nhà, tối đa 3, mỗi hướng 1; đại kỵ treo trong nhà'],
+['Khi nào dùng gương bát quái lồi?','Khi nhà đối diện có vật hóa sát chĩa vào nhà mình'],
+['Tỳ hưu kỵ điều gì?','Đặt 3 con cùng hướng'],['Cóc ba chân không được đặt ở đâu?','Bếp, nhà tắm, vệ sinh, phòng ngủ'],
+['Đầu cóc ba chân hướng về đâu?','Vào trong nhà'],['Ngựa phong thủy đặt hướng nào, kiêng gì?','Hướng Nam; không để phòng ngủ, không dùng ngựa lồng'],
+['Tứ linh bố trí ra sao?','Rồng trái, Hổ phải, Phượng trước, Rùa sau'],['Văn xương nhà hướng Nam ở đâu?','Đông Bắc'],
+['Đào hoa nhà hướng Bắc ở đâu?','Chính Đông (Mão)'],['Dịch mã nhà hướng Nam ở đâu?','Đông Bắc (Dần)'],
+['Nghênh lộc nhà hướng Ngọ ở đâu?','Tỵ (Đông Nam)'],['Phật bản mệnh tuổi Tý?','Thiên thủ Quan Âm'],
+['Tà thương sát đâm bên trái cửa thì ai bị hại?','Nam giới (bên Thanh long)'],['Liêm đao sát hóa bằng gì?','Đôi ngựa đồng và ngũ đế bạch ngọc'],
+['Cách chọn vật phẩm cho người sát nhất?','Theo dụng thần Bát tự'],['Bể cá kỵ đặt ở đâu?','Dưới tượng thần, bếp, phòng ăn; không dùng bể tam giác'],
+['Hòn non bộ nên mấy hòn?','Số lẻ 3, 5, 7 và không bằng nhau'],
+['Tam yếu của Bát Trạch Minh Kính?','Cửa chính, phòng chủ, bếp'],['Trụ năm Bát tự đổi khi nào?','Lúc tiết Lập Xuân (~4/2)'],
+['Ngũ hổ độn: năm Giáp/Kỷ khởi tháng Dần là?','Bính Dần'],['Ngũ thử độn: ngày Giáp/Kỷ khởi giờ Tý là?','Giáp Tý'],
+['Khắc nhật chủ, cùng âm dương là thập thần gì?','Thất sát'],['Nhật chủ khắc, khác âm dương là?','Chính tài'],
+['Sinh nhật chủ, khác âm dương là?','Chính ấn'],['Đại vận đi thuận khi nào?','Nam năm can dương, nữ năm can âm'],
+['Khởi vận: bao nhiêu ngày bằng 1 năm?','3 ngày = 1 năm'],['Tý Ngọ Mão Dậu… lục xung là chi cách nhau mấy?','6 chi']);
+Object.keys(COMBO).forEach(k=>{if(['2-5','8-9','6-8','3-7','7-9','1-6'].includes(k))cards.push([`Cặp sao ${k} chủ gì?`,COMBO[k]])});
+let fi=0,flip=false;
+function showFc(){$('fc').innerHTML=flip?`<span style="color:var(--good)">${cards[fi][1]}</span>`:cards[fi][0];$('fcN').textContent=` ${fi+1}/${cards.length}`}
+$('fc').onclick=()=>{flip=!flip;showFc()};
+$('fcNext').onclick=()=>{fi=(fi+1)%cards.length;flip=false;showFc()};
+$('fcPrev').onclick=()=>{fi=(fi-1+cards.length)%cards.length;flip=false;showFc()};
+showFc();
+
+// ---------- luyện lập bàn ----------
+let ok=0,tot=0;
+function newQ(){
+ const van=[7,8,9][Math.floor(Math.random()*3)],hi=Math.floor(Math.random()*24),c=chart(van,hi),ans=mainCuc(c);
+ const opts=['Vượng sơn vượng hướng','Thượng sơn hạ thủy','Song tinh đáo hướng','Song tinh đáo tọa','Không thuộc 4 cách chính'];
+ $('qz').innerHTML=`<p><b>Vận ${van}, tọa ${SON[c.toaIdx]} hướng ${SON[hi]}</b>. Cách cục chính là gì?</p>`+
+ opts.map(o=>`<button class="opt">${o}</button>`).join('')+'<div id="qzA" class="mut"></div>';
+ let done=false;
+ document.querySelectorAll('#qz .opt').forEach(b=>b.onclick=()=>{if(done)return;done=true;tot++;
+  if(b.textContent===ans){ok++;b.classList.add('ok')}else{b.classList.add('no');[...document.querySelectorAll('#qz .opt')].find(x=>x.textContent===ans).classList.add('ok')}
+  $('qzA').innerHTML=`Sơn tinh: ${c.sc} bay ${c.sf?'thuận':'nghịch'} · Hướng tinh: ${c.hc} bay ${c.hf?'thuận':'nghịch'}. Mở tab Lập bàn và chọn đúng nhà này để xem bàn đầy đủ.`;
+  $('qzScore').textContent=`Đúng ${ok}/${tot}`});
+}
+$('qzNew').onclick=newQ;newQ();
+})();
+</script>
+</body>
+</html>
