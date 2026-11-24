@@ -60,6 +60,33 @@ select,input{width:100%;padding:9px;border:1px solid var(--line);border-radius:9
 .tv .mut{font-size:inherit}
 .tv .me{outline:3px solid var(--acc);outline-offset:-3px}.tv .dh{background:var(--good-bg)}
 @media(max-width:520px){.tv{grid-template-rows:repeat(4,minmax(115px,auto))}.tv>div{font-size:.64rem;padding:3px}.tv .ctr{font-size:.72rem}}
+/* ===== Dịch lý (từ VXT Dịch Lý) ===== */
+#dl{--red:var(--acc);--blue:#2b6cb0;--pan:var(--neu-bg);--yel:var(--warn-bg)}
+@media (prefers-color-scheme:dark){#dl{--blue:#79c2cf}}
+#dl .dlnav{display:flex;gap:4px;overflow-x:auto;padding:4px 0 8px;margin-bottom:8px;border-bottom:1px solid var(--line)}
+#dl .dlnav button{flex:none;border:1px solid var(--line);background:var(--card);color:var(--ink);font:600 .85rem inherit;font-family:inherit;padding:8px 12px;border-radius:8px;cursor:pointer;white-space:nowrap}
+#dl .dlnav button[aria-selected=true]{background:var(--ink);color:var(--bg)}
+#dl .dlsec{display:none}#dl .dlsec.on{display:block}
+#dl h2{font-size:1.2rem;margin:4px 0 10px;color:var(--acc)}#dl h3{font-size:1rem;margin:16px 0 6px}
+#dl .dlgrid{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:18px}
+@media(max-width:760px){#dl .dlgrid{grid-template-columns:minmax(0,1fr)}}
+#dl .card{background:var(--pan);border-radius:12px;padding:14px;margin:0}
+#dl .row{display:flex;gap:8px;flex-wrap:wrap}#dl .row>*{flex:1 1 110px}
+#dl button.go{margin-top:12px;width:100%;min-height:42px;border:0;border-radius:8px;background:var(--red);color:#fff;font:700 .95rem inherit;font-family:inherit;cursor:pointer}
+#dl button.sm{border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:8px;padding:7px 10px;min-height:38px;font:600 .85rem inherit;font-family:inherit;cursor:pointer;margin-top:6px}
+#dl .hexes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+@media(max-width:560px){#dl .hexes{grid-template-columns:repeat(2,minmax(0,1fr))}}
+#dl .hx{border:1px solid var(--line);border-radius:10px;padding:10px;text-align:center;background:var(--card)}
+#dl .hx svg{width:100%;max-width:110px;height:auto}
+#dl .hx .role{font-size:.78rem;color:var(--mut)}#dl .qn{font-family:Georgia,"Noto Serif",serif;font-weight:700}#dl .hx .qn{font-size:1.1rem;margin:4px 0}#dl .hx .full{font-size:.78rem;color:var(--mut)}
+#dl .note{font-size:.85rem;color:var(--mut)}
+#dl .warn{background:var(--yel);border-left:4px solid var(--red);padding:8px 10px;border-radius:6px;margin:10px 0;font-size:.9rem}
+#dl table{font-size:.88rem}#dl th{font-size:.78rem;color:var(--mut);font-weight:600}
+#dl .mv{color:var(--red);font-weight:700}#dl .ok{color:var(--blue);font-weight:700}
+#dl .scroll{overflow-x:auto}
+#dl .chips{display:flex;flex-wrap:wrap;gap:6px}#dl .chip{border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:.8rem}
+#dl .big{font:700 clamp(24px,5vw,38px)/1.1 Georgia,"Noto Serif",serif;color:var(--acc)}
+@media(max-width:600px){#dl .stack thead{display:none}#dl .stack tr{display:grid;padding-block:8px;border-bottom:1px solid var(--line)}#dl .stack td{display:flow-root;border:0;padding:2px 0;padding-inline-start:8em;text-align:start}#dl .stack td::before{content:attr(data-l);float:inline-start;width:7.5em;margin-inline-start:-8em;color:var(--mut);font-size:.75rem}#dl .stack td:empty{display:none}}
 .cell{position:relative;aspect-ratio:1;border:1px solid var(--line);border-radius:8px;background:var(--card);padding:4px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer}
 .cell.toa{outline:3px solid var(--mut)}.cell.huong{outline:3px solid var(--acc)}
 .cell .nm{font-size:.68rem;color:var(--mut);text-align:center;line-height:1.2}
@@ -80,8 +107,8 @@ select,input{width:100%;padding:9px;border:1px solid var(--line);border-radius:9
 </head>
 <body>
 <header>
-<h1>Huyền Không Phi Tinh</h1>
-<p>Huyền Không · Bát trạch · Bát tự · Tử vi · Vật phẩm · Ôn tập</p>
+<h1>VXT Phong Thủy &amp; Dịch Lý</h1>
+<p>Huyền Không · Bát trạch · Bát tự · Tử vi · Dịch lý · Vật phẩm · Ôn tập</p>
 <div class="mut" style="font-size:.75rem">Phiên bản <span id="appVer"></span> · <a href="#" id="updCheck">Kiểm tra cập nhật</a> <span id="updMsg"></span></div>
 </header>
 <div id="updBar"></div>
@@ -91,6 +118,7 @@ select,input{width:100%;padding:9px;border:1px solid var(--line);border-radius:9
 <button data-t="bt">☯ Bát trạch</button>
 <button data-t="tu">🀄 Bát tự</button>
 <button data-t="tv">🌟 Tử vi</button>
+<button data-t="dl">☯️ Dịch lý</button>
 <button data-t="vp">🧿 Vật phẩm</button>
 <button data-t="on">🎯 Ôn tập</button>
 </nav>
@@ -282,6 +310,14 @@ Dương (+) thì bay thuận, âm (−) thì bay nghịch.</div>
 <div class="key"><b>Đọc lá số:</b> xem cung Mệnh cùng <b>tam phương tứ chính</b> (Mệnh, Tài Bạch, Quan Lộc và Thiên Di xung chiếu), rồi đến Tứ hóa (Lộc, Quyền, Khoa tốt; Kỵ trở ngại), sau cùng là đại hạn đang đi.</div>
 <p>Tab <b>🌟 Tử vi</b> lập lá số tự động; dùng chung ngày giờ sinh với tab Bát tự.</p>
 </div></details>
+<details><summary>17. Dịch lý: Mai Hoa và Lục hào</summary><div>
+<p><b>Mai Hoa dịch số</b> lập quẻ từ con số của thời điểm hay sự vật: thượng quái = tổng chia 8 lấy dư, hạ quái cộng thêm giờ chia 8, hào động chia 6 (dư 0 lấy 8 hoặc 6). Số tiên thiên: Càn 1, Đoài 2, Ly 3, Chấn 4, Tốn 5, Khảm 6, Cấn 7, Khôn 8.</p>
+<ul class="lst"><li><b>Chánh quẻ:</b> hiện trạng. <b>Hộ quẻ</b> (hào 2–4 làm hạ, 3–5 làm thượng): diễn biến bên trong. <b>Biến quẻ:</b> kết quả.</li>
+<li><b>Thể – Dụng:</b> quái không có hào động là Thể (mình), quái có hào động là Dụng (việc). Dụng sinh Thể tốt nhất, Dụng khắc Thể xấu.</li>
+<li>Dịch lý Việt Nam thêm <b>Chánh biến</b>: quái động đặt lên trên quái đã biến.</li></ul>
+<p><b>Lục hào (Bốc Dịch)</b> gieo 3 đồng xu 6 lần, an nạp giáp, lục thân (Huynh Đệ, Tử Tôn, Thê Tài, Quan Quỷ, Phụ Mẫu), Thế Ứng, lục thú. Chọn <b>Dụng thần</b> theo việc hỏi rồi xét vượng suy theo tháng (tiết khí), sinh khắc theo ngày, tuần không, nguyệt phá và hào động.</p>
+<p>Tab <b>☯️ Dịch lý</b> gồm: đổi lịch âm dương và can chi, lập quẻ Mai Hoa, an quẻ Lục hào, chọn giờ cúng theo quẻ, tra 64 quẻ, bảng kiểm chứng lỗi của bộ tài liệu Dịch lý.</p>
+</div></details>
 <p class="mut" style="text-align:center">Nội dung tổng hợp từ học thuật Huyền Không truyền thống (Thẩm thị Huyền Không), để tham khảo và học tập.</p>
 </section>
 
@@ -391,6 +427,61 @@ Khung đỏ: cung hướng · Khung xám: cung tọa ·
 <button class="btn" id="tvGo">Lập lá số</button><button class="btn alt" id="tvSync">Lấy ngày giờ từ tab Bát tự</button>
 </div>
 <div id="tvOut"></div>
+</section>
+
+<!-- ================= DỊCH LÝ ================= -->
+<section id="dl">
+<div id="dlTabs" class="dlnav"></div>
+<div class="dlsec" id="dl-lich">
+ <div class="dlgrid"><div class="card">
+  <label for="lDate">Ngày dương lịch</label><input type="date" id="lDate">
+  <label for="lTime">Giờ</label><input type="time" id="lTime" value="12:00">
+  <button class="go" id="lGo">Xem can chi</button>
+  <label for="lunD">Hoặc đổi từ âm lịch (ngày/tháng/năm)</label>
+  <div class="row"><input id="lunD" type="number" min="1" max="30" placeholder="Ngày"><input id="lunM" type="number" min="1" max="12" placeholder="Tháng"><input id="lunY" type="number" placeholder="Năm"></div>
+  <label><input type="checkbox" id="lunL" style="width:auto;min-height:0"> Tháng nhuận</label>
+  <button class="sm" id="lunGo">Đổi sang dương lịch</button>
+ </div><div id="lOut"></div></div>
+</div>
+<div class="dlsec" id="dl-maihoa">
+ <div class="dlgrid"><div class="card">
+  <label for="mMode">Cách lập quẻ</label>
+  <select id="mMode">
+   <option value="gio">Theo giờ (năm + tháng + ngày + giờ âm lịch)</option>
+   <option value="phut">Theo phút (tháng + ngày + giờ + phút)</option>
+   <option value="so">Theo hai số (số vật, âm thanh, dãy số…)</option>
+   <option value="tay">Chọn tay quẻ và hào động</option>
+  </select>
+  <div id="mIn"></div>
+  <button class="go" id="mGo">Lập quẻ</button>
+  <p class="note">Công thức theo Mai Hoa / Dịch lý Việt Nam: thượng quái = tổng chia 8 lấy dư (dư 0 là 8), hạ quái cộng thêm giờ, hào động chia 6. Thứ tự số: Càn 1, Đoài 2, Ly 3, Chấn 4, Tốn 5, Khảm 6, Cấn 7, Khôn 8.</p>
+ </div><div id="mOut"></div></div>
+</div>
+<div class="dlsec" id="dl-luchao">
+ <div class="dlgrid"><div class="card">
+  <label for="hDate">Ngày gieo quẻ</label><input type="date" id="hDate">
+  <label for="hTime">Giờ</label><input type="time" id="hTime">
+  <label for="hTopic">Việc hỏi (chọn Dụng thần)</label><select id="hTopic"></select>
+  <label>Sáu hào (từ hào 1 dưới lên): 6 = lão âm động, 7 = thiếu dương, 8 = thiếu âm, 9 = lão dương động</label>
+  <div class="row" id="hLines"></div>
+  <div class="row" style="margin-top:8px"><button class="sm" id="hToss">Gieo 3 đồng xu tự động</button><button class="sm" id="hFromM">Lấy quẻ từ mục Mai Hoa</button></div>
+  <button class="go" id="hGo">An quẻ Lục hào</button>
+ </div><div id="hOut"></div></div>
+</div>
+<div class="dlsec" id="dl-giocung">
+ <div class="dlgrid"><div class="card">
+  <label for="gPair">Cặp giờ (Chánh – Biến)</label><select id="gPair"></select>
+  <div class="row"><div><label for="gA">Hoặc tự chọn Chánh</label><select id="gA"></select></div><div><label for="gB">Biến</label><select id="gB"></select></div></div>
+  <label for="gFrom">Tìm từ ngày</label><input type="date" id="gFrom">
+  <label for="gDays">Số ngày tìm</label><input type="number" id="gDays" value="60" min="1" max="400">
+  <label><input type="checkbox" id="gMin" style="width:auto;min-height:0"> Tìm cả theo phút (khung 10 phút, công thức tháng+ngày+giờ+phút)</label>
+  <button class="go" id="gGo">Tìm giờ</button>
+  <p class="note">Các cặp trong danh sách là những cặp giờ cúng/chỉnh sửa mà ba tập tài liệu khuyên dùng, kèm số lần xuất hiện. Quẻ giờ tính đúng công thức “theo giờ” của Tập 1.</p>
+ </div><div id="gOut"></div></div>
+</div>
+<div class="dlsec" id="dl-huongdan"><h2>Tra 64 quẻ và bát quái</h2><div id="qOut"></div></div>
+<div class="dlsec" id="dl-kiemchung"><h2>Kết quả kiểm chứng 4 tài liệu</h2><div id="kOut"></div></div>
+<p class="note" style="margin-top:20px">Các luận đoán phong thủy, phần âm, tử vi là kinh nghiệm truyền thống, chưa có kiểm chứng khoa học; nên dùng để tham khảo.</p>
 </section>
 
 <!-- ================= VẬT PHẨM ================= -->
@@ -1371,8 +1462,176 @@ $('tvGo').onclick=tuvi;$('tvSync').onclick=syncTv;['tvDate','tvTime','tvSex'].fo
 syncTv();
 }
 
+// ---------- Dịch lý (Mai Hoa, Lục hào, giờ cúng, tra quẻ) ----------
+{
+const DOCIDX={"1-1": [["Tập 1", 58]], "1-2": [["Tập 1", 59]], "1-3": [["Tập 1", 60]], "1-4": [["Tập 1", 61]], "1-5": [["Tập 1", 61]], "1-6": [["Tập 1", 62]], "10-1": [["Tập 1", 64]], "10-2": [["Tập 1", 64]], "10-3": [["Tập 1", 65]], "10-4": [["Tập 1", 65]], "10-5": [["Tập 1", 65]], "10-6": [["Tập 1", 66]], "13-1": [["Tập 1", 67]], "13-2": [["Tập 1", 67]], "13-3": [["Tập 1", 68]], "13-5": [["Tập 1", 68]], "13-6": [["Tập 1", 69]], "25-1": [["Tập 1", 70]], "25-2": [["Tập 1", 70], ["Tập 2", 135], ["Phần âm", 2]], "25-3": [["Tập 1", 71]], "25-4": [["Tập 1", 72], ["Tập 2", 136], ["Phần âm", 3]], "25-5": [["Tập 1", 72]], "25-6": [["Tập 1", 73], ["Tập 2", 137], ["Phần âm", 3]], "44-1": [["Tập 1", 74], ["Tập 2", 156], ["Phần âm", 18]], "44-2": [["Tập 1", 74]], "44-3": [["Tập 1", 75], ["Tập 2", 157], ["Phần âm", 18]], "44-4": [["Tập 1", 75]], "44-5": [["Tập 1", 76], ["Tập 2", 157], ["Phần âm", 19]], "44-6": [["Tập 1", 77]], "6-1": [["Tập 1", 78], ["Tập 2", 203], ["Phần âm", 52]], "6-2": [["Tập 1", 79]], "6-3": [["Tập 1", 79], ["Tập 2", 204], ["Phần âm", 52]], "6-4": [["Tập 1", 80], ["Tập 2", 204], ["Phần âm", 53]], "6-5": [["Tập 1", 80], ["Tập 2", 205], ["Phần âm", 53]], "6-6": [["Tập 1", 81], ["Tập 2", 205], ["Phần âm", 54]], "33-1": [["Tập 1", 82], ["Phần âm", 10]], "33-2": [["Tập 1", 82]], "33-3": [["Tập 1", 83], ["Tập 2", 147], ["Phần âm", 11]], "33-4": [["Tập 1", 84]], "33-5": [["Tập 1", 84], ["Tập 2", 147], ["Phần âm", 11]], "33-6": [["Tập 1", 85]], "12-1": [["Tập 1", 86]], "12-2": [["Tập 1", 86], ["Phần âm", 20]], "12-3": [["Tập 1", 87]], "12-4": [["Tập 1", 87], ["Tập 2", 159], ["Phần âm", 20]], "12-5": [["Tập 1", 88]], "12-6": [["Tập 1", 88], ["Tập 2", 160], ["Phần âm", 21]], "43-1": [["Tập 1", 90]], "43-2": [["Tập 1", 91]], "43-3": [["Tập 1", 91]], "43-4": [["Tập 1", 92]], "43-5": [["Tập 1", 93]], "43-6": [["Tập 1", 94]], "58-1": [["Tập 1", 95]], "58-2": [["Tập 1", 95]], "58-3": [["Tập 1", 96]], "58-4": [["Tập 1", 96]], "58-5": [["Tập 1", 97]], "58-6": [["Tập 1", 98]], "49-1": [["Tập 1", 99]], "49-2": [["Tập 1", 99]], "49-3": [["Tập 1", 100]], "49-4": [["Tập 1", 101]], "49-5": [["Tập 1", 101]], "49-6": [["Tập 1", 102]], "17-1": [["Tập 1", 103]], "17-2": [["Tập 1", 103]], "17-3": [["Tập 1", 104]], "17-4": [["Tập 1", 105]], "17-5": [["Tập 1", 105]], "28-1": [["Tập 1", 107], ["Tập 2", 195], ["Phần âm", 47]], "28-2": [["Tập 1", 107], ["Tập 2", 195], ["Phần âm", 47]], "28-3": [["Tập 1", 108], ["Tập 2", 196], ["Phần âm", 47]], "28-4": [["Tập 1", 109], ["Tập 2", 196], ["Phần âm", 48]], "28-5": [["Tập 1", 109], ["Tập 2", 197], ["Phần âm", 48]], "28-6": [["Tập 1", 110], ["Tập 2", 197], ["Phần âm", 48]], "47-1": [["Tập 1", 112]], "47-2": [["Tập 1", 112], ["Tập 2", 192], ["Phần âm", 45]], "47-3": [["Tập 1", 113]], "47-4": [["Tập 1", 114], ["Tập 2", 193], ["Phần âm", 46]], "47-5": [["Tập 1", 114]], "47-6": [["Tập 1", 115], ["Tập 2", 193], ["Phần âm", 46]], "31-1": [["Tập 1", 116]], "31-2": [["Tập 1", 116]], "31-3": [["Tập 1", 117]], "31-4": [["Tập 1", 118]], "31-5": [["Tập 1", 118]], "31-6": [["Tập 1", 119]], "45-1": [["Tập 1", 120]], "45-2": [["Tập 1", 120], ["Tập 2", 210], ["Phần âm", 57]], "45-3": [["Tập 1", 121]], "45-4": [["Tập 1", 121], ["Tập 2", 210], ["Phần âm", 57]], "45-5": [["Tập 1", 121]], "45-6": [["Tập 1", 122], ["Tập 2", 211], ["Phần âm", 57]], "14-1": [["Tập 1", 123]], "14-2": [["Tập 1", 123]], "14-3": [["Tập 1", 124]], "14-4": [["Tập 1", 125]], "14-5": [["Tập 1", 126]], "14-6": [["Tập 1", 126]], "38-1": [["Tập 1", 128]], "38-2": [["Tập 1", 128]], "38-3": [["Tập 1", 129]], "38-4": [["Tập 1", 130]], "38-5": [["Tập 1", 130]], "38-6": [["Tập 1", 131]], "30-1": [["Tập 1", 132]], "30-2": [["Tập 1", 132]], "30-3": [["Tập 1", 133]], "30-4": [["Tập 1", 134]], "30-5": [["Tập 1", 134]], "30-6": [["Tập 1", 135]], "21-1": [["Tập 1", 136]], "21-2": [["Tập 1", 136]], "21-3": [["Tập 1", 137]], "21-4": [["Tập 1", 138]], "21-5": [["Tập 1", 138]], "21-6": [["Tập 1", 139]], "50-1": [["Tập 1", 141]], "50-2": [["Tập 1", 141]], "50-3": [["Tập 1", 142]], "50-4": [["Tập 1", 143]], "50-5": [["Tập 1", 144]], "50-6": [["Tập 1", 144]], "64-1": [["Tập 1", 146]], "64-2": [["Tập 1", 146], ["Tập 2", 139], ["Phần âm", 4]], "64-3": [["Tập 1", 147]], "64-4": [["Tập 1", 148], ["Tập 2", 140], ["Phần âm", 5]], "64-5": [["Tập 1", 149]], "64-6": [["Tập 1", 149], ["Tập 2", 140], ["Phần âm", 5]], "56-1": [["Tập 1", 151]], "56-2": [["Tập 1", 151]], "56-3": [["Tập 1", 152]], "56-4": [["Tập 1", 153]], "56-5": [["Tập 1", 154]], "56-6": [["Tập 1", 154]], "35-1": [["Tập 1", 156]], "35-2": [["Tập 1", 156]], "35-3": [["Tập 1", 157]], "35-4": [["Tập 1", 158]], "35-5": [["Tập 1", 158]], "35-6": [["Tập 1", 159]], "34-1": [["Tập 1", 160]], "34-2": [["Tập 1", 160]], "34-3": [["Tập 1", 161]], "34-4": [["Tập 1", 162]], "34-5": [["Tập 1", 162]], "34-6": [["Tập 1", 163]], "54-1": [["Tập 1", 164]], "54-2": [["Tập 1", 165], ["Tập 2", 153], ["Phần âm", 16]], "54-3": [["Tập 1", 166]], "54-4": [["Tập 1", 167], ["Tập 2", 154], ["Phần âm", 16]], "54-5": [["Tập 1", 167]], "54-6": [["Tập 1", 168], ["Tập 2", 154], ["Phần âm", 17]], "55-1": [["Tập 1", 170]], "55-2": [["Tập 1", 171]], "55-3": [["Tập 1", 171]], "55-4": [["Tập 1", 172]], "55-5": [["Tập 1", 173]], "55-6": [["Tập 1", 173]], "51-1": [["Tập 1", 175]], "51-2": [["Tập 1", 175]], "51-3": [["Tập 1", 176]], "51-4": [["Tập 1", 177]], "51-5": [["Tập 1", 178]], "51-6": [["Tập 1", 179]], "32-1": [["Tập 1", 180]], "32-2": [["Tập 1", 181]], "32-3": [["Tập 1", 181]], "32-4": [["Tập 1", 182]], "32-5": [["Tập 1", 183]], "32-6": [["Tập 1", 184]], "40-1": [["Tập 1", 185]], "40-2": [["Tập 1", 186]], "40-3": [["Tập 1", 186]], "40-4": [["Tập 1", 187]], "40-5": [["Tập 1", 188]], "62-1": [["Tập 1", 190], ["Tập 2", 142], ["Phần âm", 6]], "62-2": [["Tập 1", 190]], "62-3": [["Tập 1", 191], ["Tập 2", 142], ["Phần âm", 6]], "62-4": [["Tập 1", 192]], "62-5": [["Tập 1", 193], ["Phần âm", 7]], "62-6": [["Tập 1", 194]], "16-1": [["Tập 1", 195]], "16-2": [["Tập 1", 195]], "16-3": [["Tập 1", 196]], "16-4": [["Tập 1", 197]], "16-5": [["Tập 1", 198]], "16-6": [["Tập 1", 199]], "9-1": [["Tập 1", 200], ["Tập 2", 188], ["Phần âm", 41]], "9-2": [["Tập 1", 200]], "9-3": [["Tập 1", 201], ["Tập 2", 186], ["Phần âm", 40]], "9-4": [["Tập 1", 202]], "9-5": [["Tập 1", 203], ["Tập 2", 187], ["Phần âm", 41]], "9-6": [["Tập 1", 203]], "61-1": [["Tập 1", 205]], "61-2": [["Tập 1", 206]], "61-3": [["Tập 1", 206]], "61-4": [["Tập 1", 207]], "61-5": [["Tập 1", 208]], "61-6": [["Tập 1", 209]], "37-1": [["Tập 1", 211]], "37-2": [["Tập 1", 211]], "37-3": [["Tập 1", 212]], "37-4": [["Tập 1", 213]], "37-5": [["Tập 1", 214]], "42-1": [["Tập 1", 215]], "42-2": [["Tập 1", 215]], "42-3": [["Tập 1", 216]], "42-4": [["Tập 1", 217]], "42-5": [["Tập 1", 218]], "42-6": [["Tập 1", 218]], "57-1": [["Tập 1", 220]], "57-2": [["Tập 1", 221]], "57-3": [["Tập 1", 221]], "57-4": [["Tập 1", 222]], "57-5": [["Tập 1", 223]], "57-6": [["Tập 1", 223]], "59-1": [["Tập 1", 225]], "59-2": [["Tập 1", 226]], "59-3": [["Tập 1", 226]], "59-4": [["Tập 1", 227]], "59-5": [["Tập 1", 228]], "59-6": [["Tập 1", 229]], "53-1": [["Tập 1", 231]], "53-2": [["Tập 1", 231]], "53-3": [["Tập 1", 232]], "53-4": [["Tập 1", 233]], "53-5": [["Tập 1", 234]], "53-6": [["Tập 1", 234]], "20-1": [["Tập 1", 236]], "20-2": [["Tập 1", 237]], "20-3": [["Tập 1", 237]], "20-4": [["Tập 1", 238]], "20-5": [["Tập 1", 239]], "20-6": [["Tập 1", 240]], "5-1": [["Tập 2", 4]], "5-2": [["Tập 2", 4]], "5-3": [["Tập 2", 5]], "5-4": [["Tập 2", 6]], "5-5": [["Tập 2", 6]], "5-6": [["Tập 2", 7]], "60-1": [["Tập 2", 8]], "60-2": [["Tập 2", 8]], "60-3": [["Tập 2", 9]], "60-4": [["Tập 2", 10]], "60-5": [["Tập 2", 10]], "60-6": [["Tập 2", 11]], "63-1": [["Tập 2", 13]], "63-2": [["Tập 2", 13]], "63-3": [["Tập 2", 14]], "63-4": [["Tập 2", 15]], "63-5": [["Tập 2", 15]], "63-6": [["Tập 2", 16]], "3-1": [["Tập 2", 18]], "3-2": [["Tập 2", 18]], "3-3": [["Tập 2", 19]], "3-4": [["Tập 2", 20]], "3-6": [["Tập 2", 21]], "48-1": [["Tập 2", 23], ["Tập 2", 178], ["Phần âm", 34]], "48-2": [["Tập 2", 23]], "48-3": [["Tập 2", 24], ["Tập 2", 179], ["Phần âm", 35]], "48-4": [["Tập 2", 25]], "48-5": [["Tập 2", 26], ["Tập 2", 181], ["Phần âm", 36]], "48-6": [["Tập 2", 26]], "29-1": [["Tập 2", 28], ["Tập 2", 33]], "29-2": [["Tập 2", 28], ["Tập 2", 33], ["Tập 2", 170], ["Phần âm", 28]], "29-3": [["Tập 2", 29], ["Tập 2", 34]], "29-4": [["Tập 2", 30], ["Tập 2", 35], ["Phần âm", 29]], "29-5": [["Tập 2", 31], ["Tập 2", 36]], "29-6": [["Tập 2", 32], ["Tập 2", 37], ["Tập 2", 172], ["Phần âm", 29]], "39-1": [["Tập 2", 38], ["Tập 2", 207], ["Phần âm", 55]], "39-2": [["Tập 2", 38], ["Tập 2", 207], ["Phần âm", 55]], "39-3": [["Tập 2", 39], ["Tập 2", 208], ["Phần âm", 55]], "39-4": [["Tập 2", 40], ["Tập 2", 208], ["Phần âm", 56]], "39-5": [["Tập 2", 41], ["Tập 2", 209], ["Phần âm", 56]], "39-6": [["Tập 2", 41], ["Tập 2", 209], ["Phần âm", 56]], "8-1": [["Tập 2", 43]], "8-2": [["Tập 2", 43]], "8-3": [["Tập 2", 44]], "8-4": [["Tập 2", 45]], "8-5": [["Tập 2", 45]], "8-6": [["Tập 2", 46]], "26-1": [["Tập 2", 48]], "26-2": [["Tập 2", 49]], "26-3": [["Tập 2", 49]], "26-4": [["Tập 2", 50]], "26-5": [["Tập 2", 51]], "26-6": [["Tập 2", 52]], "41-1": [["Tập 2", 54], ["Tập 2", 199], ["Phần âm", 49]], "41-2": [["Tập 2", 55], ["Tập 2", 199], ["Phần âm", 49]], "41-3": [["Tập 2", 55], ["Tập 2", 200], ["Phần âm", 49]], "41-4": [["Tập 2", 56], ["Tập 2", 200], ["Phần âm", 50]], "41-5": [["Tập 2", 57], ["Tập 2", 201], ["Phần âm", 51]], "41-6": [["Tập 2", 58], ["Tập 2", 202], ["Phần âm", 51]], "22-1": [["Tập 2", 60]], "22-2": [["Tập 2", 60]], "22-3": [["Tập 2", 61]], "22-4": [["Tập 2", 61]], "22-5": [["Tập 2", 62]], "22-6": [["Tập 2", 63]], "27-1": [["Tập 2", 64]], "27-2": [["Tập 2", 65]], "27-3": [["Tập 2", 65]], "27-4": [["Tập 2", 66]], "27-5": [["Tập 2", 67]], "27-6": [["Tập 2", 68]], "18-1": [["Tập 2", 69], ["Tập 2", 189], ["Phần âm", 42]], "18-2": [["Tập 2", 69]], "18-3": [["Tập 2", 70], ["Tập 2", 190], ["Phần âm", 43]], "18-4": [["Tập 2", 71]], "18-5": [["Tập 2", 72], ["Tập 2", 191], ["Phần âm", 43]], "18-6": [["Tập 2", 73]], "4-1": [["Tập 2", 75]], "4-2": [["Tập 2", 76], ["Tập 2", 161], ["Phần âm", 21]], "4-3": [["Tập 2", 76]], "4-4": [["Tập 2", 77], ["Tập 2", 163], ["Phần âm", 22]], "4-5": [["Tập 2", 78]], "4-6": [["Tập 2", 79], ["Tập 2", 164], ["Phần âm", 23]], "52-1": [["Tập 2", 81], ["Tập 2", 166], ["Phần âm", 25]], "52-2": [["Tập 2", 81]], "52-3": [["Tập 2", 82], ["Tập 2", 167], ["Phần âm", 26]], "52-4": [["Tập 2", 83]], "52-5": [["Tập 2", 84], ["Tập 2", 168], ["Phần âm", 26]], "52-6": [["Tập 2", 85]], "23-1": [["Tập 2", 86]], "23-2": [["Tập 2", 86]], "23-3": [["Tập 2", 87]], "23-4": [["Tập 2", 88]], "23-5": [["Tập 2", 89]], "23-6": [["Tập 2", 90]], "11-1": [["Tập 2", 91]], "11-2": [["Tập 2", 91]], "11-3": [["Tập 2", 92]], "11-4": [["Tập 2", 93]], "11-5": [["Tập 2", 94]], "11-6": [["Tập 2", 94]], "19-1": [["Tập 2", 96]], "19-2": [["Tập 2", 97]], "19-3": [["Tập 2", 98]], "19-4": [["Tập 2", 98]], "19-5": [["Tập 2", 99]], "19-6": [["Tập 2", 100]], "36-1": [["Tập 2", 102], ["Tập 2", 144], ["Phần âm", 8]], "36-2": [["Tập 2", 103]], "36-3": [["Tập 2", 104], ["Tập 2", 144], ["Phần âm", 8]], "36-4": [["Tập 2", 105]], "36-5": [["Tập 2", 106], ["Phần âm", 9]], "36-6": [["Tập 2", 106]], "24-1": [["Tập 2", 108]], "24-2": [["Tập 2", 109], ["Phần âm", 14]], "24-3": [["Tập 2", 109]], "24-4": [["Tập 2", 110], ["Tập 2", 151], ["Phần âm", 14]], "24-5": [["Tập 2", 111]], "24-6": [["Tập 2", 112], ["Tập 2", 152], ["Phần âm", 15]], "46-1": [["Tập 2", 114], ["Tập 2", 182], ["Phần âm", 37]], "46-2": [["Tập 2", 115]], "46-3": [["Tập 2", 115], ["Tập 2", 183], ["Phần âm", 37]], "46-4": [["Tập 2", 116]], "46-5": [["Tập 2", 117], ["Tập 2", 184], ["Phần âm", 39]], "46-6": [["Tập 2", 118]], "7-1": [["Tập 2", 120]], "7-2": [["Tập 2", 121]], "7-3": [["Tập 2", 122]], "7-4": [["Tập 2", 122]], "7-5": [["Tập 2", 123]], "7-6": [["Tập 2", 124]], "15-1": [["Tập 2", 126], ["Tập 2", 174], ["Phần âm", 31]], "15-2": [["Tập 2", 127]], "15-3": [["Tập 2", 127], ["Tập 2", 176], ["Phần âm", 32]], "15-4": [["Tập 2", 128]], "15-5": [["Tập 2", 129], ["Tập 2", 177], ["Phần âm", 32]], "15-6": [["Tập 2", 130]], "2-1": [["Tập 2", 131]], "2-2": [["Tập 2", 131], ["Tập 2", 148], ["Phần âm", 12]], "2-3": [["Tập 2", 132]], "2-4": [["Tập 2", 132], ["Tập 2", 149], ["Phần âm", 12]], "2-5": [["Tập 2", 133]], "2-6": [["Tập 2", 133], ["Tập 2", 149], ["Phần âm", 13]]}, ERRATA=[["Tập 1", 6, "Bảng tra tìm quẻ: hàng Khôn × cột Tốn", "23", "20 (Phong Địa Quan)", "Số liệu"], ["Tập 1", 27, "Bảng số lý ngày âm lịch", "Ngày 21 → số lý 22", "Ngày 21 → số lý 21", "Số liệu"], ["Tập 1", 28, "Ví dụ lập quẻ theo giờ (12/6 Đinh Dậu)", "“Tháng 5 : 6”", "Tháng 6 : 6 (kết quả Tiểu Quá động 3 vẫn đúng nếu là ngày 12/6 âm lịch)", "Lỗi đánh máy"], ["Tập 1", 29, "Ví dụ lập quẻ theo phút (8h21)", "“38:8 dư 6. Thượng quái là 6 (Thủy)”", "Hạ quái là 6 (Thủy); kết quả Hoán động 2 đúng", "Lỗi đánh máy"], ["Tập 1", 29, "Lưu ý tính phút", "Từ 7h00 đến 8h20 “cách nhau 120 phút”", "80 phút (8h21 là phút thứ 81, khớp với số lý Thân = 9)", "Tính toán"], ["Tập 1", 35, "Ví dụ cỏ thi số 2", "Trái 39 cọng “còn lại 2 (38−36)”; phải còn 2", "Trái 39 → dư 3; phải 9 → dư 1; tổng 1+3+1 = 5 (tổng vẫn đúng vì hai lỗi bù nhau)", "Tính toán"], ["Tập 1", 18, "Bảng ngũ hành và phương vị (dòng Mộc)", "Bắc (Thủy) xếp “không hợp”; Tây, Tây Bắc (Kim) xếp “trung tính”", "Theo chính quy luật tài liệu nêu (sinh nhập tốt, khắc nhập xấu): Bắc sinh Mộc phải là hợp; Kim khắc Mộc mới là không hợp. Các dòng khác cũng theo logic ngược tương tự", "Mâu thuẫn nội tại"], ["Tập 1", 24, "Hình minh họa bát quái", "Đoài “đại diện cho nước”, Khảm “đại diện cho đầm hồ”", "Bị tráo: Đoài = đầm/hồ, Khảm = nước", "Tượng quẻ"], ["Tập 1", 95, "Thuần Đoài – Cách", "Biến: Cách; lời giải dùng nghĩa quẻ Cách", "Thuần Đoài không thể biến thành Cách bằng 1 hào. Hình vẽ là động hào 1 → biến Khốn (chánh biến Khốn). Mục phải là “Thuần Đoài – Khốn”", "Sai quẻ biến"], ["Tập 1", 104, "Giờ cúng “Tiệm – Bí”", "Tiệm – Bí", "Tiệm → Bí phải đổi 2 hào, không phải một quẻ giờ (Chánh–Biến 1 hào động)", "Sai cặp giờ"], ["Tập 1", 106, "Tùy – Phệ Hạp", "Biến: Phệ Hạp", "Tùy → Phệ Hạp phải đổi 2 hào; không phải mục 1 hào động", "Sai quẻ biến"], ["Tập 1", 107, "Đại Quá – Quải (cả Tập 2 tr.195, Phần âm tr.47)", "Chánh biến: Quải", "Tiểu Súc (Tốn trên Càn)", "Sai chánh biến"], ["Tập 1", 108, "Đại Quá – Kiển (cả Tập 2 tr.196, Phần âm tr.47)", "Biến: Kiển", "Tỉnh (động hào 4; chánh biến Khốn ghi đúng)", "Sai quẻ biến"], ["Tập 1", 114, "Khốn – Hoán", "Biến: Hoán", "Khốn → Hoán phải đổi 2 hào. Hình vẽ là động hào 5 → biến Giải, chánh biến Tùy (lời giải cũng nhắc Tùy). Mục phải là “Khốn – Giải”", "Sai quẻ biến"], ["Tập 1", 133, "Thuần Ly – Phệ Hạp", "Hình chánh biến vẽ thành Khuê", "Nhãn Phệ Hạp đúng; chỉ hình vẽ sai", "Hình vẽ"], ["Tập 1", 154, "Lữ – Độn", "Chánh biến: Tấn (lời giải dùng nghĩa Tấn)", "Đại Hữu (Ly trên Càn) — hình vẽ đúng, nhãn và lời giải sai", "Sai chánh biến"], ["Tập 1", 227, "Hoán – Tụng", "Chánh biến: Nhu", "Tiểu Súc (Tốn trên Càn)", "Sai chánh biến"], ["Tập 2", 41, "Kiển – Tiệm (lặp lại ở tr.209)", "Chánh biến: Kiển", "Tỉnh (Khảm trên Tốn) — hình vẽ đúng", "Sai chánh biến"], ["Tập 2", 56, "Tổn – Phệ Hạp (lặp lại tr.200, Phần âm tr.50)", "Biến: Phệ Hạp", "Tổn → Phệ Hạp không thể (2 hào). Hình vẽ là động hào 4 → biến Khuê, chánh biến Bí ghi đúng. Mục phải là “Tổn – Khuê”", "Sai quẻ biến"], ["Tập 2", 71, "Cổ – Ích", "Biến: Ích", "Cổ → Ích không thể (4 hào). Hình vẽ là động hào 4 → biến Đỉnh, chánh biến Bí đúng. Mục phải là “Cổ – Đỉnh”", "Sai quẻ biến"], ["Tập 2", 73, "Cổ – Khiêm", "Tiêu đề biến: Khiêm", "Thăng (nhãn trong khung ghi Thăng, chánh biến Bác đều đúng; chỉ tiêu đề sai)", "Sai tiêu đề"], ["Tập 2", 124, "Sư – Cổ", "Biến: Cổ", "Mông (động hào 6; chánh biến Khiêm ghi đúng)", "Sai quẻ biến"], ["Tập 2", 132, "Thuần Khôn – Dự", "Chánh biến: Dự", "Phục (Khôn trên Chấn)", "Sai chánh biến"], ["Tập 2", 147, "Độn – Bĩ (cả Phần âm tr.11)", "Hình chánh biến vẽ thành Bĩ", "Nhãn Bác đúng; chỉ hình vẽ sai", "Hình vẽ"], ["Tập 2", 178, "Tỉnh (3 mục: tr.178, 179, 181; cả Phần âm tr.34–36)", "Hình quẻ Hộ vẽ thành Tiết", "Nhãn Khuê đúng; hình vẽ sai", "Hình vẽ"], ["Tập 2", 189, "Cổ – Đại Súc (cả Phần âm tr.42)", "Hình chánh biến vẽ thành Đại Súc", "Nhãn Tiểu Súc đúng; hình vẽ sai", "Hình vẽ"], ["Tập 2", 203, "Tụng – 6 mục (tr.203–205)", "Nhãn Hộ: Cách", "Gia Nhân (hình vẽ đúng)", "Sai quẻ Hộ"], ["Tập 2", 203, "Tụng – Đồng Nhân (cả Phần âm tr.52)", "Biến: Đồng Nhân, chánh biến Ký Tế", "Tụng → Đồng Nhân phải đổi 3 hào; không phải mục 1 hào động", "Sai quẻ biến"], ["Bốc Dịch", 5, "Quẻ Càn động hào 5 (ngày Nhâm Thân tháng Sửu)", "Huynh Đệ Thân Kim × Tuất", "Hóa Mùi Thổ (quẻ biến Đại Hữu). Kết luận ứng kỳ Tuất/Hợi (Mộ, Tuyệt của Hỏa) vẫn nhất quán", "Nạp giáp"], ["Bốc Dịch", 19, "Quẻ ngày 13/4/1991", "“Ngày Quý Sửu tháng Mão”", "Ngày Quý Sửu đúng. Tháng Mão là tháng âm lịch; Lục hào thường lấy nguyệt lệnh theo tiết khí → sau Thanh Minh (5/4) là tháng Thìn. Cần ghi rõ quy ước", "Quy ước"], ["Bốc Dịch", 74, "Ví dụ “Ngày động tâm 13/03/2019”", "Không ghi âm/dương lịch", "Là âm lịch (= 17/4/2019 dương lịch, ngày Giáp Thân, tháng Thìn — khớp với tài liệu)", "Ghi chú"]], GIOPAIRS=[[22, 27, 328], [49, 55, 92], [37, 53, 31], [32, 34, 23], [7, 2, 20], [50, 14, 19], [34, 32, 18], [14, 1, 18], [16, 35, 17], [38, 14, 17], [49, 31, 16], [14, 38, 16], [1, 14, 13], [10, 61, 13], [11, 5, 13], [35, 16, 11], [45, 8, 10], [37, 42, 10], [61, 42, 10], [61, 10, 9], [14, 50, 9], [2, 7, 9], [37, 22, 8], [55, 49, 8], [20, 59, 8], [5, 11, 8], [46, 11, 8], [11, 46, 7], [53, 37, 6], [7, 40, 6], [55, 51, 6], [40, 7, 6], [59, 20, 6], [7, 46, 6], [51, 55, 5], [56, 35, 4], [11, 19, 4], [57, 53, 4], [42, 61, 4], [24, 51, 4], [21, 27, 3], [63, 5, 3], [1, 10, 2], [52, 53, 2], [31, 49, 2], [10, 1, 2], [42, 37, 2], [2, 16, 2], [46, 7, 2], [52, 22, 2], [18, 57, 2], [43, 34, 1], [21, 38, 1], [34, 43, 1], [35, 56, 1], [51, 21, 1], [53, 52, 1], [20, 42, 1], [10, 58, 1], [19, 11, 1], [8, 45, 1], [17, 49, 1], [22, 26, 1]];
+new MutationObserver(()=>{for(const c of document.querySelectorAll('#dl .stack td:not([data-l])')){let i=0,p=c;while(p=p.previousElementSibling)i+=p.colSpan;c.dataset.l=c.closest('table').rows[0].cells[i]?.textContent||''}}).observe($('dl'),{childList:true,subtree:true});
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const mod=(a,n)=>((a%n)+n)%n;
+/* ===== Dữ liệu Dịch ===== */
+const TRI=['Càn','Đoài','Ly','Chấn','Tốn','Khảm','Cấn','Khôn'];
+const TL={Càn:[1,1,1],Đoài:[1,1,0],Ly:[1,0,1],Chấn:[1,0,0],Tốn:[0,1,1],Khảm:[0,1,0],Cấn:[0,0,1],Khôn:[0,0,0]};
+const NAT={Càn:'Thiên',Đoài:'Trạch',Ly:'Hỏa',Chấn:'Lôi',Tốn:'Phong',Khảm:'Thủy',Cấn:'Sơn',Khôn:'Địa'};
+const TEL={Càn:'Kim',Đoài:'Kim',Ly:'Hỏa',Chấn:'Mộc',Tốn:'Mộc',Khảm:'Thủy',Cấn:'Thổ',Khôn:'Thổ'};
+const KW=[null,['Thuần Càn','Càn','Càn'],['Thuần Khôn','Khôn','Khôn'],['Truân','Khảm','Chấn'],['Mông','Cấn','Khảm'],['Nhu','Khảm','Càn'],['Tụng','Càn','Khảm'],['Sư','Khôn','Khảm'],['Tỷ','Khảm','Khôn'],['Tiểu Súc','Tốn','Càn'],['Lý','Càn','Đoài'],['Thái','Khôn','Càn'],['Bĩ','Càn','Khôn'],['Đồng Nhân','Càn','Ly'],['Đại Hữu','Ly','Càn'],['Khiêm','Khôn','Cấn'],['Dự','Chấn','Khôn'],['Tùy','Đoài','Chấn'],['Cổ','Cấn','Tốn'],['Lâm','Khôn','Đoài'],['Quan','Tốn','Khôn'],['Phệ Hạp','Ly','Chấn'],['Bí','Cấn','Ly'],['Bác','Cấn','Khôn'],['Phục','Khôn','Chấn'],['Vô Vọng','Càn','Chấn'],['Đại Súc','Cấn','Càn'],['Di','Cấn','Chấn'],['Đại Quá','Đoài','Tốn'],['Thuần Khảm','Khảm','Khảm'],['Thuần Ly','Ly','Ly'],['Hàm','Đoài','Cấn'],['Hằng','Chấn','Tốn'],['Độn','Càn','Cấn'],['Đại Tráng','Chấn','Càn'],['Tấn','Ly','Khôn'],['Minh Di','Khôn','Ly'],['Gia Nhân','Tốn','Ly'],['Khuê','Ly','Đoài'],['Kiển','Khảm','Cấn'],['Giải','Chấn','Khảm'],['Tổn','Cấn','Đoài'],['Ích','Tốn','Chấn'],['Quải','Đoài','Càn'],['Cấu','Càn','Tốn'],['Tụy','Đoài','Khôn'],['Thăng','Khôn','Tốn'],['Khốn','Đoài','Khảm'],['Tỉnh','Khảm','Tốn'],['Cách','Đoài','Ly'],['Đỉnh','Ly','Tốn'],['Thuần Chấn','Chấn','Chấn'],['Thuần Cấn','Cấn','Cấn'],['Tiệm','Tốn','Cấn'],['Quy Muội','Chấn','Đoài'],['Phong','Chấn','Ly'],['Lữ','Ly','Cấn'],['Thuần Tốn','Tốn','Tốn'],['Thuần Đoài','Đoài','Đoài'],['Hoán','Tốn','Khảm'],['Tiết','Khảm','Đoài'],['Trung Phu','Tốn','Đoài'],['Tiểu Quá','Chấn','Cấn'],['Ký Tế','Khảm','Ly'],['Vị Tế','Ly','Khảm']];
+const GIST=[null,'Cương kiện, khởi đầu mạnh, chủ động','Nhu thuận, bao dung, nuôi dưỡng, đi sau thì lợi','Gian nan buổi đầu, khởi sự khó','Mờ tối, non nớt, cần học hỏi','Chờ đợi, chưa nên vội','Tranh chấp, kiện cáo, bất đồng','Đông người, tổ chức, kỷ luật','Gần gũi, liên kết, thân thiện','Tích nhỏ, bị ngăn trở tạm thời','Lễ nghĩa, nề nếp, bước đi thận trọng','Thông suốt, trên dưới hòa hợp','Bế tắc, cách trở, không thông','Đồng lòng, hợp tác, bạn bè','Sung túc, có nhiều, thịnh vượng','Khiêm nhường thì bền','Vui vẻ, hưởng thụ, dự phòng','Thuận theo, đi theo thời thế','Hư hỏng tích tụ, cần sửa chữa','Tiến gần, đến nơi, giám sát','Quan sát, xem xét','Cắn đứt trở ngại, xử lý dứt điểm','Trang sức, vẻ ngoài','Hao mòn, sụp dần','Trở lại, phục hồi','Không càn bậy, việc bất ngờ','Tích lớn, chứa nhiều','Nuôi dưỡng, ăn uống, lời nói','Quá mức, gánh nặng vượt sức','Hiểm trở, hãm sâu','Sáng sủa, bám dựa','Cảm ứng, tình cảm','Bền lâu, giữ nếp thường','Lui ẩn, rút lui đúng lúc','Mạnh mẽ, coi chừng quá đà','Tiến lên, thăng tiến','Ánh sáng bị che, ẩn nhẫn','Gia đạo, người trong nhà','Trái ý, chia lìa','Gian nan, đi lại khó','Cởi bỏ, thoát nạn','Hao bớt','Tăng thêm, lợi ích','Quyết đoán, dứt bỏ','Gặp gỡ bất ngờ','Tụ họp, quy tụ','Đi lên từ từ','Khốn cùng, thiếu thốn','Giếng, nguồn nuôi chung, ổn định','Thay đổi, đổi mới','Đổi mới vững chắc, nấu nướng','Chấn động, khởi động','Dừng lại, yên tĩnh','Tiến dần từng bước','Lệch vị, việc không chính danh','Thịnh lớn, đỉnh cao','Lữ khách, tạm bợ','Thuận nhập, mềm mỏng','Vui vẻ, nói năng','Ly tán, khuếch tán','Tiết chế, chừng mực','Thành tín từ bên trong','Hơi quá: việc nhỏ được','Đã xong, cần giữ gìn','Chưa xong, dở dang'];
+const TUONG={Càn:['Trời','Cha, người lớn tuổi, lãnh đạo','Đầu','Tây Bắc','Vật tròn, kim loại, đồ quý; phòng chủ nhà, chỗ cao'],Khôn:['Đất','Mẹ, phụ nữ lớn tuổi','Bụng','Tây Nam','Đất, nền, vải, vật vuông; kho, phòng mẹ'],Chấn:['Sấm','Trưởng nam','Chân','Đông','Xe, cây lớn, vật động; lối đi, chỗ ồn'],Tốn:['Gió','Trưởng nữ','Đùi, hông','Đông Nam','Dây, gỗ dài, cửa sổ, chỗ gió lùa'],Khảm:['Nước','Trung nam','Tai, thận','Bắc','Nước, cống rãnh, chỗ ẩm, eo hẹp'],Ly:['Lửa','Trung nữ','Mắt, tim','Nam','Đèn, bếp, giấy tờ, ánh sáng'],Cấn:['Núi','Thiếu nam','Tay, mũi','Đông Bắc','Cổng, tường, đá, gò đống, mộ'],Đoài:['Đầm hồ','Thiếu nữ','Miệng','Tây','Ao hồ, chỗ khuyết mẻ, lời nói, cửa']};
+const lines=n=>{const k=KW[n];return TL[k[2]].concat(TL[k[1]])};
+const BY={};for(let n=1;n<=64;n++)BY[lines(n).join('')]=n;
+const fromL=l=>BY[l.join('')];
+const ho=n=>{const l=lines(n);return fromL(l.slice(1,4).concat(l.slice(2,5)))};
+const bien=(n,h)=>{const l=lines(n).slice();for(const x of [].concat(h))l[x-1]^=1;return fromL(l)};
+const chanhBien=(n,h)=>{const k=KW[n],mv=h<=3?k[2]:k[1],b=KW[bien(n,h)],ch=h<=3?b[2]:b[1];return fromL(TL[ch].concat(TL[mv]))};
+const full=n=>{const k=KW[n];return k[1]===k[2]?'Thuần '+k[1]+' ('+NAT[k[1]]+' vi '+k[1]+')':NAT[k[1]]+' '+NAT[k[2]]+' '+k[0]};
+const hexSVG=(n,mv=[])=>{const l=lines(n);let s='<svg viewBox="0 0 100 92" role="img" aria-label="'+esc(KW[n][0])+'">';for(let i=0;i<6;i++){const y=80-i*15,c=mv.includes(i+1)?'var(--red)':'currentColor';s+=l[i]?`<rect x="6" y="${y}" width="88" height="9" rx="1.5" fill="${c}"/>`:`<rect x="6" y="${y}" width="38" height="9" rx="1.5" fill="${c}"/><rect x="56" y="${y}" width="38" height="9" rx="1.5" fill="${c}"/>`}return s+'</svg>'};
+const PAL={};for(const t of TRI){const base=TL[t].concat(TL[t]);PAL[fromL(base)]=[t,6,'Bát thuần'];let c=base.slice();['Nhất thế','Nhị thế','Tam thế','Tứ thế','Ngũ thế'].forEach((lab,i)=>{c[i]^=1;PAL[fromL(c)]=[t,i+1,lab]});const du=c.slice();du[3]^=1;PAL[fromL(du)]=[t,4,'Du hồn'];const qh=TL[t].concat(du.slice(3));PAL[fromL(qh)]=[t,3,'Quy hồn']}
+const CHI=['Tý','Sửu','Dần','Mão','Thìn','Tỵ','Ngọ','Mùi','Thân','Dậu','Tuất','Hợi'];
+const CAN=['Giáp','Ất','Bính','Đinh','Mậu','Kỷ','Canh','Tân','Nhâm','Quý'];
+const CEL=['Thủy','Thổ','Mộc','Mộc','Thổ','Hỏa','Hỏa','Thổ','Kim','Kim','Thổ','Thủy'];
+const NG={Càn:[[0,2,4],[6,8,10]],Khảm:[[2,4,6],[8,10,0]],Cấn:[[4,6,8],[10,0,2]],Chấn:[[0,2,4],[6,8,10]],Tốn:[[1,11,9],[7,5,3]],Ly:[[3,1,11],[9,7,5]],Khôn:[[7,5,3],[1,11,9]],Đoài:[[5,3,1],[11,9,7]]};
+const SINH={Mộc:'Hỏa',Hỏa:'Thổ',Thổ:'Kim',Kim:'Thủy',Thủy:'Mộc'},KHAC={Mộc:'Thổ',Thổ:'Thủy',Thủy:'Hỏa',Hỏa:'Kim',Kim:'Mộc'};
+const ltOf=(me,x)=>me===x?'Huynh Đệ':SINH[me]===x?'Tử Tôn':SINH[x]===me?'Phụ Mẫu':KHAC[me]===x?'Thê Tài':'Quan Quỷ';
+const branches=n=>{const k=KW[n];return NG[k[2]][0].concat(NG[k[1]][1])};
+/* ===== Lịch âm (Hồ Ngọc Đức, +7) ===== */
+const TZ=7,INT=Math.floor,PI=Math.PI;
+const jdFromDate=(d,m,y)=>{const a=INT((14-m)/12),yy=y+4800-a,mm=m+12*a-3;let jd=d+INT((153*mm+2)/5)+365*yy+INT(yy/4)-INT(yy/100)+INT(yy/400)-32045;if(jd<2299161)jd=d+INT((153*mm+2)/5)+365*yy+INT(yy/4)-32083;return jd};
+const jdToDate=jd=>{let a,b,c;if(jd>2299160){a=jd+32044;b=INT((4*a+3)/146097);c=a-INT(b*146097/4)}else{b=0;c=jd+32082}const d=INT((4*c+3)/1461),e=c-INT(1461*d/4),m=INT((5*e+2)/153);return[e-INT((153*m+2)/5)+1,m+3-12*INT(m/10),b*100+d-4800+INT(m/10)]};
+const newMoon=k=>{const T=k/1236.85,T2=T*T,T3=T2*T,dr=PI/180;let J=2415020.75933+29.53058868*k+0.0001178*T2-0.000000155*T3;J+=0.00033*Math.sin((166.56+132.87*T-0.009173*T2)*dr);const M=359.2242+29.10535608*k-0.0000333*T2-0.00000347*T3,Mp=306.0253+385.81691806*k+0.0107306*T2+0.00001236*T3,F=21.2964+390.67050646*k-0.0016528*T2-0.00000239*T3;let C=(0.1734-0.000393*T)*Math.sin(M*dr)+0.0021*Math.sin(2*dr*M);C-=0.4068*Math.sin(Mp*dr)+0.0161*Math.sin(dr*2*Mp);C-=0.0004*Math.sin(dr*3*Mp);C+=0.0104*Math.sin(dr*2*F)-0.0051*Math.sin(dr*(M+Mp));C-=0.0074*Math.sin(dr*(M-Mp))+0.0004*Math.sin(dr*(2*F+M));C-=0.0004*Math.sin(dr*(2*F-M))-0.0006*Math.sin(dr*(2*F+Mp));C+=0.0010*Math.sin(dr*(2*F-Mp))+0.0005*Math.sin(dr*(2*Mp+M));const dt=T<-11?0.001+0.000839*T+0.0002261*T2-0.00000845*T3-0.000000081*T*T3:-0.000278+0.000265*T+0.000262*T2;return J+C-dt};
+const sunLongDeg=jd=>{const T=(jd-2451545)/36525,T2=T*T,dr=PI/180,M=357.5291+35999.0503*T-0.0001559*T2-0.00000048*T*T2,L0=280.46645+36000.76983*T+0.0003032*T2;let DL=(1.9146-0.004817*T-0.000014*T2)*Math.sin(dr*M);DL+=(0.019993-0.000101*T)*Math.sin(dr*2*M)+0.00029*Math.sin(dr*3*M);return mod(L0+DL,360)};
+const nmDay=k=>INT(newMoon(k)+0.5+TZ/24);
+const sunSec=d=>INT(sunLongDeg(d-0.5-TZ/24)/30);
+const month11=y=>{const off=jdFromDate(31,12,y)-2415021,k=INT(off/29.530588853);let nm=nmDay(k);if(sunSec(nm)>=9)nm=nmDay(k-1);return nm};
+const leapOff=a11=>{const k=INT((a11-2415021.076998695)/29.530588853+0.5);let last,i=1,arc=sunSec(nmDay(k+i));do{last=arc;i++;arc=sunSec(nmDay(k+i))}while(arc!==last&&i<14);return i-1};
+const solar2lunar=(d,m,y)=>{const dn=jdFromDate(d,m,y),k=INT((dn-2415021.076998695)/29.530588853);let ms=nmDay(k+1);if(ms>dn)ms=nmDay(k);let a11=month11(y),b11=a11,ly;if(a11>=ms){ly=y;a11=month11(y-1)}else{ly=y+1;b11=month11(y+1)}const ld=dn-ms+1,diff=INT((ms-a11)/29);let leap=0,lm=diff+11;if(b11-a11>365){const lo=leapOff(a11);if(diff>=lo){lm=diff+10;if(diff===lo)leap=1}}if(lm>12)lm-=12;if(lm>=11&&diff<4)ly-=1;return{d:ld,m:lm,y:ly,leap}};
+const lunar2solar=(d,m,y,leap)=>{let jd=jdFromDate(1,1,y);for(let i=0;i<420;i++){const [dd,mm,yy]=jdToDate(jd+i),L=solar2lunar(dd,mm,yy);if(L.d===d&&L.m===m&&L.y===y&&!!L.leap===!!leap)return[dd,mm,yy]}return null};
+const yearCC=y=>[mod(y+6,10),mod(y+8,12)];
+const dayCC=jd=>[mod(jd+9,10),mod(jd+1,12)];
+const hourIdx=h=>INT((h+1)/2)%12;
+const tietMonth=(d,m,y,hh,mi)=>{const jd=jdFromDate(d,m,y)-0.5+(hh+mi/60-TZ)/24,L=sunLongDeg(jd);return mod(INT(mod(L-315,360)/30)+2,12)};
+const TIET=['Xuân phân','Thanh minh','Cốc vũ','Lập hạ','Tiểu mãn','Mang chủng','Hạ chí','Tiểu thử','Đại thử','Lập thu','Xử thử','Bạch lộ','Thu phân','Hàn lộ','Sương giáng','Lập đông','Tiểu tuyết','Đại tuyết','Đông chí','Tiểu hàn','Đại hàn','Lập xuân','Vũ thủy','Kinh trập'];
+const readDT=(dId,tId)=>{const v=$(dId).value,t=($(tId)&&$(tId).value)||'12:00';if(!v)return null;const [y,m,d]=v.split('-').map(Number),[hh,mi]=t.split(':').map(Number);return{d,m,y,hh,mi}};
+const info=dt=>{const jd=jdFromDate(dt.d,dt.m,dt.y),L=solar2lunar(dt.d,dt.m,dt.y),yc=yearCC(L.y),dc=dayCC(jd),hi=hourIdx(dt.hh),hc=mod(dc[0]%5*2+hi,10),mc=mod((yc[0]%5)*2+2+(L.m-1),10),tm=tietMonth(dt.d,dt.m,dt.y,dt.hh,dt.mi);return{jd,L,yc,dc,hi,hc,mc,tm}};
+const cc=(c,z)=>CAN[c]+' '+CHI[z];
+/* ===== Thẻ con ===== */
+const TABS=[['lich','Lịch & can chi'],['maihoa','Mai Hoa / Dịch lý VN'],['luchao','Lục hào'],['giocung','Chọn giờ cúng'],['huongdan','Tra quẻ'],['kiemchung','Kiểm chứng tài liệu']];
+$('dlTabs').innerHTML=TABS.map(([id,t])=>`<button data-d="${id}">${t}</button>`).join('');
+const show=id=>{if(!TABS.some(t=>t[0]===id))id='lich';document.querySelectorAll('#dl .dlsec').forEach(s=>s.classList.toggle('on',s.id==='dl-'+id));document.querySelectorAll('#dlTabs button').forEach(b=>b.setAttribute('aria-selected',b.dataset.d===id));try{localStorage.setItem('vxt_dl',id)}catch(_){}};
+$('dlTabs').addEventListener('click',e=>{const b=e.target.closest('button');if(b){show(b.dataset.d);try{b.scrollIntoView({inline:'center',block:'nearest'})}catch(_){}}});
+const now=new Date(),pad=x=>String(x).padStart(2,'0'),today=`${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`,nowT=`${pad(now.getHours())}:${pad(now.getMinutes())}`;
+['lDate','hDate','gFrom'].forEach(i=>$(i).value=today);['lTime','hTime'].forEach(i=>$(i).value=nowT);
+/* ===== Lịch ===== */
+const renderLich=()=>{const dt=readDT('lDate','lTime');if(!dt)return;const I=info(dt),L=I.L,lg=sunLongDeg(I.jd-0.5+(dt.hh+dt.mi/60-TZ)/24),ti=INT(lg/15);
+ const xk=I.dc;const tuanStart=mod(xk[1]-xk[0],12);
+ $('lOut').innerHTML=`<div class="big">${L.d}/${L.m}${L.leap?' (nhuận)':''}/${L.y} âm lịch</div>
+ <table class="stack" style="margin-top:16px"><thead><tr><th>Trụ</th><th>Can chi</th><th>Ghi chú</th></tr></thead><tbody>
+ <tr><td>Năm</td><td>${cc(...I.yc)}</td><td>Theo năm âm lịch</td></tr>
+ <tr><td>Tháng âm</td><td>${CAN[I.mc]} ${CHI[mod(L.m+1,12)]}</td><td>Tháng ${L.m} âm lịch</td></tr>
+ <tr><td>Tháng tiết khí</td><td>${CHI[I.tm]}</td><td>Nguyệt lệnh dùng cho Lục hào, Tứ trụ</td></tr>
+ <tr><td>Ngày</td><td>${cc(...I.dc)}</td><td>Tuần Giáp ${CHI[tuanStart]}, không vong ${CHI[mod(tuanStart+10,12)]} – ${CHI[mod(tuanStart+11,12)]}</td></tr>
+ <tr><td>Giờ</td><td>${cc(I.hc,I.hi)}</td><td>Giờ ${CHI[I.hi]}</td></tr>
+ <tr><td>Tiết khí</td><td>${TIET[mod(ti,24)]}</td><td>Kinh độ mặt trời ${lg.toFixed(2)}°</td></tr></tbody></table>`};
+$('lGo').onclick=renderLich;
+$('lunGo').onclick=()=>{const r=lunar2solar(+$('lunD').value,+$('lunM').value,+$('lunY').value,$('lunL').checked);if(!r){$('lOut').innerHTML='<div class="warn">Không có ngày âm lịch này (kiểm tra tháng nhuận hoặc tháng thiếu).</div>';return}$('lDate').value=`${r[2]}-${pad(r[1])}-${pad(r[0])}`;renderLich()};
+/* ===== Mai Hoa ===== */
+const triSel=(id,v)=>`<select id="${id}">${TRI.map((t,i)=>`<option value="${i+1}" ${i+1==v?'selected':''}>${i+1}. ${t} (${NAT[t]})</option>`).join('')}</select>`;
+const mInputs=()=>{const m=$('mMode').value;let h='';
+ if(m==='gio'||m==='phut')h=`<label for="mDate">Ngày dương lịch</label><input type="date" id="mDate" value="${today}"><label for="mTime">Giờ phút</label><input type="time" id="mTime" value="${nowT}">`;
+ if(m==='so')h=`<label for="mA">Số thứ nhất (thượng quái)</label><input type="number" id="mA" value="8"><label for="mB">Số thứ hai (để trống: dùng số giờ hiện tại phối với số thứ nhất)</label><input type="number" id="mB"><label for="mH">Số giờ (Tý 1 … Hợi 12)</label><input type="number" id="mH" value="${hourIdx(now.getHours())+1}" min="1" max="12">`;
+ if(m==='tay')h=`<label for="mU">Thượng quái</label>${triSel('mU',1)}<label for="mL">Hạ quái</label>${triSel('mL',1)}<label for="mD">Hào động</label><select id="mD">${[1,2,3,4,5,6].map(i=>`<option>${i}</option>`).join('')}</select>`;
+ $('mIn').innerHTML=h};
+$('mMode').onchange=mInputs;mInputs();
+const r8=x=>mod(x,8)||8,r6=x=>mod(x,6)||6;
+let lastM=null;
+const docRefs=(c,h)=>DOCIDX[c+'-'+h]||[];
+const errFor=(c,h)=>{const n1=KW[c][0],nb=KW[bien(c,h)][0];return ERRATA.filter(e=>{const t=e[2];return t.startsWith(n1+' ')||t.startsWith(n1.replace('Thuần ','')+' ')}).filter(e=>/\d mục/.test(e[2])||e[2].includes(nb)||e[3].includes(nb)||e[4].includes(nb))};
+const renderDLVN=(c,h,steps)=>{const H=ho(c),B=bien(c,h),CB=chanhBien(c,h),k=KW[c],the=h<=3?k[1]:k[2],dung=h<=3?k[2]:k[1];
+ const tr=(n,role,mv)=>`<div class="hx">${hexSVG(n,mv)}<div class="role">${role}</div><div class="qn">${esc(KW[n][0])}</div><div class="full">${esc(full(n))}</div></div>`;
+ const rel=(a,b)=>{const A=TEL[a],B2=TEL[b];return A===B2?'tỷ hòa (tốt)':SINH[B2]===A?'Dụng sinh Thể (rất tốt)':SINH[A]===B2?'Thể sinh Dụng (hao tổn)':KHAC[A]===B2?'Thể khắc Dụng (tốn sức nhưng được)':'Dụng khắc Thể (xấu)'};
+ const refs=docRefs(c,h),ers=errFor(c,h);
+ $('mOut').innerHTML=`<p class="note">${esc(steps)}</p><div class="hexes">${tr(c,'Chánh',[h])}${tr(H,'Hộ',[])}${tr(B,'Biến',[h])}${tr(CB,'Chánh biến',[])}</div>
+ <h3>${esc(KW[c][0])} động hào ${h} – ${h<=3?'động nội tượng (trong nhà, phía sau)':'động ngoại tượng (bên ngoài, phía trước)'}</h3>
+ <table class="stack"><thead><tr><th>Quẻ</th><th>Ý chính</th></tr></thead><tbody>${[[c,'Chánh'],[H,'Hộ'],[B,'Biến'],[CB,'Chánh biến']].map(([n,r])=>`<tr><td>${r}: ${esc(KW[n][0])}</td><td>${esc(GIST[n])}</td></tr>`).join('')}</tbody></table>
+ <h3>Thể – Dụng (Mai Hoa)</h3><p>Thể: <b>${the}</b> (${TEL[the]}) · Dụng: <b>${dung}</b> (${TEL[dung]}) → ${rel(the,dung)}. Quái động <b>${dung}</b>: ${esc(TUONG[dung][1])}; ${esc(TUONG[dung][4])}; hướng ${TUONG[dung][3]}.</p>
+ <h3>Tra trong tài liệu của bạn</h3>${refs.length?`<p>Mục “${esc(KW[c][0])} – ${esc(KW[B][0])}” có ở: ${refs.map(r=>`<span class="chip">${esc(r[0])} – trang PDF ${r[1]}</span>`).join(' ')}</p>`:'<p class="note">Không tìm thấy mục này trong ba tập.</p>'}
+ ${ers.map(e=>`<div class="warn"><b>Lưu ý kiểm chứng:</b> ${esc(e[0])} tr.${e[1]}, ${esc(e[2])}: tài liệu ghi “${esc(e[3])}” → ${esc(e[4])}.</div>`).join('')}`};
+const maiHoa=()=>{const m=$('mMode').value;let up,lo,h,steps='';
+ if(m==='gio'||m==='phut'){const dt=readDT('mDate','mTime');const I=info(dt),L=I.L,Y=I.yc[1]+1,M=L.m,D=L.d,H=I.hi+1;
+  if(m==='gio'){const s1=Y+M+D,s2=s1+H;up=r8(s1);lo=r8(s2);h=r6(s2);steps=`Âm lịch ${D}/${M}/${L.y}${L.leap?' (nhuận)':''}, năm ${CHI[I.yc[1]]} = ${Y}, giờ ${CHI[I.hi]} = ${H}. Thượng: ${Y}+${M}+${D} = ${s1} → ${up}. Hạ: ${s1}+${H} = ${s2} → ${lo}. Hào động: ${s2} chia 6 → ${h}.`}
+  else{const start=I.hi===0?23:I.hi*2-1;let mins=(dt.hh-start)*60+dt.mi;if(mins<0)mins+=24*60;const P=INT(mins/10)+1,s1=M+D+H,s2=s1+P;up=r8(s1);lo=r8(s2);h=r6(s2);steps=`Tháng ${M} + ngày ${D} + giờ ${CHI[I.hi]} (${H}) = ${s1} → thượng ${up}. ${mins} phút tính từ đầu canh giờ → số ${P} (${CHI[P-1]}); ${s1}+${P} = ${s2} → hạ ${lo}, hào động ${h}.`}}
+ else if(m==='so'){const a=+$('mA').value||0,bRaw=$('mB').value,H=+$('mH').value||1;up=r8(a);if(bRaw===''){lo=r8(a+H);h=r6(a+H);steps=`Thượng ${a} → ${up}; hạ (${a}+${H}) → ${lo}; hào ${a+H} chia 6 → ${h}.`}else{const b=+bRaw;lo=r8(b);h=r6(a+b+H);steps=`Thượng ${a} → ${up}; hạ ${b} → ${lo}; hào (${a}+${b}+${H}) chia 6 → ${h}.`}}
+ else{up=+$('mU').value;lo=+$('mL').value;h=+$('mD').value;steps='Chọn tay.'}
+ const c=fromL(TL[TRI[lo-1]].concat(TL[TRI[up-1]]));lastM={c,h};renderDLVN(c,h,steps)};
+$('mGo').onclick=maiHoa;
+/* ===== Lục hào ===== */
+const TOPICS=[['Tiền bạc, kinh doanh, vay mượn','Thê Tài'],['Tìm việc văn phòng, doanh nghiệp, giấy tờ, nhà cửa, thi cử','Phụ Mẫu'],['Việc ngắn hạn, bán hàng, làm thêm','Thê Tài'],['Thăng chức, giữ chức, công an quân đội','Quan Quỷ'],['Nam hỏi tình duyên, vợ','Thê Tài'],['Nữ hỏi tình duyên, chồng','Quan Quỷ'],['Con cái, sinh nở','Tử Tôn'],['Cha mẹ, cấp trên','Phụ Mẫu'],['Anh chị em ruột','Huynh Đệ'],['Người ngoài không huyết thống, tìm người, thắng thua của người khác','Ứng'],['Bản thân, sức khỏe bản thân','Thế'],['Án, trộm cướp (Quan là thủ phạm, Ứng là nạn nhân)','Quan Quỷ']];
+$('hTopic').innerHTML=TOPICS.map((t,i)=>`<option value="${i}">${t[0]} → ${t[1]}</option>`).join('');
+$('hLines').innerHTML=[1,2,3,4,5,6].map(i=>`<select id="hl${i}" aria-label="Hào ${i}" style="flex:1 1 70px">${[6,7,8,9].map(v=>`<option ${v===7?'selected':''}>${v}</option>`).join('')}</select>`).join('');
+const alertBox=(id,t)=>{$(id).innerHTML=`<div class="warn">${esc(t)}</div>`};
+$('hToss').onclick=()=>{const a=new Uint8Array(18);crypto.getRandomValues(a);for(let i=0;i<6;i++){let s=0;for(let j=0;j<3;j++)s+=(a[i*3+j]&1)?3:2;$('hl'+(i+1)).value=s}};
+const THU=['Thanh Long','Chu Tước','Câu Trần','Đằng Xà','Bạch Hổ','Huyền Vũ'];
+const XUNG=(a,b)=>mod(a-b,12)===6;const HOP=(a,b)=>mod(a+b,12)===1;
+const state=(el,mz)=>{const s=CEL[mz];return el===s?'Vượng':SINH[s]===el?'Tướng':SINH[el]===s?'Hưu':KHAC[el]===s?'Tù':'Tử'};
+const TS_START={Mộc:11,Hỏa:2,Kim:5,Thủy:8,Thổ:8};const TS=['Trường sinh','Mộc dục','Quan đới','Lâm quan','Đế vượng','Suy','Bệnh','Tử','Mộ','Tuyệt','Thai','Dưỡng'];
+const tsAt=(el,z)=>TS[mod(z-TS_START[el],12)];
+const tienThoai=(a,b)=>{const ORD=[[11,0],[2,3],[5,6],[8,9],[1,4,7,10]];for(const o of ORD){const i=o.indexOf(a),j=o.indexOf(b);if(i>=0&&j>=0){if(o.length===2)return j>i?'hóa tiến':'hóa thoái';return mod(j-i,4)===1?'hóa tiến':mod(i-j,4)===1?'hóa thoái':''}}return''};
+const luchao=()=>{const dt=readDT('hDate','hTime');if(!dt)return;const I=info(dt),dz=I.dc[1],dcan=I.dc[0],mz=I.tm;
+ const v=[1,2,3,4,5,6].map(i=>+$('hl'+i).value),l=v.map(x=>x%2),mv=v.map((x,i)=>x===6||x===9?i+1:0).filter(Boolean);
+ const n=fromL(l),[pt,the,lab]=PAL[n],pel=TEL[pt],ung=mod(the+2,6)+1,br=branches(n);
+ const b=mv.length?bien(n,mv):null,bbr=b?branches(b):null;
+ const ts=mod(dz-dcan,12),kv=[mod(ts+10,12),mod(ts+11,12)];
+ const rows=br.map((z,i)=>{const el=CEL[z];return{i:i+1,z,el,lt:ltOf(pel,el),yang:l[i],mv:mv.includes(i+1),st:state(el,mz)}});
+ const ts0={0:0,1:0,2:1,3:1,4:2,5:3,6:4,7:4,8:5,9:5}[dcan];rows.forEach((r,i)=>r.thu=THU[(ts0+i)%6]);
+ const pure=fromL(TL[pt].concat(TL[pt])),pbr=branches(pure),have=new Set(rows.map(r=>r.lt));const phuc={};
+ pbr.forEach((z,i)=>{const lt=ltOf(pel,CEL[z]);if(!have.has(lt))phuc[i+1]=`${lt} ${CHI[z]} ${CEL[z]}`});
+ const topic=TOPICS[+$('hTopic').value],dungName=topic[1];
+ let dungRows=dungName==='Thế'?rows.filter(r=>r.i===the):dungName==='Ứng'?rows.filter(r=>r.i===ung):rows.filter(r=>r.lt===dungName);
+ const notes=r=>{const a=[];if(kv.includes(r.z))a.push('tuần không');if(XUNG(r.z,mz))a.push('nguyệt phá');if(XUNG(r.z,dz))a.push(!r.mv&&(r.st==='Vượng'||r.st==='Tướng')?'ám động (nhật xung)':'nhật xung');if(HOP(r.z,dz))a.push('nhật hợp');if(CEL[dz]===r.el)a.push('nhật phù');else if(SINH[CEL[dz]]===r.el)a.push('nhật sinh');else if(KHAC[CEL[dz]]===r.el)a.push('nhật khắc');const t=tsAt(r.el,dz);if(['Trường sinh','Đế vượng','Mộ','Tuyệt'].includes(t))a.push(t+' tại ngày');return a.join(', ')};
+ const bcell=r=>{if(!r.mv)return'';const z=bbr[r.i-1],el=CEL[z],lt=ltOf(pel,el);let x=`${lt} ${CHI[z]} ${el}`;const rel=el===r.el?tienThoai(r.z,z):SINH[el]===r.el?'hồi đầu sinh':KHAC[el]===r.el?'hồi đầu khắc':'';const t=tsAt(r.el,z);if(['Trường sinh','Mộ','Tuyệt'].includes(t))x+=`, hóa ${t.toLowerCase()}`;if(kv.includes(z))x+=', hóa không';return x+(rel?`, ${rel}`:'')};
+ const table=`<div class="scroll"><table><thead><tr><th>Hào</th><th>Lục thú</th><th>Vạch</th><th>Lục thân – Chi</th><th></th><th>Vượng suy</th><th>Biến</th><th>Ghi chú</th></tr></thead><tbody>${rows.slice().reverse().map(r=>`<tr${dungRows.includes(r)?' style="background:var(--yel)"':''}><td>${r.i}${phuc[r.i]?`<div class="note">phục: ${phuc[r.i]}</div>`:''}</td><td>${r.thu}</td><td class="${r.mv?'mv':''}">${r.yang?'▅▅▅':'▅ ▅'} ${r.mv?(r.yang?'O':'X'):''}</td><td>${r.lt} ${CHI[r.z]} ${r.el}</td><td class="ok">${r.i===the?'Thế':r.i===ung?'Ứng':''}</td><td>${r.st}</td><td>${bcell(r)}</td><td class="note">${notes(r)}</td></tr>`).join('')}</tbody></table></div>`;
+ const del=dungRows[0]?dungRows[0].el:null;let summary='';
+ if(!dungRows.length){summary=`Dụng thần <b>${dungName}</b> không hiện trong quẻ${Object.values(phuc).some(p=>p.startsWith(dungName))?' – xem hào phục thần':''}.`}
+ else{const nguyen=Object.keys(SINH).find(k=>SINH[k]===del),ky=Object.keys(KHAC).find(k=>KHAC[k]===del),cuu=Object.keys(SINH).find(k=>SINH[k]===ky);
+  const d=dungRows.find(r=>r.mv)||dungRows[0],T=rows[the-1],good=x=>x==='Vượng'||x==='Tướng';
+  const flag=r=>{const nt=notes(r);return(nt.includes('tuần không')||nt.includes('nguyệt phá'))?' nhưng gặp '+nt.split(', ').filter(x=>x==='tuần không'||x==='nguyệt phá').join(', '):''};
+  summary=`Dụng thần: <b>${dungName==='Thế'||dungName==='Ứng'?dungName:d.lt} ${CHI[d.z]} ${d.el}</b> (hào ${d.i}), ${d.st.toLowerCase()} ở tháng${flag(d)}. Nguyên thần ${nguyen}, Kỵ thần ${ky}, Cừu thần ${cuu}.<br>Thế hào ${the}: ${T.lt} ${CHI[T.z]} ${T.el}, ${T.st.toLowerCase()}${flag(T)}.<br><b>Gợi ý theo nguyên tắc khung (Bốc Dịch Bỏ Túi):</b> ${good(d.st)&&good(T.st)&&!flag(d)&&!flag(T)?'Dụng vượng, Thế vượng → nghiêng về thành.':!good(d.st)||flag(d)?'Dụng suy hoặc bị không/phá → việc khó thành ở hiện tại; xem ứng kỳ khi Dụng được sinh, xuất không, điền thực.':'Dụng được nhưng Thế yếu → việc có thể thành mà bản thân hao tổn; việc xa thì Thế hưu vẫn dùng được.'}`;
+  const mvR=rows.filter(r=>r.mv);if(mvR.length)summary+=`<br>Hào động: ${mvR.map(r=>`${r.lt} ${CHI[r.z]} (${r.el===del?'đồng hành Dụng':SINH[r.el]===del?'Nguyên thần động – sinh Dụng':KHAC[r.el]===del?'Kỵ thần động – khắc Dụng':r.el===cuu?'Cừu thần động':'tiết/hao Dụng'})`).join('; ')}.`}
+ $('hOut').innerHTML=`<div class="hexes" style="grid-template-columns:repeat(2,minmax(0,160px))"><div class="hx">${hexSVG(n,mv)}<div class="role">Quẻ chủ</div><div class="qn">${esc(KW[n][0])}</div><div class="full">Cung ${pt} (${pel}) – ${lab}</div></div>${b?`<div class="hx">${hexSVG(b)}<div class="role">Quẻ biến</div><div class="qn">${esc(KW[b][0])}</div><div class="full">${esc(full(b))}</div></div>`:''}</div>
+ <p>Ngày <b>${cc(...I.dc)}</b>, tháng (tiết khí) <b>${CHI[mz]}</b> · tuần không: <b>${CHI[kv[0]]}, ${CHI[kv[1]]}</b></p>${table}<div class="card" style="margin-top:14px">${summary}</div>
+ <p class="note">Theo nguyên tắc tài liệu: mỗi quẻ chỉ một Dụng thần; hào biến chỉ tác động lên hào động sinh ra nó; phục thần không tác động phi thần; vòng trường sinh chỉ xét tại Nhật, không xét tại Nguyệt.</p>`};
+$('hGo').onclick=luchao;
+$('hFromM').onclick=()=>{if(!lastM){alertBox('hOut','Hãy lập quẻ ở mục Mai Hoa trước.');return}const l=lines(lastM.c);for(let i=0;i<6;i++)$('hl'+(i+1)).value=l[i]?(i+1===lastM.h?9:7):(i+1===lastM.h?6:8);luchao()};
+/* ===== Giờ cúng ===== */
+const opts=sel=>Array.from({length:64},(_,i)=>`<option value="${i+1}" ${i+1===sel?'selected':''}>${esc(KW[i+1][0])}</option>`).join('');
+$('gPair').innerHTML='<option value="">— tự chọn bên dưới —</option>'+GIOPAIRS.map(([a,b,c])=>`<option value="${a}-${b}">${esc(KW[a][0])} – ${esc(KW[b][0])} (${c} lần)</option>`).join('');
+$('gA').innerHTML=opts(22);$('gB').innerHTML=opts(27);
+$('gPair').onchange=()=>{const v=$('gPair').value;if(v){const [a,b]=v.split('-');$('gA').value=a;$('gB').value=b}};
+$('gPair').value='22-27';
+const HRS=['23h–1h','1h–3h','3h–5h','5h–7h','7h–9h','9h–11h','11h–13h','13h–15h','15h–17h','17h–19h','19h–21h','21h–23h'];
+const timeQ=(Y,M,D,H,P)=>{const s1=P?M+D+H:Y+M+D,s2=s1+(P||H);return[fromL(TL[TRI[r8(s2)-1]].concat(TL[TRI[r8(s1)-1]])),r6(s2)]};
+$('gGo').onclick=()=>{const A=+$('gA').value,B=+$('gB').value,diff=lines(A).map((x,i)=>x!==lines(B)[i]?i+1:0).filter(Boolean);
+ if(diff.length!==1){alertBox('gOut',`${KW[A][0]} → ${KW[B][0]} khác ${diff.length} hào, không phải một quẻ giờ (Chánh–Biến chỉ một hào động).`);return}
+ const h=diff[0],[y0,m0,d0]=$('gFrom').value.split('-').map(Number),start=jdFromDate(d0,m0,y0),N=Math.min(400,+$('gDays').value||60),res=[];
+ for(let k=0;k<N;k++){const [d,m,y]=jdToDate(start+k),L=solar2lunar(d,m,y),Y=mod(L.y+8,12)+1;for(let hi=0;hi<12;hi++){const [q,hh]=timeQ(Y,L.m,L.d,hi+1);if(q===A&&hh===h)res.push([d,m,y,L,hi,'cả canh giờ']);if($('gMin').checked)for(let P=1;P<=12;P++){const [q2,h2]=timeQ(0,L.m,L.d,hi+1,P);if(q2===A&&h2===h){const st=(hi===0?23:hi*2-1)*60+(P-1)*10;res.push([d,m,y,L,hi,`phút ${pad(INT(st/60)%24)}:${pad(st%60)}–${pad(INT((st+9)/60)%24)}:${pad((st+9)%60)}`])}}}}
+ $('gOut').innerHTML=`<div class="hexes" style="grid-template-columns:repeat(2,minmax(0,140px))"><div class="hx">${hexSVG(A,[h])}<div class="qn">${esc(KW[A][0])}</div><div class="role">động hào ${h}</div></div><div class="hx">${hexSVG(B,[h])}<div class="qn">${esc(KW[B][0])}</div><div class="role">Biến</div></div></div>
+ <h3>${res.length} thời điểm trong ${N} ngày</h3>${res.length?`<div class="scroll"><table class="stack"><thead><tr><th>Dương lịch</th><th>Âm lịch</th><th>Giờ</th><th>Khung</th></tr></thead><tbody>${res.slice(0,300).map(([d,m,y,L,hi,t])=>`<tr><td>${pad(d)}/${pad(m)}/${y}</td><td>${L.d}/${L.m}${L.leap?'n':''}</td><td>${CHI[hi]} (${HRS[hi]})</td><td>${t}</td></tr>`).join('')}</tbody></table></div>`:'<p class="note">Không có giờ nào khớp; tăng số ngày hoặc bật tìm theo phút.</p>'}
+ <p class="note">Giờ Tý (23h–1h) tính theo ngày âm lịch của ngày dương lịch đang xét.</p>`};
+/* ===== Kiểm chứng ===== */
+const cat=[...new Set(ERRATA.map(e=>e[5]))];
+$('kOut').innerHTML=`<p>Đã đối chiếu tự động mọi hình quẻ vẽ (≈550 bộ Chánh–Hộ–Biến–Chánh biến), hơn 1.400 tiêu đề và cặp giờ cúng, 9 lá quẻ Lục hào và các ví dụ tính toán; từng lỗi dưới đây đã được xem lại trên ảnh trang gốc. Số trang là số trang của file PDF (Tập 1, Tập 2: trang in = trang PDF − 1).</p>
+<div class="chips" style="margin:10px 0">${cat.map(c=>`<span class="chip">${esc(c)}: ${ERRATA.filter(e=>e[5]===c).length}</span>`).join('')}</div>
+<div class="scroll"><table class="stack"><thead><tr><th>Tài liệu</th><th>Trang</th><th>Mục</th><th>Tài liệu ghi</th><th>Đúng là</th><th>Loại</th></tr></thead><tbody>${ERRATA.map(e=>`<tr><td>${esc(e[0])}</td><td>${e[1]}</td><td>${esc(e[2])}</td><td>${esc(e[3])}</td><td>${esc(e[4])}</td><td>${esc(e[5])}</td></tr>`).join('')}</tbody></table></div>
+<h3>Những gì đúng</h3><p>Phần còn lại khớp hoàn toàn với Kinh Dịch: bảng tên 64 quẻ, cách lập Hộ quẻ, Biến quẻ, quy tắc “Chánh biến” của Dịch lý Việt Nam (quái động đặt trên quái đã biến), các ví dụ lập quẻ theo giờ, số, âm thanh, dãy số, chữ viết, hiện tượng; phép cỏ thi; 8/9 lá quẻ Lục hào trong Bốc Dịch Bỏ Túi (nạp giáp, lục thân, Thế Ứng, lục thú, tuần không, ngày can chi). Gần như toàn bộ cặp “giờ cúng” là quẻ 1 hào động hợp lệ.</p>
+<h3>Phần không kiểm chứng được</h3><p>Các luận đoán về nhà cửa, gia đạo, “vong”, cúng giải là suy diễn từ tượng quẻ theo kinh nghiệm của tác giả, không có dữ liệu đối chứng nên không thể xác nhận đúng sai. Tài liệu “Phần âm theo Dịch lý Việt Nam” trùng phần lớn nội dung với Tập 2 (cả lỗi), nên đây không phải hai nguồn độc lập.</p>`;
+/* ===== Tra quẻ ===== */
+$('qOut').innerHTML=`<div class="scroll"><table class="stack"><thead><tr><th>Quái</th><th>Tượng</th><th>Ngũ hành</th><th>Người</th><th>Thân thể</th><th>Hướng</th><th>Vật, vị trí trong nhà</th></tr></thead><tbody>${TRI.map((t,i)=>`<tr><td><b>${i+1}. ${t}</b></td><td>${TUONG[t][0]}</td><td>${TEL[t]}</td><td>${TUONG[t][1]}</td><td>${TUONG[t][2]}</td><td>${TUONG[t][3]}</td><td>${TUONG[t][4]}</td></tr>`).join('')}</tbody></table></div>
+<h3>64 quẻ</h3><input id="qFind" placeholder="Tìm tên quẻ…" style="max-width:360px"><div class="hexes" id="qGrid" style="margin-top:12px;grid-template-columns:repeat(auto-fill,minmax(150px,1fr))"></div>`;
+const qGrid=()=>{const f=($('qFind').value||'').toLowerCase();$('qGrid').innerHTML=Array.from({length:64},(_,i)=>i+1).filter(n=>full(n).toLowerCase().includes(f)).map(n=>`<div class="hx">${hexSVG(n)}<div class="role">${n} · Cung ${PAL[n][0]} – ${PAL[n][2]}</div><div class="qn">${esc(KW[n][0])}</div><div class="full">${esc(full(n))}</div><div class="note">${esc(GIST[n])}</div></div>`).join('')};
+$('qFind').oninput=qGrid;qGrid();
+let saved='lich';try{saved=localStorage.getItem('vxt_dl')||'lich'}catch(_){}
+show(saved);renderLich();maiHoa();luchao();
+}
 // ---------- tabs ----------
-document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{try{b.scrollIntoView({inline:'center',block:'nearest'})}catch(_){};
  document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('on',x===b));
  document.querySelectorAll('section').forEach(s=>s.classList.toggle('on',s.id===b.dataset.t));window.scrollTo(0,0)});
 
@@ -1415,6 +1674,10 @@ cards.push(['Đường bay của phi tinh?','Trung → Càn → Đoài → Cấn
 ['Cách chọn vật phẩm cho người sát nhất?','Theo dụng thần Bát tự'],['Bể cá kỵ đặt ở đâu?','Dưới tượng thần, bếp, phòng ăn; không dùng bể tam giác'],
 ['Hòn non bộ nên mấy hòn?','Số lẻ 3, 5, 7 và không bằng nhau'],
 ['Tam yếu của Bát Trạch Minh Kính?','Cửa chính, phòng chủ, bếp'],
+['Số tiên thiên của 8 quái?','Càn 1, Đoài 2, Ly 3, Chấn 4, Tốn 5, Khảm 6, Cấn 7, Khôn 8'],
+['Mai Hoa: hào động tính thế nào?','Tổng số chia 6 lấy dư (dư 0 là hào 6)'],['Hộ quẻ lấy từ các hào nào?','Hào 2–3–4 làm hạ quái, 3–4–5 làm thượng quái'],
+['Thể và Dụng trong Mai Hoa?','Quái không động là Thể, quái có hào động là Dụng'],['Lục thân trong Lục hào?','Huynh Đệ, Tử Tôn, Thê Tài, Quan Quỷ, Phụ Mẫu'],
+['Lục hào: hỏi tiền bạc thì Dụng thần là?','Thê Tài'],['Lục hào: nữ hỏi chồng, Dụng thần là?','Quan Quỷ'],
 ['Tử vi: 12 cung bắt đầu từ cung nào?','Mệnh, rồi Phụ Mẫu, Phúc Đức… đi ngược chiều'],['Thủy nhị cục, Mộc tam cục, Kim ?, Thổ ?, Hỏa ?','Kim tứ cục, Thổ ngũ cục, Hỏa lục cục'],
 ['Tam phương tứ chính của Mệnh?','Mệnh, Tài Bạch, Quan Lộc, Thiên Di'],['Tứ hóa gồm?','Hóa Lộc, Hóa Quyền, Hóa Khoa, Hóa Kỵ'],
 ['Đại hạn Tử vi đi thuận khi nào?','Dương nam, âm nữ'],['Chòm Tử Vi gồm mấy sao?','6: Tử Vi, Thiên Cơ, Thái Dương, Vũ Khúc, Thiên Đồng, Liêm Trinh'],['Trụ năm Bát tự đổi khi nào?','Lúc tiết Lập Xuân (~4/2)'],
