@@ -15,11 +15,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.dep.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
       - name: Ghi phiên bản
@@ -29,8 +26,16 @@ jobs:
           sed -i "s/const APP_VERSION='__APP_VERSION__'/const APP_VERSION='$V'/" app/index.html
           rm -f app/icon.ico
       - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v4
         with:
           path: app
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.dep.outputs.page_url }}
+    steps:
       - id: dep
         uses: actions/deploy-pages@v4
