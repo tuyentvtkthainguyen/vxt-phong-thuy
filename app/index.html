@@ -3,6 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#9b2c2c">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="VXT Phong Thủy">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="icon-192.png">
 <title>VXT Phong Thủy – Huyền Không · Bát trạch · Bát tự</title>
 <style>
 :root{--bg:#faf7f2;--card:#fff;--ink:#2b2622;--mut:#7a6f66;--line:#e6ddd2;--acc:#9b2c2c;--acc2:#b7791f;
@@ -1253,20 +1261,32 @@ const isDev=APP_VERSION.startsWith('__');
 $('appVer').textContent=isDev?'web':APP_VERSION;
 const vnum=v=>String(v).replace(/^v/,'').split('.').map(x=>parseInt(x)||0);
 const newer=(a,b)=>{const x=vnum(a),y=vnum(b);for(let i=0;i<3;i++){if((x[i]||0)!==(y[i]||0))return (x[i]||0)>(y[i]||0)}return false};
+const PLAT=window.Capacitor?'apk':location.protocol==='file:'?'exe':'web';
 async function checkUpdate(manual){
+ if(PLAT==='web'){if(manual){try{const r=await navigator.serviceWorker?.getRegistration();if(r){await r.update();$('updMsg').textContent=r.waiting?'có bản mới, đang áp dụng…':'đang dùng bản mới nhất'}else $('updMsg').textContent='bản web luôn mới nhất'}catch(e){$('updMsg').textContent='không kiểm tra được'}}return}
  if(manual)$('updMsg').textContent='đang kiểm tra…';
  try{const r=await fetch(`https://api.github.com/repos/${REPO}/releases/latest`,{headers:{Accept:'application/vnd.github+json'}});
   if(!r.ok)throw new Error(r.status);const j=await r.json(),tag=j.tag_name||'';
   if(!isDev&&newer(tag,APP_VERSION)){
-   const exe=(j.assets||[]).find(a=>/\.exe$/i.test(a.name)),url=exe?exe.browser_download_url:j.html_url;
-   $('updBar').innerHTML=`🔔 Có bản mới <b>${tag}</b> (đang dùng ${APP_VERSION}).<a class="btn" href="${url}" target="_blank" rel="noopener">Tải bản cập nhật</a><a href="${j.html_url}" target="_blank" rel="noopener">Xem thay đổi</a><button class="btn alt" id="updLater">Để sau</button><div class="mut" style="margin-top:4px">Tải xong, chạy file cài để ghi đè bản cũ; dữ liệu và biểu tượng giữ nguyên.</div>`;
+   const ext=PLAT==='apk'?/\.apk$/i:/\.exe$/i,exe=(j.assets||[]).find(a=>ext.test(a.name)),url=exe?exe.browser_download_url:j.html_url;
+   $('updBar').innerHTML=`🔔 Có bản mới <b>${tag}</b> (đang dùng ${APP_VERSION}).<a class="btn" href="${url}" target="_blank" rel="noopener">Tải bản cập nhật</a><a href="${j.html_url}" target="_blank" rel="noopener">Xem thay đổi</a><button class="btn alt" id="updLater">Để sau</button><div class="mut" style="margin-top:4px">${PLAT==='apk'?'Tải xong, mở file APK để cài đè bản cũ.':'Tải xong, chạy file cài để ghi đè bản cũ; dữ liệu và biểu tượng giữ nguyên.'}</div>`;
    $('updBar').style.display='block';$('updLater').onclick=()=>{$('updBar').style.display='none';try{localStorage.setItem('vxt_skip',tag)}catch(e){}};
    $('updMsg').textContent='';
   }else $('updMsg').textContent=manual?(isDev?`bản mới nhất: ${tag}`:'đang dùng bản mới nhất'):'';
  }catch(e){$('updMsg').textContent=manual?'không kiểm tra được (cần mạng)':''}
 }
 $('updCheck').onclick=e=>{e.preventDefault();checkUpdate(true)};
-if(!isDev){let skip='';try{skip=localStorage.getItem('vxt_skip')||''}catch(e){}
+// PWA: service worker để chạy offline và tự cập nhật
+if(PLAT==='web'&&'serviceWorker' in navigator&&location.protocol==='https:'&&!isDev){
+ navigator.serviceWorker.register('sw.js').then(reg=>{
+  const ask=w=>{$('updBar').innerHTML='🔔 Có bản mới.<button class="btn" id="updNow">Cập nhật ngay</button><button class="btn alt" id="updLater">Để sau</button>';$('updBar').style.display='block';
+   $('updNow').onclick=()=>w.postMessage('skip');$('updLater').onclick=()=>$('updBar').style.display='none'};
+  if(reg.waiting&&navigator.serviceWorker.controller)ask(reg.waiting);
+  reg.addEventListener('updatefound',()=>{const w=reg.installing;w.addEventListener('statechange',()=>{if(w.state==='installed'&&navigator.serviceWorker.controller)ask(w)})});
+ }).catch(()=>{});
+ let reloaded=false;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!reloaded){reloaded=true;location.reload()}});
+}
+if(!isDev&&PLAT!=='web'){let skip='';try{skip=localStorage.getItem('vxt_skip')||''}catch(e){}
  setTimeout(()=>checkUpdate(false).then(()=>{if(skip&&$('updBar').innerHTML.includes('<b>'+skip+'</b>'))$('updBar').style.display='none'}),1500)}
 // ---------- tabs ----------
 document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{

@@ -12,6 +12,14 @@ Phần mềm học và tra cứu phong thủy chạy trên Windows, hoàn toàn 
 
 Vào mục **Releases** bên phải trang, tải `VXT_PhongThuy_Setup_x.y.z.exe` rồi chạy. Không cần quyền quản trị.
 
+## Cài trên điện thoại
+
+- **Android:** tải file `VXT_PhongThuy_x.y.z.apk` ở mục Releases, mở ra để cài (cho phép "Cài ứng dụng không rõ nguồn gốc" nếu máy hỏi).
+- **iPhone / iPad:** mở https://tuyentvtkthainguyen.github.io/vxt-phong-thuy/ bằng **Safari** → nút Chia sẻ → **Thêm vào Màn hình chính**.
+- **Android (cách 2):** mở link trên bằng **Chrome** → menu ⋮ → **Cài đặt ứng dụng**.
+
+Bản cài từ web chạy offline và tự cập nhật khi có bản mới.
+
 ## Cập nhật tự động
 
 Phần mềm tự hỏi GitHub (chỉ một yêu cầu đọc, không gửi dữ liệu người dùng) xem có bản Release mới hơn không và hiện nút **Tải bản cập nhật**. Tính năng này chỉ chạy khi repo để **Public**. Có thể bấm **Kiểm tra cập nhật** ở đầu trang bất cứ lúc nào.

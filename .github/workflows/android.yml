@@ -1,0 +1,77 @@
+name: Build Android APK
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Số phiên bản
+        id: ver
+        run: |
+          V="${GITHUB_REF_NAME#v}"
+          [[ "$V" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || V="1.0.0"
+          IFS=. read MA MI PA <<< "$V"
+          echo "version=$V" >> $GITHUB_OUTPUT
+          echo "code=$((MA*10000+MI*100+PA))" >> $GITHUB_OUTPUT
+
+      - name: Chuẩn bị giao diện
+        run: |
+          mkdir -p mobile/www
+          cp app/index.html app/*.png mobile/www/
+          sed -i "s/__APP_VERSION__/${{ steps.ver.outputs.version }}/g" mobile/www/index.html
+
+      - name: Tạo dự án Capacitor
+        working-directory: mobile
+        run: |
+          npm init -y >/dev/null
+          npm i @capacitor/core@6 @capacitor/cli@6 @capacitor/android@6 @capacitor/assets@3
+          cat > capacitor.config.json <<'J'
+          {"appId":"vn.vxt.phongthuy","appName":"VXT Phong Thủy","webDir":"www","android":{"allowMixedContent":false}}
+          J
+          npx cap add android
+          mkdir -p assets && cp www/icon-maskable-512.png assets/icon-foreground.png && cp www/icon-512.png assets/icon-only.png
+          npx capacitor-assets generate --android --iconBackgroundColor '#faf7f2' --splashBackgroundColor '#faf7f2' || true
+          sed -i "s/versionCode 1$/versionCode ${{ steps.ver.outputs.code }}/; s/versionName \"1.0\"/versionName \"${{ steps.ver.outputs.version }}\"/" android/app/build.gradle
+          npx cap sync android
+
+      - name: Ký và build APK
+        working-directory: mobile/android
+        env:
+          KS_B64: ${{ secrets.ANDROID_KEYSTORE_B64 }}
+          KS_PASS: ${{ secrets.ANDROID_KEYSTORE_PASS }}
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleRelease --no-daemon -q
+          APK=app/build/outputs/apk/release/app-release-unsigned.apk
+          BT=$(ls -d $ANDROID_HOME/build-tools/* | sort -V | tail -1)
+          if [ -n "$KS_B64" ]; then echo "$KS_B64" | base64 -d > ks.jks; PASS="$KS_PASS"; ALIAS=vxt
+          else keytool -genkeypair -v -keystore ks.jks -alias vxt -keyalg RSA -keysize 2048 -validity 10000 -storepass vxtpass123 -keypass vxtpass123 -dname "CN=VXT, O=VXT, C=VN"; PASS=vxtpass123; ALIAS=vxt; fi
+          $BT/zipalign -f 4 $APK aligned.apk
+          $BT/apksigner sign --ks ks.jks --ks-key-alias $ALIAS --ks-pass pass:$PASS --key-pass pass:$PASS --out ../../VXT_PhongThuy_${{ steps.ver.outputs.version }}.apk aligned.apk
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: VXT_PhongThuy_APK
+          path: mobile/*.apk
+
+      - name: Gắn vào Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: mobile/*.apk
