@@ -35,6 +35,15 @@ select,input{width:100%;padding:9px;border:1px solid var(--line);border-radius:9
 .btn{padding:9px 14px;border-radius:9px;border:1px solid var(--acc);background:var(--acc);color:#fff;cursor:pointer;font-size:.92rem;margin:4px 4px 0 0}
 .btn.alt{background:transparent;color:var(--acc)}
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;max-width:420px;margin:10px auto}
+.gwrap{position:relative;width:100%;max-width:440px;aspect-ratio:1;margin:8px auto}
+.gwrap .grid{position:absolute;left:0;top:0;width:100%;max-width:none;margin:0;transition:transform .35s ease;transform-origin:50% 50%}
+.gwrap svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+.ci{position:absolute;inset:4px;display:flex;flex-direction:column;justify-content:space-between;transition:transform .35s ease}
+.rotbar{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:4px}
+.rotbar button{padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);cursor:pointer;font-size:.85rem}
+.rotbar button.on{background:var(--acc);color:#fff;border-color:var(--acc)}
+#updBar{display:none;background:var(--good-bg);border:1px solid var(--good);color:var(--ink);padding:8px 12px;border-radius:10px;margin:8px auto;max-width:860px;font-size:.9rem}
+#updBar a,#updBar button{margin-left:8px}
 .cell{position:relative;aspect-ratio:1;border:1px solid var(--line);border-radius:8px;background:var(--card);padding:4px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer}
 .cell.toa{outline:3px solid var(--mut)}.cell.huong{outline:3px solid var(--acc)}
 .cell .nm{font-size:.68rem;color:var(--mut);text-align:center;line-height:1.2}
@@ -57,7 +66,9 @@ select,input{width:100%;padding:9px;border:1px solid var(--line);border-radius:9
 <header>
 <h1>Huyền Không Phi Tinh</h1>
 <p>Huyền Không · Bát trạch · Bát tự · Vật phẩm · Ôn tập</p>
+<div class="mut" style="font-size:.75rem">Phiên bản <span id="appVer"></span> · <a href="#" id="updCheck">Kiểm tra cập nhật</a> <span id="updMsg"></span></div>
 </header>
+<div id="updBar"></div>
 <nav>
 <button data-t="hoc" class="on">📖 Học</button>
 <button data-t="lap">🧭 Lập bàn</button>
@@ -260,7 +271,7 @@ Dương (+) thì bay thuận, âm (−) thì bay nghịch.</div>
 </div>
 <div class="row">
 <div><label>Năm lưu niên</label><input id="inLN" type="number" value="2026"></div>
-<div><label>Hiển thị</label><select id="inOri"><option value="S">Nam ở trên</option><option value="N">Bắc ở trên</option></select></div>
+<div><label>Hiển thị</label><select id="inOri"><option value="S">Nam ở trên</option><option value="N">Bắc ở trên</option><option value="HD">Xoay: hướng nhà ở dưới</option><option value="HT">Xoay: hướng nhà ở trên</option></select></div>
 </div>
 <label>Loại quái</label>
 <select id="inQuai"><option value="auto">Tự động theo độ (kiêm &gt; 3° thì dùng Thế quái)</option><option value="ha">Hạ quái (chính hướng)</option><option value="the">Thế quái (kiêm hướng)</option></select>
@@ -268,8 +279,9 @@ Dương (+) thì bay thuận, âm (−) thì bay nghịch.</div>
 <div class="card">
 <div id="title" style="text-align:center;font-weight:700"></div>
 <div id="warn"></div>
-<div class="grid" id="grid"></div>
-<div class="legend">Trái: sơn tinh · Phải: hướng tinh · Dưới: vận tinh · Góc vàng: niên tinh<br>
+<div class="gwrap" id="gWrap"><div class="grid" id="grid"></div><svg id="gSvg" viewBox="-100 -100 200 200"></svg></div>
+<div class="rotbar"><button data-ro="S">Nam trên</button><button data-ro="N">Bắc trên</button><button data-ro="HD">Hướng nhà dưới</button><button data-ro="HT">Hướng nhà trên</button><button id="rotL" title="Xoay trái 15°">⟲</button><button id="rotR" title="Xoay phải 15°">⟳</button></div>
+<div class="legend" id="gCap"></div><div class="legend">Trái: sơn tinh · Phải: hướng tinh · Dưới: vận tinh · Góc vàng: niên tinh<br>
 Khung đỏ: cung hướng · Khung xám: cung tọa ·
 <span class="s-vuong">vượng</span> · <span class="s-sinh">sinh</span> · <span class="s-thoai">thoái</span> · <span class="s-tu">suy/tử</span></div>
 </div>
@@ -412,6 +424,32 @@ const COMBO={
 '8-8':'Song Bát Bạch: điền sản, tài lộc (vận 9 là thoái khí, tốt nhẹ).','8-9':'Hỏa sinh Thổ: hỷ sự, cưới hỏi, tài lộc (rất tốt ở vận 9).','9-9':'Song Cửu Tử: vận 9 cực vượng, hỷ khánh; cẩn thận hỏa.'};
 const key=(a,b)=>a<b?a+'-'+b:b+'-'+a;
 const LAST={};
+let ROT_OFF=0;
+const APP_VERSION='__APP_VERSION__';
+const REPO='tuyentvtkthainguyen/vxt-phong-thuy';
+function facingDeg(){const d=parseFloat(document.getElementById('inDeg').value);return isNaN(d)?(345+15*(+document.getElementById('inSon').value))%360:((d%360)+360)%360}
+function oriAngle(){const o=document.getElementById('inOri').value,h=facingDeg();
+ const base=o==='S'?180:o==='N'?0:o==='HD'?180-h:-h;return base+ROT_OFF}
+function oriLayout(){const a=((Math.round(oriAngle()/90)%4)+4)%4;
+ return [[6,1,8,7,5,3,2,9,4],[8,3,4,1,5,9,6,7,2],[4,9,2,3,5,7,8,1,6],[2,7,6,9,5,1,4,3,8]][a]}
+function orientGrid(c){
+ const a=oriAngle(),m=((a%90)+90)%90,k=1/(Math.abs(Math.cos(m*Math.PI/180))+Math.abs(Math.sin(m*Math.PI/180)));
+ const h0=facingDeg(),eh=Math.abs(Math.cos(h0*Math.PI/180))+Math.abs(Math.sin(h0*Math.PI/180)),sc=Math.min(k*0.97,0.74/eh),g=document.getElementById('grid');
+ g.style.transform=`rotate(${a}deg) scale(${sc})`;
+ g.querySelectorAll('.ci').forEach(e=>e.style.transform=`rotate(${-a}deg)`);
+ const h=facingDeg(),sv=document.getElementById('gSvg');
+ const P=(ang,r)=>{const t=ang*Math.PI/180;return[(r*Math.sin(t)).toFixed(1),(-r*Math.cos(t)).toFixed(1)]};
+ const fa=h+a,ta=fa+180,na=a;
+ const ah=(ang,r1,r2,col,w)=>{const[x1,y1]=P(ang,r1),[x2,y2]=P(ang,r2),[l1,l2]=P(ang-7,r2-8),[r1x,r1y]=P(ang+7,r2-8);
+  return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${col}" stroke-width="${w}" stroke-linecap="round"/><polygon points="${x2},${y2} ${l1},${l2} ${r1x},${r1y}" fill="${col}"/>`};
+ const txt=(ang,r,t,col,fs,b)=>{const[x,y]=P(ang,r);return `<text x="${x}" y="${y}" fill="${col}" font-size="${fs}" ${b?'font-weight="700"':''} text-anchor="middle" dominant-baseline="middle">${t}</text>`};
+ sv.innerHTML=`<line x1="${P(ta,72)[0]}" y1="${P(ta,72)[1]}" x2="${P(fa,72)[0]}" y2="${P(fa,72)[1]}" stroke="#9b2c2c" stroke-width="1" stroke-dasharray="3 3" opacity=".35"/>
+ ${ah(fa,78,99,'#9b2c2c',2.6)}${txt(fa+13,90,'HƯỚNG','#9b2c2c',6,1)}
+ ${txt(ta-13,90,'TỌA','#7a6f66',6,1)}
+ ${txt(na,96,'B','#c53030',8,1)}${txt(na+90,96,'Đ','var(--mut)',6)}${txt(na+180,96,'N','var(--mut)',6)}${txt(na+270,96,'T','var(--mut)',6)}`;
+ document.querySelectorAll('.rotbar [data-ro]').forEach(b=>b.classList.toggle('on',b.dataset.ro===document.getElementById('inOri').value&&!ROT_OFF));
+ const lb=document.getElementById('gCap');if(lb)lb.textContent=`Hướng ${h.toFixed(1)}° (${SON[+document.getElementById('inSon').value]}) · mũi tên đỏ chỉ hướng nhà`;
+}
 const wrap=n=>((n-1)%9+9)%9+1;
 const $=id=>document.getElementById(id);
 
@@ -494,12 +532,13 @@ function render(){
    :'<div class="key">Đang hiển thị <b>Thế quái</b>. Chọn “Hạ quái” ở mục Loại quái để so sánh.</div>';}
  $('title').textContent=`Vận ${van} · Tọa ${SON[c.toaIdx]} – Hướng ${SON[hi]} (${NGUYEN[c.pos]}) · ${the?'Thế quái':'Hạ quái'}`;
  $('warn').innerHTML=w;
- const layout=$('inOri').value==='S'?[4,9,2,3,5,7,8,1,6]:[6,1,8,7,5,3,2,9,4];
+ const layout=[6,1,8,7,5,3,2,9,4];
  $('grid').innerHTML=layout.map(p=>{
   const cls=p===c.hP?' huong':p===c.tP?' toa':'';
-  return `<div class="cell${cls}" data-p="${p}"><div class="nm">${PNAME[p]}${PDIR[p]?' · '+PDIR[p]:''}</div>
+  return `<div class="cell${cls}" data-p="${p}"><div class="ci"><div class="nm">${PNAME[p]}${PDIR[p]?' · '+PDIR[p]:''}</div>
   <div class="sh"><span class="s-${status(c.S[p],van)}">${c.S[p]}</span><span class="s-${status(c.H[p],van)}">${c.H[p]}</span></div>
-  <div class="v">${c.V[p]}</div><span class="ln">${N[p]}</span></div>`}).join('');
+  <div class="v">${c.V[p]}</div><span class="ln">${N[p]}</span></div></div>`}).join('');
+ orientGrid(c);
  document.querySelectorAll('.cell').forEach(el=>el.onclick=()=>{const t=$('lc'+el.dataset.p);if(t){t.scrollIntoView({behavior:'smooth',block:'center'});t.style.outline='2px solid var(--acc)';setTimeout(()=>t.style.outline='',1500)}});
  const cc=cachCuc(c);
  $('cuc').innerHTML=(cc.length?cc.map(x=>`<span class="tag ${x[0]}">${x[1]}</span>`).join(''):'<span class="tag n">Không có cách cục đặc biệt</span>');
@@ -590,7 +629,7 @@ function renderBT(){
  const toa=(hi+12)%24,tP=SONP[Math.floor(toa/3)],hP=SONP[Math.floor(hi/3)];
  if(m){
   $('btMenh').innerHTML=`<p>${sex==='nam'?'Nam':'Nữ'} sinh năm âm lịch ${y}: cung <b>${PNAME[m]} (${m})</b>, <b>${grp(m)} mệnh</b>.</p>`;
-  const layout=$('inOri').value==='S'?[4,9,2,3,5,7,8,1,6]:[6,1,8,7,5,3,2,9,4];
+  const layout=oriLayout();
   $('btGrid').innerHTML=layout.map(p=>{
    if(p===5)return `<div class="cell"><div class="nm">Mệnh</div><div class="v" style="font-size:1.1rem;color:var(--ink)">${PNAME[m]}</div><div class="nm">${grp(m)}</div></div>`;
    const d=DN[dnAt(m,p)];
@@ -1094,7 +1133,7 @@ function renderVP(){
   <tr><td>Dịch mã theo tuổi chủ</td><td>${chiTxt(DM_TUOI[g])}</td><td>Kích khi cần đi xa, đổi việc, mua bán nhà.</td></tr>
   <tr><td>Đá hợp tuổi ${CHI[yb]}</td><td colspan="2">${DATUOI[yb]} · Phật bản mệnh: ${PHAT[yb]}</td></tr>`;}
  $('vpHead').innerHTML=`Vận ${c.van} · Hướng ${SON[hi]} (${PDIR[hP]}) · Năm ${LAST.ln}${c.the?' · Thế quái':''}`;
- const layout=$('inOri').value==='S'?[4,9,2,3,5,7,8,1,6]:[6,1,8,7,5,3,2,9,4];
+ const layout=oriLayout();
  $('vpGrid').innerHTML=layout.map(p=>{
   if(p===5)return `<div class="cell" data-p="5"><div class="nm">Trung cung</div><div class="v" style="font-size:.8rem;color:var(--ink)">${c.S[5]} ${c.H[5]} · ${c.V[5]}</div><div class="nm">niên ${N[5]}</div></div>`;
   const st=starTips(p,c,N),tg=tags[p]||[];
@@ -1202,6 +1241,33 @@ $('lotSave').onclick=()=>{try{$('lotImg').src=lotCv.toDataURL('image/jpeg',.9);$
 window.drawLot=drawLot;
 
 const _render2=render;render=function(){_render2();drawLot()};
+// ---------- xoay tinh bàn ----------
+try{const o=localStorage.getItem('vxt_ori');if(o)$('inOri').value=o}catch(e){}
+document.querySelectorAll('.rotbar [data-ro]').forEach(b=>b.onclick=()=>{$('inOri').value=b.dataset.ro;ROT_OFF=0;try{localStorage.setItem('vxt_ori',b.dataset.ro)}catch(e){}render()});
+$('inOri').addEventListener('change',()=>{ROT_OFF=0;try{localStorage.setItem('vxt_ori',$('inOri').value)}catch(e){}});
+$('rotL').onclick=()=>{ROT_OFF-=15;render()};$('rotR').onclick=()=>{ROT_OFF+=15;render()};
+render();
+
+// ---------- kiểm tra cập nhật ----------
+const isDev=APP_VERSION.startsWith('__');
+$('appVer').textContent=isDev?'web':APP_VERSION;
+const vnum=v=>String(v).replace(/^v/,'').split('.').map(x=>parseInt(x)||0);
+const newer=(a,b)=>{const x=vnum(a),y=vnum(b);for(let i=0;i<3;i++){if((x[i]||0)!==(y[i]||0))return (x[i]||0)>(y[i]||0)}return false};
+async function checkUpdate(manual){
+ if(manual)$('updMsg').textContent='đang kiểm tra…';
+ try{const r=await fetch(`https://api.github.com/repos/${REPO}/releases/latest`,{headers:{Accept:'application/vnd.github+json'}});
+  if(!r.ok)throw new Error(r.status);const j=await r.json(),tag=j.tag_name||'';
+  if(!isDev&&newer(tag,APP_VERSION)){
+   const exe=(j.assets||[]).find(a=>/\.exe$/i.test(a.name)),url=exe?exe.browser_download_url:j.html_url;
+   $('updBar').innerHTML=`🔔 Có bản mới <b>${tag}</b> (đang dùng ${APP_VERSION}).<a class="btn" href="${url}" target="_blank" rel="noopener">Tải bản cập nhật</a><a href="${j.html_url}" target="_blank" rel="noopener">Xem thay đổi</a><button class="btn alt" id="updLater">Để sau</button><div class="mut" style="margin-top:4px">Tải xong, chạy file cài để ghi đè bản cũ; dữ liệu và biểu tượng giữ nguyên.</div>`;
+   $('updBar').style.display='block';$('updLater').onclick=()=>{$('updBar').style.display='none';try{localStorage.setItem('vxt_skip',tag)}catch(e){}};
+   $('updMsg').textContent='';
+  }else $('updMsg').textContent=manual?(isDev?`bản mới nhất: ${tag}`:'đang dùng bản mới nhất'):'';
+ }catch(e){$('updMsg').textContent=manual?'không kiểm tra được (cần mạng)':''}
+}
+$('updCheck').onclick=e=>{e.preventDefault();checkUpdate(true)};
+if(!isDev){let skip='';try{skip=localStorage.getItem('vxt_skip')||''}catch(e){}
+ setTimeout(()=>checkUpdate(false).then(()=>{if(skip&&$('updBar').innerHTML.includes('<b>'+skip+'</b>'))$('updBar').style.display='none'}),1500)}
 // ---------- tabs ----------
 document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{
  document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('on',x===b));

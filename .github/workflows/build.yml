@@ -27,6 +27,13 @@ jobs:
           if ($v -match '^v(\d+\.\d+\.\d+)$') { $v = $Matches[1] } else { $v = "1.0.0" }
           "version=$v" >> $env:GITHUB_OUTPUT
 
+      - name: Ghi số phiên bản vào phần mềm
+        shell: pwsh
+        run: |
+          $f = "app/index.html"
+          $t = [IO.File]::ReadAllText($f)
+          [IO.File]::WriteAllText($f, $t.Replace("__APP_VERSION__", "${{ steps.ver.outputs.version }}"), (New-Object Text.UTF8Encoding $false))
+
       - name: Biên dịch Setup.exe
         shell: pwsh
         run: |
