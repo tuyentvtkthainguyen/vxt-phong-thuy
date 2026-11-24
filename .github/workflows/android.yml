@@ -16,7 +16,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: 21
@@ -40,13 +40,12 @@ jobs:
         working-directory: mobile
         run: |
           npm init -y >/dev/null
-          npm i @capacitor/core@6 @capacitor/cli@6 @capacitor/android@6 @capacitor/assets@3
+          npm i @capacitor/core@6 @capacitor/cli@6 @capacitor/android@6
           cat > capacitor.config.json <<'J'
           {"appId":"vn.vxt.phongthuy","appName":"VXT Phong Thủy","webDir":"www","android":{"allowMixedContent":false}}
           J
           npx cap add android
-          mkdir -p assets && cp www/icon-maskable-512.png assets/icon-foreground.png && cp www/icon-512.png assets/icon-only.png
-          npx capacitor-assets generate --android --iconBackgroundColor '#faf7f2' --splashBackgroundColor '#faf7f2' || true
+          cp -r ../mobile-res/. android/app/src/main/res/
           sed -i "s/versionCode 1$/versionCode ${{ steps.ver.outputs.code }}/; s/versionName \"1.0\"/versionName \"${{ steps.ver.outputs.version }}\"/" android/app/build.gradle
           npx cap sync android
 
