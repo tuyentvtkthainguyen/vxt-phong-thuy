@@ -22,8 +22,8 @@ body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-ap
 header{padding:18px 16px 8px;text-align:center}
 h1{margin:0;font-size:1.35rem;color:var(--acc)}
 header p{margin:4px 0 0;color:var(--mut);font-size:.88rem}
-nav{position:sticky;top:0;z-index:5;display:flex;gap:6px;justify-content:center;padding:8px;background:var(--bg);border-bottom:1px solid var(--line)}
-nav button{flex:1;max-width:150px;padding:8px 3px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;font-size:.8rem;cursor:pointer}
+nav{position:sticky;top:0;z-index:5;display:flex;gap:6px;justify-content:safe center;overflow-x:auto;padding:8px;background:var(--bg);border-bottom:1px solid var(--line)}
+nav button{flex:1 0 auto;max-width:150px;padding:8px 8px;white-space:nowrap;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;font-size:.8rem;cursor:pointer}
 nav button.on{background:var(--acc);color:#fff;border-color:var(--acc)}
 main{max-width:860px;margin:0 auto;padding:12px}
 section{display:none}section.on{display:block}
@@ -52,6 +52,14 @@ select,input{width:100%;padding:9px;border:1px solid var(--line);border-radius:9
 .rotbar button.on{background:var(--acc);color:#fff;border-color:var(--acc)}
 #updBar{display:none;background:var(--good-bg);border:1px solid var(--good);color:var(--ink);padding:8px 12px;border-radius:10px;margin:8px auto;max-width:860px;font-size:.9rem}
 #updBar a,#updBar button{margin-left:8px}
+.tv{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(4,minmax(140px,auto));gap:2px;background:var(--ink);border:2px solid var(--ink);margin-top:8px}
+.tv>div{background:var(--card);padding:5px;font-size:.74rem;line-height:1.35;overflow-wrap:anywhere}
+.tv .ctr{grid-column:2/4;grid-row:2/4;display:flex;flex-direction:column;justify-content:center;gap:2px;text-align:center;padding:10px;font-size:.85rem}
+.tv .cn{display:flex;justify-content:space-between;font-weight:700;font-size:.7rem;color:var(--mut)}
+.tv .pl{font-weight:800;color:#2b6cb0;font-size:.78rem}.tv .mn{color:var(--acc);font-weight:700}.tvhoa{color:var(--acc2);font-weight:700}
+.tv .mut{font-size:inherit}
+.tv .me{outline:3px solid var(--acc);outline-offset:-3px}.tv .dh{background:var(--good-bg)}
+@media(max-width:520px){.tv{grid-template-rows:repeat(4,minmax(115px,auto))}.tv>div{font-size:.64rem;padding:3px}.tv .ctr{font-size:.72rem}}
 .cell{position:relative;aspect-ratio:1;border:1px solid var(--line);border-radius:8px;background:var(--card);padding:4px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer}
 .cell.toa{outline:3px solid var(--mut)}.cell.huong{outline:3px solid var(--acc)}
 .cell .nm{font-size:.68rem;color:var(--mut);text-align:center;line-height:1.2}
@@ -73,7 +81,7 @@ select,input{width:100%;padding:9px;border:1px solid var(--line);border-radius:9
 <body>
 <header>
 <h1>Huyền Không Phi Tinh</h1>
-<p>Huyền Không · Bát trạch · Bát tự · Vật phẩm · Ôn tập</p>
+<p>Huyền Không · Bát trạch · Bát tự · Tử vi · Vật phẩm · Ôn tập</p>
 <div class="mut" style="font-size:.75rem">Phiên bản <span id="appVer"></span> · <a href="#" id="updCheck">Kiểm tra cập nhật</a> <span id="updMsg"></span></div>
 </header>
 <div id="updBar"></div>
@@ -82,6 +90,7 @@ select,input{width:100%;padding:9px;border:1px solid var(--line);border-radius:9
 <button data-t="lap">🧭 Lập bàn</button>
 <button data-t="bt">☯ Bát trạch</button>
 <button data-t="tu">🀄 Bát tự</button>
+<button data-t="tv">🌟 Tử vi</button>
 <button data-t="vp">🧿 Vật phẩm</button>
 <button data-t="on">🎯 Ôn tập</button>
 </nav>
@@ -263,6 +272,16 @@ Dương (+) thì bay thuận, âm (−) thì bay nghịch.</div>
 <div class="key"><b>Ba nguyên tắc:</b> 1) Hóa sát trước, kích hoạt sau. 2) Vật phẩm theo ngũ hành của cung và của sao, không đặt bừa. 3) Ít mà đúng chỗ hơn nhiều mà sai chỗ: gương, bát quái, vật hung (đao, kiếm, đại bàng vồ mồi) đặt sai dễ phản tác dụng.</div>
 <p>Tab <b>🧿 Vật phẩm</b> tự lập bản đồ bố trí cho nhà đang chọn và tra cứu toàn bộ phần này.</p>
 </div></details>
+<details><summary>16. Tử vi đẩu số – nhập môn</summary><div>
+<p>Tử vi chia đời người thành <b>12 cung</b> xếp theo 12 địa chi, mỗi cung chủ một mặt: Mệnh, Phụ Mẫu, Phúc Đức, Điền Trạch, Quan Lộc, Nô Bộc, Thiên Di, Tật Ách, Tài Bạch, Tử Tức, Phu Thê, Huynh Đệ (đi ngược chiều kim đồng hồ từ Mệnh).</p>
+<ol class="lst"><li><b>An Mệnh, Thân:</b> từ cung Dần đếm thuận đến tháng sinh âm lịch, rồi từ đó đếm ngược theo giờ sinh ra Mệnh, đếm thuận ra Thân.</li>
+<li><b>Định Cục:</b> lấy nạp âm của can chi cung Mệnh: Thủy nhị cục, Mộc tam cục, Kim tứ cục, Thổ ngũ cục, Hỏa lục cục. Số cục cũng là tuổi bắt đầu đại hạn đầu tiên.</li>
+<li><b>An Tử Vi</b> theo ngày sinh và số cục, rồi an chòm Tử Vi (6 sao) và chòm Thiên Phủ (8 sao) đối xứng qua trục Dần–Thân.</li>
+<li><b>An phụ tinh</b> theo năm (Lộc Tồn, Kình Đà, Khôi Việt, Tứ Hóa…), tháng (Tả Hữu, Hình Diêu) và giờ (Xương Khúc, Không Kiếp, Hỏa Linh).</li>
+<li><b>Đại hạn 10 năm:</b> dương nam, âm nữ đi thuận; âm nam, dương nữ đi nghịch.</li></ol>
+<div class="key"><b>Đọc lá số:</b> xem cung Mệnh cùng <b>tam phương tứ chính</b> (Mệnh, Tài Bạch, Quan Lộc và Thiên Di xung chiếu), rồi đến Tứ hóa (Lộc, Quyền, Khoa tốt; Kỵ trở ngại), sau cùng là đại hạn đang đi.</div>
+<p>Tab <b>🌟 Tử vi</b> lập lá số tự động; dùng chung ngày giờ sinh với tab Bát tự.</p>
+</div></details>
 <p class="mut" style="text-align:center">Nội dung tổng hợp từ học thuật Huyền Không truyền thống (Thẩm thị Huyền Không), để tham khảo và học tập.</p>
 </section>
 
@@ -361,6 +380,17 @@ Khung đỏ: cung hướng · Khung xám: cung tọa ·
 <div class="card"><b>📜 Luận giải sơ bộ</b> <button class="btn alt" id="tuCopy" style="float:right;margin:0">Sao chép</button>
 <div id="tuLuan" style="clear:both"></div></div>
 <div class="card"><b>Liên hệ Bát trạch</b><div id="tuBT"></div></div>
+</section>
+
+<!-- ================= TỬ VI ================= -->
+<section id="tv">
+<div class="card">
+<label>Họ tên (không bắt buộc)</label><input id="tvName">
+<div class="row"><div><label>Ngày sinh (dương lịch)</label><input type="date" id="tvDate"></div><div><label>Giờ sinh</label><input type="time" id="tvTime"></div></div>
+<label>Giới tính</label><select id="tvSex"><option value="1">Nam</option><option value="0">Nữ</option></select>
+<button class="btn" id="tvGo">Lập lá số</button><button class="btn alt" id="tvSync">Lấy ngày giờ từ tab Bát tự</button>
+</div>
+<div id="tvOut"></div>
 </section>
 
 <!-- ================= VẬT PHẨM ================= -->
@@ -1288,6 +1318,59 @@ if(PLAT==='web'&&'serviceWorker' in navigator&&location.protocol==='https:'&&!is
 }
 if(!isDev&&PLAT!=='web'){let skip='';try{skip=localStorage.getItem('vxt_skip')||''}catch(e){}
  setTimeout(()=>checkUpdate(false).then(()=>{if(skip&&$('updBar').innerHTML.includes('<b>'+skip+'</b>'))$('updBar').style.display='none'}),1500)}
+// ---------- Tử vi đẩu số (từ VXT Dịch Lý – Tử Vi) ----------
+{
+const mod=(a,n)=>((a%n)+n)%n,pad=x=>String(x).padStart(2,'0');
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const yearCC=y=>[mod(y+6,10),mod(y+8,12)],hourIdx=h=>Math.floor((h+1)/2)%12,cc=(c,z)=>CAN[c]+' '+CHI[z];
+const napam=(c,z)=>{for(let i=0;i<60;i++)if(i%10===c&&i%12===z)return NAPAM[Math.floor(i/2)].replace(/(^| )\S/g,s=>s.toUpperCase())};
+const CUNG=['Mệnh','Phụ Mẫu','Phúc Đức','Điền Trạch','Quan Lộc','Nô Bộc','Thiên Di','Tật Ách','Tài Bạch','Tử Tức','Phu Thê','Huynh Đệ'];
+const CUC={Thủy:2,Mộc:3,Kim:4,Thổ:5,Hỏa:6};
+const TUHOA=[['Liêm Trinh','Phá Quân','Vũ Khúc','Thái Dương'],['Thiên Cơ','Thiên Lương','Tử Vi','Thái Âm'],['Thiên Đồng','Thiên Cơ','Văn Xương','Liêm Trinh'],['Thái Âm','Thiên Đồng','Thiên Cơ','Cự Môn'],['Tham Lang','Thái Âm','Hữu Bật','Thiên Cơ'],['Vũ Khúc','Tham Lang','Thiên Lương','Văn Khúc'],['Thái Dương','Vũ Khúc','Thái Âm','Thiên Đồng'],['Cự Môn','Thái Dương','Văn Khúc','Văn Xương'],['Thiên Lương','Tử Vi','Tả Phù','Vũ Khúc'],['Phá Quân','Cự Môn','Thái Âm','Tham Lang']];
+const SAO_Y={'Tử Vi':'đế tinh, uy quyền, độ lượng','Thiên Cơ':'mưu trí, linh hoạt, hay thay đổi','Thái Dương':'quang minh, danh tiếng, chủ về nam giới','Vũ Khúc':'tài tinh, quyết đoán, cứng rắn','Thiên Đồng':'phúc tinh, hòa nhã, hưởng thụ','Liêm Trinh':'thẳng thắn, nóng nảy, liên quan pháp lý','Thiên Phủ':'kho tàng, ổn định, giữ của','Thái Âm':'điền sản, kín đáo, chủ về nữ giới','Tham Lang':'ham muốn, giao thiệp, đa tài','Cự Môn':'ăn nói, thị phi, nghi ngờ','Thiên Tướng':'ấn tín, giúp đỡ, công bằng','Thiên Lương':'che chở, thọ, lương thiện','Thất Sát':'xung phong, gian khổ, quyết liệt','Phá Quân':'phá cũ lập mới, biến động'};
+function tuvi(){const v=$('tvDate').value,t=$('tvTime').value||'12:00';if(!v)return;const [y,m,d]=v.split('-').map(Number),[hh,mi]=t.split(':').map(Number);
+ const sex=+$('tvSex').value,L=solar2lunar(d,m,y,7),[yc,yz]=yearCC(L.y),hi=hourIdx(hh),duong=yc%2===0,thuan=(duong&&sex)||(!duong&&!sex);
+ const P=Array.from({length:12},()=>({stars:[],main:[],bad:[]}));const put=(z,s,k='stars')=>P[mod(z,12)][k].push(s);
+ const menh=mod(2+(L.m-1)-hi,12),than=mod(2+(L.m-1)+hi,12);
+ const canDan=[2,4,6,8,0][yc%5];const canOf=z=>mod(canDan+mod(z-2,12),10);
+ const naMenh=napam(canOf(menh),menh),cucEl=naMenh.split(' ').pop(),cuc=CUC[cucEl];
+ let k=0;while((L.d+k)%cuc)k++;const q=(L.d+k)/cuc;let tv=mod(2+q-1+(k%2?-k:k),12);
+ const tp=mod(4-tv,12);
+ [['Tử Vi',0],['Thiên Cơ',-1],['Thái Dương',-3],['Vũ Khúc',-4],['Thiên Đồng',-5],['Liêm Trinh',-8]].forEach(([s,o])=>put(tv+o,s,'main'));
+ [['Thiên Phủ',0],['Thái Âm',1],['Tham Lang',2],['Cự Môn',3],['Thiên Tướng',4],['Thiên Lương',5],['Thất Sát',6],['Phá Quân',10]].forEach(([s,o])=>put(tp+o,s,'main'));
+ const loc=[2,3,5,6,5,6,8,9,11,0][yc];put(loc,'Lộc Tồn');put(loc+1,'Kình Dương','bad');put(loc-1,'Đà La','bad');
+ const KV=[[1,7],[0,8],[11,9],[11,9],[1,7],[0,8],[6,2],[6,2],[3,5],[3,5]][yc];put(KV[0],'Thiên Khôi');put(KV[1],'Thiên Việt');
+ put(4+(L.m-1),'Tả Phù');put(10-(L.m-1),'Hữu Bật');put(10-hi,'Văn Xương');put(4+hi,'Văn Khúc');put(11-hi,'Địa Không','bad');put(11+hi,'Địa Kiếp','bad');
+ const grp=[[8,0,4],[2,6,10],[5,9,1],[11,3,7]].findIndex(g=>g.includes(yz));
+ const hl=[[2,10],[1,3],[3,10],[9,10]][grp];const ho_=thuan?hl[0]+hi:hl[0]-hi,li=thuan?hl[1]-hi:hl[1]+hi;put(ho_,'Hỏa Tinh','bad');put(li,'Linh Tinh','bad');
+ put([2,8,11,5][grp],'Thiên Mã');put([9,3,6,0][grp],'Đào Hoa');const hong=mod(3-yz,12);put(hong,'Hồng Loan');put(hong+6,'Thiên Hỷ');
+ put(9+(L.m-1),'Thiên Hình','bad');put(1+(L.m-1),'Thiên Diêu');
+ const triet=[[8,9],[6,7],[4,5],[2,3],[0,1]][yc%5];const tst=mod(yz-yc,12);const tuan=[mod(tst+10,12),mod(tst+11,12)];
+ const TH=TUHOA[yc],HN=['Hóa Lộc','Hóa Quyền','Hóa Khoa','Hóa Kỵ'];
+ const ts0={Thủy:8,Thổ:8,Mộc:11,Kim:5,Hỏa:2}[cucEl];
+ for(let i=0;i<12;i++){const z=mod(menh+i,12);P[z].cung=CUNG[i];P[z].han=cuc+10*(thuan?mod(z-menh,12):mod(menh-z,12))}
+ for(let i=0;i<12;i++)P[mod(ts0+(thuan?i:-i),12)].ts=TS[i];
+ const tag=s=>{const j=TH.indexOf(s);return j>=0?`${s} <span class="tvhoa">(${HN[j].replace('Hóa ','')})</span>`:s};
+ const POS={5:[1,1],6:[2,1],7:[3,1],8:[4,1],9:[4,2],10:[4,3],11:[4,4],0:[3,4],1:[2,4],2:[1,4],3:[1,3],4:[1,2]};
+ const age=new Date().getFullYear()-L.y+1;
+ let cells='';for(let z=0;z<12;z++){const p=P[z],[c,r]=POS[z],cur=age>=p.han&&age<p.han+10;
+  cells+=`<div style="grid-column:${c};grid-row:${r}" class="${z===menh?'me':''}${cur?' dh':''}" data-z="${z}"><div class="cn"><span>${CAN[canOf(z)]} ${CHI[z]}</span><span>${p.han}</span></div><div class="pl">${p.cung}${z===than?' · THÂN':''}</div><div class="mn">${p.main.map(tag).join(', ')||'<span class="mut">(vô chính diệu)</span>'}</div><div>${p.stars.map(tag).join(', ')}</div><div class="mut">${p.bad.join(', ')}</div><div class="mut">${p.ts}${triet.includes(z)?' · Triệt':''}${tuan.includes(z)?' · Tuần':''}</div></div>`}
+ const name=$('tvName').value.trim();
+ const center=`<div class="ctr"><b style="font-size:1.05rem">${esc(name||'Lá số tử vi')}</b><div>${d}/${m}/${y} · ${pad(hh)}:${pad(mi)}</div><div>Âm lịch ${L.d}/${L.m}${L.leap?' nhuận':''} năm ${cc(yc,yz)} · giờ ${CHI[hi]}</div><div>${duong?'Dương':'Âm'} ${sex?'Nam':'Nữ'} · Mệnh ${napam(yc,yz)}</div><div><b>${cucEl} ${['','','nhị','tam','tứ','ngũ','lục'][cuc]} cục</b></div><div class="mut">Tuổi âm ${age}</div></div>`;
+ const mm=P[menh].main.length?P[menh].main:P[mod(menh+6,12)].main;
+ const cur=Object.keys(P).find(z=>age>=P[z].han&&age<P[z].han+10);
+ const tam=[menh,mod(menh+4,12),mod(menh+8,12),mod(menh+6,12)];
+ $('tvOut').innerHTML=`<div class="tv">${cells}${center}</div>
+ <p class="legend">Khung đỏ: cung Mệnh · nền xanh: đại hạn đang đi (tuổi âm ${age}). Số góc phải mỗi cung là tuổi bắt đầu đại hạn.</p>
+ <div class="card"><b>Đọc nhanh cung Mệnh</b><p>Mệnh tại <b>${CHI[menh]}</b>${P[menh].main.length?'':' (vô chính diệu, mượn sao cung Thiên Di)'}: ${mm.map(s=>`<b>${s}</b> – ${SAO_Y[s]}`).join('; ')}. Thân cư <b>${P[than].cung}</b>.</p>
+ <p>Tam phương tứ chính của Mệnh (Mệnh, Tài Bạch, Quan Lộc, Thiên Di): ${tam.map(z=>`${P[z].cung} ${CHI[z]}: ${P[z].main.join(', ')||'vô chính diệu'}`).join(' · ')}.</p>
+ <p>Tứ hóa năm ${CAN[yc]}: ${TH.map((s,i)=>`${HN[i]} ${s}`).join(', ')}. Đại hạn ${thuan?'đi thuận':'đi nghịch'}, bắt đầu ${cuc} tuổi${cur!==undefined?`; hiện đi đại hạn cung <b>${P[cur].cung}</b> (${CHI[cur]}, ${P[cur].han}–${P[cur].han+9} tuổi): ${P[cur].main.join(', ')||'vô chính diệu'}`:''}.</p></div>
+ <p class="mut">An sao theo phép phổ biến ở Việt Nam: 14 chính tinh, Lộc Tồn, Kình Đà, Khôi Việt, Xương Khúc, Tả Hữu, Không Kiếp, Hỏa Linh, Thiên Mã, Đào Hồng Hỷ, Hình Diêu, Tứ Hóa, vòng Tràng Sinh, Tuần Triệt, Đại hạn. Chưa tính độ sáng (miếu, vượng, đắc, hãm) và các vòng Thái Tuế, Bác Sĩ. Tháng nhuận tính như tháng thường. Người sinh giờ Tý muộn (23h–24h) có trường phái tính sang ngày hôm sau.</p>`}
+const syncTv=()=>{$('tvDate').value=$('tuDate').value;$('tvTime').value=$('tuTime').value;$('tvSex').value=$('tuSex').value==='nam'?'1':'0';tuvi()};
+$('tvGo').onclick=tuvi;$('tvSync').onclick=syncTv;['tvDate','tvTime','tvSex'].forEach(id=>$(id).onchange=tuvi);
+syncTv();
+}
+
 // ---------- tabs ----------
 document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{
  document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('on',x===b));
@@ -1331,7 +1414,10 @@ cards.push(['Đường bay của phi tinh?','Trung → Càn → Đoài → Cấn
 ['Tà thương sát đâm bên trái cửa thì ai bị hại?','Nam giới (bên Thanh long)'],['Liêm đao sát hóa bằng gì?','Đôi ngựa đồng và ngũ đế bạch ngọc'],
 ['Cách chọn vật phẩm cho người sát nhất?','Theo dụng thần Bát tự'],['Bể cá kỵ đặt ở đâu?','Dưới tượng thần, bếp, phòng ăn; không dùng bể tam giác'],
 ['Hòn non bộ nên mấy hòn?','Số lẻ 3, 5, 7 và không bằng nhau'],
-['Tam yếu của Bát Trạch Minh Kính?','Cửa chính, phòng chủ, bếp'],['Trụ năm Bát tự đổi khi nào?','Lúc tiết Lập Xuân (~4/2)'],
+['Tam yếu của Bát Trạch Minh Kính?','Cửa chính, phòng chủ, bếp'],
+['Tử vi: 12 cung bắt đầu từ cung nào?','Mệnh, rồi Phụ Mẫu, Phúc Đức… đi ngược chiều'],['Thủy nhị cục, Mộc tam cục, Kim ?, Thổ ?, Hỏa ?','Kim tứ cục, Thổ ngũ cục, Hỏa lục cục'],
+['Tam phương tứ chính của Mệnh?','Mệnh, Tài Bạch, Quan Lộc, Thiên Di'],['Tứ hóa gồm?','Hóa Lộc, Hóa Quyền, Hóa Khoa, Hóa Kỵ'],
+['Đại hạn Tử vi đi thuận khi nào?','Dương nam, âm nữ'],['Chòm Tử Vi gồm mấy sao?','6: Tử Vi, Thiên Cơ, Thái Dương, Vũ Khúc, Thiên Đồng, Liêm Trinh'],['Trụ năm Bát tự đổi khi nào?','Lúc tiết Lập Xuân (~4/2)'],
 ['Ngũ hổ độn: năm Giáp/Kỷ khởi tháng Dần là?','Bính Dần'],['Ngũ thử độn: ngày Giáp/Kỷ khởi giờ Tý là?','Giáp Tý'],
 ['Khắc nhật chủ, cùng âm dương là thập thần gì?','Thất sát'],['Nhật chủ khắc, khác âm dương là?','Chính tài'],
 ['Sinh nhật chủ, khác âm dương là?','Chính ấn'],['Đại vận đi thuận khi nào?','Nam năm can dương, nữ năm can âm'],
