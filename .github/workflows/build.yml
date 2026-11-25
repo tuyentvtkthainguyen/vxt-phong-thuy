@@ -3,6 +3,8 @@ name: Build Setup
 on:
   push:
     tags: ["v*"]
+    branches: [main]
+    paths: ["VERSION"]
   workflow_dispatch:
     inputs:
       tag:
@@ -28,6 +30,8 @@ jobs:
         shell: pwsh
         run: |
           $v = "${{ inputs.tag || github.ref_name }}"
+          if ("${{ github.event_name }}" -eq "push" -and "${{ github.ref }}" -eq "refs/heads/main") { $v = "v" + (Get-Content VERSION -Raw).Trim() }
+          "tag=$v" >> $env:GITHUB_OUTPUT
           if ($v -match '^v(\d+\.\d+\.\d+)$') { $v = $Matches[1] } else { $v = "1.0.0" }
           "version=$v" >> $env:GITHUB_OUTPUT
 
@@ -49,13 +53,23 @@ jobs:
           name: VXT_PhongThuy_Setup
           path: Output/*.exe
 
-      - name: Đăng lên Releases (khi đẩy tag v*)
-        if: startsWith(github.ref, 'refs/tags/v') || inputs.tag != ''
+      - name: Tạo release mới từ file VERSION
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          $tag = "${{ inputs.tag || github.ref_name }}"
+          $tag = "${{ steps.ver.outputs.tag }}"
+          gh release view $tag --repo "${{ github.repository }}" 2>$null
+          if ($LASTEXITCODE -ne 0) { gh release create $tag --repo "${{ github.repository }}" --target "${{ github.sha }}" --title "VXT Phong Thủy $($tag.TrimStart('v'))" --notes "Bản cập nhật $tag" }
+
+      - name: Đăng lên Releases (khi đẩy tag v*)
+        if: startsWith(github.ref, 'refs/tags/v') || inputs.tag != '' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $tag = "${{ steps.ver.outputs.tag }}"
           $files = Get-ChildItem Output\*.exe | ForEach-Object { $_.FullName }
           for ($i = 1; $i -le 6; $i++) {
             gh release upload $tag $files --clobber --repo "${{ github.repository }}"
