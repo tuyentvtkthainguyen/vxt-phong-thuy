@@ -103,6 +103,14 @@ select,input{width:100%;padding:9px;border:1px solid var(--line);border-radius:9
 .opt{display:block;width:100%;text-align:left;margin:6px 0;padding:10px;border-radius:9px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer;font-size:.92rem}
 .opt.ok{background:var(--good-bg);border-color:var(--good)}.opt.no{background:var(--bad-bg);border-color:var(--bad)}
 .lst{margin:4px 0;padding-left:18px}
+details.cg{background:var(--neu-bg);border-style:dashed;margin:12px 0 0}
+details.cg summary{color:var(--ink);font-weight:600;font-size:.9rem;padding:9px 0}
+details.cg>div{font-size:.9rem}
+.gl{border-bottom:1px dotted var(--acc);cursor:help}
+#glPop{display:none;position:fixed;left:50%;bottom:14px;transform:translateX(-50%);width:min(92vw,520px);z-index:50;background:var(--card);border:1px solid var(--acc);border-radius:12px;padding:10px 34px 10px 12px;box-shadow:0 6px 24px rgba(0,0,0,.25);font-size:.92rem}
+#glPop b{color:var(--acc)}#glPop button{position:absolute;right:6px;top:6px;border:0;background:none;font-size:1.1rem;color:var(--mut);cursor:pointer}
+#glList dt{font-weight:700;color:var(--acc);margin-top:6px}#glList dd{margin:0 0 4px 0;font-size:.9rem}
+
 </style>
 </head>
 <body>
@@ -127,6 +135,7 @@ select,input{width:100%;padding:9px;border:1px solid var(--line);border-radius:9
 
 <!-- ================= HỌC ================= -->
 <section id="hoc" class="on">
+<div class="tip" style="font-size:.85rem">Mỗi bài có mục <b>📝 Chú giải</b> ở cuối giải thích thuật ngữ và lý do của các quy tắc. Chữ <span style="border-bottom:1px dotted var(--acc)">gạch chấm</span> bấm vào để xem nghĩa; tra đầy đủ ở <a href="#glossary">📚 Từ điển thuật ngữ</a> cuối trang.</div>
 <div class="key"><b>Lộ trình học gợi ý:</b> 1) Lạc Thư &amp; 9 sao → 2) Tam nguyên cửu vận → 3) 24 sơn &amp; âm dương → 4) Cách lập tinh bàn → 5) Cách cục → 6) Tổ hợp sao → 7) Lưu niên &amp; hóa giải. Mỗi bài học xong thì sang tab <b>Lập bàn</b> để kiểm chứng.</div>
 
 <details open><summary>1. Lạc Thư – nền tảng của Phi tinh</summary><div>
@@ -138,11 +147,19 @@ select,input{width:100%;padding:9px;border:1px solid var(--line);border-radius:9
 <p><b>Đường bay (phi) của sao:</b> Trung cung → Càn → Đoài → Cấn → Ly → Khảm → Khôn → Chấn → Tốn. Đây là thứ tự 5→6→7→8→9→1→2→3→4 của Lạc Thư.</p>
 <ul class="lst"><li><b>Bay thuận:</b> số tăng dần theo đường bay (5,6,7,…).</li><li><b>Bay nghịch:</b> số giảm dần theo đường bay (5,4,3,…).</li></ul>
 <div class="tip">Thuộc lòng đường bay là việc cần làm đầu tiên. Mẹo nhớ: <b>“Trung – Càn – Đoài – Cấn – Ly – Khảm – Khôn – Chấn – Tốn”</b>.</div>
+<details class="cg"><summary>📝 Chú giải – vì sao như vậy</summary><div><p><b>Lạc Thư là gì?</b> Tương truyền thời vua Vũ trị thủy, rùa thần hiện trên sông Lạc, trên lưng có các chấm xếp thành 9 số. Khẩu quyết nhớ vị trí: <i>“Đội 9 đạp 1, tả 3 hữu 7, 2 – 4 là vai, 6 – 8 là chân, 5 ở giữa.”</i> Mỗi số gắn với một quẻ của <b>Hậu thiên bát quái</b> (bát quái của Văn Vương, dùng cho phương vị và thời gian), nên số và cung là một: nói “sao 1” cũng là nói khí của Khảm.</p>
+<p><b>Vì sao tổng bằng 15?</b> Tổng 1 đến 9 là 45, chia đều cho 3 hàng ra 15. Hai cung đối nhau qua trung cung luôn cộng thành 10 (1–9, 2–8, 3–7, 4–6). Đây là gốc của cách <b>hợp thập</b> ở bài 6.</p>
+<p><b>Vì sao Nam ở trên?</b> Người xưa vẽ bản đồ theo tư thế vua <i>ngồi quay mặt về Nam</i>, nên phương Nam ở phía trước (phía trên giấy). Khi đổi sang bản đồ hiện đại Bắc ở trên thì chỉ cần lật dọc, quan hệ giữa các cung không đổi.</p>
+<p><b>“Phi tinh” nghĩa là gì?</b> Sao không đi vòng quanh các cung kề nhau mà <i>nhảy</i> theo thứ tự số 5→6→7→…→4, nên gọi là “bay”. Đường đi này nối các cung theo đúng thứ tự số trong ma phương Lạc Thư, người xưa gọi là <b>đường lường thiên xích</b>.</p></div></details>
 </div></details>
 
 <details><summary>2. Cửu tinh – tính chất 9 sao</summary><div>
 <div id="tblStars"></div>
 <div class="key"><b>Cốt lõi:</b> Một sao tốt hay xấu tùy <b>thời vận</b>, không cố định. Sao đang vượng thì cát, sao đã qua thời (suy, tử) thì hung. Riêng 2 và 5 là hung tinh mạnh, gần như luôn cần hóa giải.</div>
+<details class="cg"><summary>📝 Chú giải – vì sao như vậy</summary><div><p><b>Tên gọi 9 sao:</b> mỗi sao có số, tên sao Bắc Đẩu, màu và ngũ hành: 1 Nhất Bạch – Tham Lang (Thủy), 2 Nhị Hắc – Cự Môn (Thổ), 3 Tam Bích – Lộc Tồn (Mộc), 4 Tứ Lục – Văn Khúc (Mộc), 5 Ngũ Hoàng – Liêm Trinh (Thổ), 6 Lục Bạch – Vũ Khúc (Kim), 7 Thất Xích – Phá Quân (Kim), 8 Bát Bạch – Tả Phụ (Thổ), 9 Cửu Tử – Hữu Bật (Hỏa). Sách hay gọi sao theo màu (“Nhị Hắc”, “Ngũ Hoàng”), nên cần thuộc cả hai cách gọi.</p>
+<p><b>Vì sao tốt xấu tùy thời vận?</b> Huyền Không xem mỗi sao là một dòng khí có lúc thịnh lúc suy theo thời gian. Câu gốc: <i>“Đương lệnh giả vượng, tương lai giả sinh, dĩ quá giả suy, cửu quá giả tử”</i>, tức sao đang cầm quyền thì vượng, sắp tới thì sinh, vừa qua thì suy, qua lâu thì tử. Cùng một sao 8, vận 8 là sao tài lộc số một, sang vận 9 thành thoái khí, vài vận sau có thể gây hại.</p>
+<p><b>Vì sao 2 và 5 luôn phải dè chừng?</b> Ngũ Hoàng (5) vốn ngự trung cung, không có quẻ riêng; khi bay ra cung nào thì như “vua rời ngai”, đem khí Thổ hỗn loạn tới đó, chủ tai họa, bệnh nặng. Nhị Hắc (2) là sao bệnh phù (Khôn – mẹ già, bụng, tỳ vị). Hai sao này chỉ tốt trong đúng vận của mình (vận 2, vận 5), còn ngoài vận thì hầu như luôn cần hóa.</p>
+<p><b>Tam bạch</b> là ba sao 1, 6, 8 (đều có chữ “bạch”), xưa coi là cát tinh bền, kể cả khi không đắc vận vẫn ít hại.</p></div></details>
 </div></details>
 
 <details><summary>3. Tam nguyên cửu vận – sao nào đang vượng</summary><div>
@@ -157,6 +174,11 @@ select,input{width:100%;padding:9px;border:1px solid var(--line);border-radius:9
 <li><span class="s-thoai"><b>Thoái khí: 8</b></span>, vừa qua thời, vẫn còn tốt nhẹ.</li>
 <li><span class="s-tu"><b>Suy / tử khí: 7, 6, 5, 4, 3</b></span>, đã hết thời, dễ gây hung.</li></ul>
 <div class="tip">Vận của nhà tính theo <b>năm hoàn thiện / lợp mái / nhập trạch</b>, ranh giới năm lấy tiết Lập Xuân (~4/2). Nhà cải tạo lớn (thay mái, thay cửa chính, sửa toàn bộ) thì được xem như đổi sang vận mới.</div>
+<details class="cg"><summary>📝 Chú giải – vì sao như vậy</summary><div><p><b>Vì sao 180 năm và 20 năm?</b> Lịch pháp xưa dựa vào chu kỳ hội tụ của sao Mộc (khoảng 12 năm một vòng) và sao Thổ (khoảng 30 năm). Hai sao gặp nhau trên bầu trời khoảng 20 năm một lần; sau 3 lần gặp (60 năm, một vòng Giáp Tý) chúng về gần chỗ cũ; 3 vòng Giáp Tý là 180 năm. Mỗi lần gặp mở một <b>vận</b>, mỗi vòng 60 năm là một <b>nguyên</b>.</p>
+<p><b>Vận 9 (2024–2043)</b> là vận của quẻ Ly (Hỏa): người ta hay liên hệ với điện, ánh sáng, mạng, truyền thông, hình ảnh, phụ nữ trung niên. Đây là suy diễn theo tượng quẻ, chỉ để tham khảo.</p>
+<p><b>Sinh khí, thoái khí, tử khí</b> là cách gọi trạng thái của sao so với vận hiện tại (xem chú giải bài 2). Sao 1 được gọi là sinh khí vì vận 1 (2044) là vận kế tiếp.</p>
+<p><b>Vì sao lấy năm hoàn thiện?</b> Ngôi nhà “thụ khí” (nhận khí của thời) khi đã khép kín, có mái che. Phái Thẩm thị lấy lúc <b>lợp mái / đổ mái</b>; có phái lấy lúc <b>dọn vào ở</b>. Nếu hai mốc rơi vào hai vận khác nhau thì nên lập cả hai bàn để so sánh.</p>
+<p><b>Lập Xuân</b> là tiết khí khi Mặt Trời ở 315° hoàng kinh, khoảng 4/2 dương lịch. Lịch can chi (dùng trong phong thủy, bát tự) đổi năm ở mốc này, không phải ở Tết âm lịch.</p></div></details>
 </div></details>
 
 <details><summary>4. 24 sơn và âm dương (quyết định bay thuận / nghịch)</summary><div>
@@ -166,6 +188,13 @@ select,input{width:100%;padding:9px;border:1px solid var(--line);border-radius:9
 Cung <b>Khảm, Chấn, Ly, Đoài</b> (cung chính) có 3 sơn mang dấu: <b>+ − −</b><br>
 Cung <b>Khôn, Tốn, Càn, Cấn</b> (cung góc) có 3 sơn mang dấu: <b>− + +</b><br>
 Dương (+) thì bay thuận, âm (−) thì bay nghịch.</div>
+<details class="cg"><summary>📝 Chú giải – vì sao như vậy</summary><div><p><b>24 sơn gồm những gì?</b> 12 địa chi + 8 thiên can (bỏ Mậu, Kỷ vì hai can Thổ thuộc trung ương) + 4 quẻ góc (Càn, Khôn, Cấn, Tốn). Mỗi sơn rộng 15°, ví dụ sơn Tý từ 352,5° đến 7,5°, giữa sơn là 0°.</p>
+<p><b>Địa – Thiên – Nhân nguyên:</b> đi theo chiều kim đồng hồ, sơn đầu mỗi cung là <b>địa nguyên</b>, sơn giữa là <b>thiên nguyên</b>, sơn cuối là <b>nhân nguyên</b>. Ví dụ cung Khảm: Nhâm (địa) – Tý (thiên) – Quý (nhân). Các sơn cùng nguyên thông khí với nhau, đây là lý do bài 5 bảo lấy sơn “cùng vị trí”.</p>
+<p><b>Vì sao lại là + − − và − + +?</b> Huyền Không quy ước âm dương theo loại chữ:</p>
+<ul class="lst"><li>Can dương (Giáp, Bính, Canh, Nhâm) là +; can âm (Ất, Đinh, Tân, Quý) là −.</li>
+<li>Tứ chính (Tý, Ngọ, Mão, Dậu) là −; tứ mộ (Thìn, Tuất, Sửu, Mùi) là −; tứ sinh (Dần, Thân, Tỵ, Hợi) là +.</li>
+<li>Bốn quẻ góc (Càn, Khôn, Cấn, Tốn) là +.</li></ul>
+<p>Cung chính = can dương + chi chính + can âm → <b>+ − −</b>. Cung góc = chi tứ mộ + quẻ + chi tứ sinh → <b>− + +</b>. Hiểu cách ghép này thì không cần học thuộc từng sơn.</p></div></details>
 </div></details>
 
 <details><summary>5. Các bước lập tinh bàn</summary><div>
@@ -178,6 +207,10 @@ Dương (+) thì bay thuận, âm (−) thì bay nghịch.</div>
 <li><b>Số 5 vào trung cung</b> thì không có cung gốc, nên mượn âm dương của cung ứng với <b>số vận</b> (vận 9 mượn cung Ly).</li></ol>
 <p><b>Ví dụ, vận 9, tọa Tý hướng Ngọ:</b> vận bàn có Khảm = 5, Ly = 4. Sơn tinh 5 mượn Ly; Tý là sơn thứ 2, ở Ly sơn thứ 2 là Ngọ (−) nên bay nghịch. Hướng tinh 4 thuộc Tốn; sơn thứ 2 của Tốn là Tốn (+) nên bay thuận. Kết quả: cả sơn tinh 9 lẫn hướng tinh 9 đều về Khảm, tức cách <b>Song tinh đáo tọa</b>.</p>
 <div class="tip">Cách đọc ô: <b>số trái = sơn tinh</b> (quản nhân đinh, sức khỏe), <b>số phải = hướng tinh</b> (quản tài lộc), <b>số dưới = vận tinh</b>.</div>
+<details class="cg"><summary>📝 Chú giải – vì sao như vậy</summary><div><p><b>“Nhập trung”</b> là đưa một số vào trung cung rồi cho bay ra 8 cung. Vận bàn luôn bay thuận vì nó là khí thời gian chung của cả vận.</p>
+<p><b>Vì sao sơn tinh lấy ở cung tọa, hướng tinh lấy ở cung hướng?</b> Tọa là phía dựa lưng, tượng núi, chủ <b>nhân đinh</b> (người, con cháu, sức khỏe). Hướng là phía đón khí, tượng thủy, chủ <b>tài lộc</b>. Mỗi bên “mang” sao vận bàn ở cung của mình vào trung cung để dựng bàn riêng.</p>
+<p><b>Vì sao phải xét sơn “cùng vị trí”?</b> Theo thuyết <b>tam nguyên long</b>, khí đi theo cùng nguyên: thiên nguyên thông thiên nguyên, địa nguyên thông địa nguyên. Sao đưa vào trung cung phải mang âm dương của sơn cùng nguyên trong cung gốc của nó thì khí mới thuần.</p>
+<p><b>Vì sao số 5 mượn cung của vận?</b> 5 ở trung cung, không có quẻ, không có 3 sơn để xét. Lệ chung là “ngũ hoàng vô quái, tùy vận nhi định”: lấy quẻ của vận đương thời thay vào (vận 9 lấy Ly, vận 8 lấy Cấn…).</p></div></details>
 </div></details>
 
 <details><summary>6. Cách cục quan trọng</summary><div>
@@ -193,11 +226,19 @@ Dương (+) thì bay thuận, âm (−) thì bay nghịch.</div>
 <tr><td><b>Liên châu tam ban quái</b></td><td>3 số mỗi cung liên tiếp (vd 7-8-9)</td><td>Thông khí cả 3 nguyên, phát lâu dài.</td></tr>
 <tr><td><b>Phụ mẫu tam ban quái</b></td><td>Mỗi cung chứa đủ bộ 1-4-7, 2-5-8 hoặc 3-6-9</td><td>Cát, thông khí.</td></tr></table>
 <div class="key"><b>Câu then chốt:</b> “Sơn quản nhân đinh, thủy quản tài lộc.” Sao vượng của sơn tinh cần gặp <b>sơn</b> (vật cao, tường đặc). Sao vượng của hướng tinh cần gặp <b>thủy</b> (nước, cửa, lối đi, khoảng trống). Lý khí phải khớp với hình thế.</div>
+<details class="cg"><summary>📝 Chú giải – vì sao như vậy</summary><div><p><b>Nhân đinh và tài lộc:</b> “đinh” là người, gồm con cháu, sức khỏe, quan hệ, danh tiếng; “tài” là tiền bạc, làm ăn. Mọi cách cục đều xoay quanh việc sao vượng của đinh có gặp núi và sao vượng của tài có gặp nước hay không.</p>
+<p><b>Thượng sơn hạ thủy</b> nghĩa đen: sao của thủy (hướng tinh vượng) “lên núi” ở phía sau, sao của núi (sơn tinh vượng) “xuống nước” ở phía trước. Với hình thế thường (sau có tường, trước có đường) thì cả đinh lẫn tài đều đặt sai chỗ. Nếu hình thế ngược (sau trống, trước cao) thì lại thành tốt.</p>
+<p><b>Phục ngâm, phản ngâm:</b> “ngâm” là rên rỉ. Phục ngâm là khí lặp lại y hệt nguyên bàn Lạc Thư, ứ đọng; phản ngâm là khí đảo ngược hoàn toàn. Cả hai đều mất sự lưu chuyển.</p>
+<p><b>Hợp thập:</b> 10 là số “hợp” của Lạc Thư (các cặp đối cung đều cộng 10), nên vận tinh cộng sao bằng 10 ở mọi cung nghĩa là hai bàn “ăn khớp” với thời vận, khí thông suốt.</p>
+<p><b>Tam ban quái:</b> 1-4-7, 2-5-8, 3-6-9 là ba bộ số đứng cùng thứ tự ở ba nguyên (1, 4, 7 mở đầu Thượng, Trung, Hạ nguyên). Cung chứa đủ một bộ nghĩa là nối được khí cả ba nguyên. Liên châu (7-8-9) là ba vận liền nhau nối tiếp.</p></div></details>
 </div></details>
 
 <details><summary>7. Tổ hợp sao thường gặp</summary><div>
 <p class="mut">Đọc cặp sơn tinh và hướng tinh trong một cung. Tổ hợp chỉ ứng mạnh khi sao đang vượng / suy và cung đó bị kích hoạt (cửa, phòng dùng nhiều, động thổ).</p>
 <div id="tblCombo"></div>
+<details class="cg"><summary>📝 Chú giải – vì sao như vậy</summary><div><p><b>Tổ hợp sao được suy ra từ đâu?</b> Từ hai nguồn: <b>tượng quẻ</b> của mỗi sao (1 Khảm trung nam, tai, thận; 2 Khôn mẹ, bụng; 3 Chấn trưởng nam, chân; 4 Tốn trưởng nữ, văn chương; 6 Càn cha, đầu; 7 Đoài thiếu nữ, miệng; 8 Cấn thiếu nam, tay; 9 Ly trung nữ, mắt, tim) và <b>ngũ hành sinh khắc</b> giữa hai sao. Ví dụ 1–4: Thủy sinh Mộc, Khảm gặp Tốn thành văn xương (học hành, thi cử). 6–7: Kim gặp Kim, Càn Đoài đều chủ binh khí, nên gọi “giao kiếm sát”.</p>
+<p><b>Vì sao cần “kích hoạt”?</b> Nguyên lý “động thì ứng”: khí chỉ phát tác khi cung đó có cửa ra vào, có người dùng nhiều, có động thổ, hoặc lưu niên tinh bay tới làm mạnh thêm. Cung đóng kín, ít dùng thì tổ hợp xấu cũng ít hại.</p>
+<p>Một tổ hợp vốn tốt cũng ứng xấu khi hai sao đều thất vận, và ngược lại. Luôn đọc tổ hợp kèm trạng thái vượng/suy (bài 3).</p></div></details>
 </div></details>
 
 <details><summary>8. Lưu niên phi tinh và hóa giải</summary><div>
@@ -210,6 +251,9 @@ Dương (+) thì bay thuận, âm (−) thì bay nghịch.</div>
 <tr><td>6, 7 bị 9 khắc</td><td>Hỏa khắc Kim</td><td>Thêm Thổ thông quan: đá, gốm, màu vàng nâu</td></tr>
 <tr><td>Kích hoạt sao vượng 9</td><td>Hỏa</td><td>Đèn sáng, màu đỏ/tím, hoạt động nhiều; với hướng tinh thì mở thoáng</td></tr></table>
 <div class="tip">Ưu tiên <b>bố cục</b> (đặt cửa, phòng, bếp, giường đúng cung) hơn vật phẩm. Vật phẩm chỉ hỗ trợ.</div>
+<details class="cg"><summary>📝 Chú giải – vì sao như vậy</summary><div><p><b>Vì sao niên tinh giảm dần?</b> Niên tinh đi nghịch theo chu kỳ 9 năm (Tam nguyên niên tinh). Mốc dễ nhớ: năm 2000 là 9, mỗi năm bớt 1; ranh giới năm cũng lấy Lập Xuân. Ngoài niên tinh còn <b>nguyệt tinh</b> (theo tháng tiết khí) dùng khi chọn tháng động thổ.</p>
+<p><b>“Tiết” khác “khắc” thế nào?</b> Khắc là đánh thẳng (Mộc khắc Thổ), dễ gây “đấu” khí, càng động. Tiết là cho sao xấu “sinh” ra hành khác để hao bớt sức (Thổ sinh Kim nên Kim tiết Thổ). Hung tinh thường được hóa bằng tiết vì êm hơn.</p>
+<p><b>Thông quan</b> là chèn một hành trung gian giữa hai hành khắc nhau để biến khắc thành chuỗi sinh: Hỏa khắc Kim, chèn Thổ thì thành Hỏa sinh Thổ, Thổ sinh Kim.</p></div></details>
 </div></details>
 
 <details><summary>9. Những lỗi người mới hay mắc</summary><div>
@@ -219,6 +263,9 @@ Dương (+) thì bay thuận, âm (−) thì bay nghịch.</div>
 <li>Hướng <b>kiêm</b> lệch quá 3° khỏi giữa sơn mà vẫn dùng hạ quái: phải dùng <b>Thế quái</b> (xem bài 10).</li>
 <li>Tính sai vận do lấy năm khởi công thay vì năm hoàn thiện/nhập trạch.</li>
 <li>Chỉ nhìn số mà quên hình thế: sao vượng gặp sai hình (sơn tinh vượng gặp hồ nước) thì không phát.</li></ul>
+<details class="cg"><summary>📝 Chú giải – vì sao như vậy</summary><div><p><b>Không vong là gì?</b> “Không” là trống, “vong” là mất. Hướng đặt đúng ranh giới giữa hai cung (<b>đại không vong</b>) hoặc hai sơn (<b>tiểu không vong</b>) thì khí không thuộc hẳn về bên nào, âm dương lẫn lộn, bàn sao không đứng được. Khi đo ra số độ gần ranh giới, nên đo lại nhiều lần ở vài vị trí.</p>
+<p><b>Đo hướng:</b> la bàn chỉ hướng Bắc từ, lệch với Bắc thật một góc nhỏ (độ lệch từ, ở Việt Nam chỉ khoảng 1°). Sai số lớn thường do nhiễu từ: cốt thép, cửa sắt, ô tô, điện thoại, tủ điện. Nên đứng cách công trình vài mét, đo ở 2–3 điểm rồi lấy trung bình.</p>
+<p><b>Hướng nhà là gì?</b> Phía nhà đón khí nhiều nhất: thường là mặt tiền tiếp đường, nơi có cửa chính, nhiều cửa sổ, ánh sáng. Không phải lúc nào cũng là hướng cửa chính (cửa có thể mở hông).</p></div></details>
 </div></details>
 <details><summary>10. Thế quái (kiêm hướng)</summary><div>
 <p>Mỗi sơn rộng 15°. Trong vòng <b>3°</b> quanh giữa sơn là <b>chính hướng</b>, dùng <b>Hạ quái</b> (cách lập bàn ở bài 5). Lệch quá 3° về phía sơn bên cạnh gọi là <b>kiêm hướng</b>, khí bị pha tạp, nên dùng <b>Thế quái</b>, tức là thay sao đưa vào trung cung bằng “thế tinh”. Sát ranh giới (≤1,5°) là không vong, không nên dùng.</p>
@@ -238,6 +285,9 @@ Dương (+) thì bay thuận, âm (−) thì bay nghịch.</div>
 <li>Thuận/nghịch <b>vẫn theo âm dương của sơn gốc</b> (y như hạ quái), rồi bay ra 8 cung.</li></ol>
 <p><b>Ví dụ, vận 9, hướng Ngọ kiêm Đinh (tọa Tý kiêm Quý):</b> vận bàn có Khảm = 5, Ly = 4. Sơn tinh 5 mượn Ly; sơn thứ 2 của Ly là Ngọ, thế tinh là 9, bay nghịch (Ngọ −). Hướng tinh 4 thuộc Tốn; sơn thứ 2 là Tốn, thế tinh là 6, bay thuận (Tốn +).</p>
 <div class="tip">Nếu thế tinh trùng sao gốc (ví dụ sao 1 ở sơn Tý thì thế tinh vẫn là 1) thì bàn thế quái giống hạ quái. Một số phái khác có lệ riêng cho số 5 hoặc chiều bay; ở đây theo phổ biến của Thẩm thị.</div>
+<details class="cg"><summary>📝 Chú giải – vì sao như vậy</summary><div><p><b>Hạ quái và thế quái:</b> “hạ” là bàn gốc; “thế” là “thay thế”. Khi hướng lệch nhiều sang sơn bên cạnh, khí của hai sơn trộn lẫn, nên bàn sao gốc không còn đúng; phải thay sao nhập trung bằng sao khác (thế tinh) để phản ánh khí pha.</p>
+<p><b>Vì sao 3°?</b> Phái Thẩm thị lấy 3° quanh giữa sơn là vùng khí thuần. Một số phái lấy rộng hơn (4,5° hay 6°). Phần mềm dùng ngưỡng 3° và cho chọn tay Hạ quái / Thế quái để so sánh.</p>
+<p><b>Khẩu quyết thế tinh</b> trong sách cổ (Thanh nang áo ngữ, Thẩm thị chú giải) gán mỗi sơn với một trong các sao 1, 2, 6, 7, 9 (đều là sao Bắc Đẩu chính). Khẩu quyết bản gốc: <i>“Tý Quý Giáp Thân Tham Lang nhất lộ hành; Nhâm Mão Ất Mùi Khôn, Cự Môn tòng đầu xuất; Càn Hợi Thìn Tốn Tỵ Tuất, liên Vũ Khúc danh; Dậu Tân Sửu Cấn Bính, tinh tinh Phá Quân; Dần Ngọ Canh Đinh, Hữu Bật vi tinh.”</i></p></div></details>
 </div></details>
 <details><summary>11. Bát trạch – cung phi và 8 du niên</summary><div>
 <p>Bát trạch xét sự hợp nhau giữa <b>mệnh người</b> (cung phi) và <b>nhà</b> (trạch quái theo tọa), không xét thời vận như Huyền Không. Hai phép bổ trợ nhau: Bát trạch chọn hướng hợp người, Huyền Không chọn thời điểm và bố cục theo sao.</p>
@@ -250,6 +300,10 @@ Dương (+) thì bay thuận, âm (−) thì bay nghịch.</div>
 <div id="tblDN"></div>
 <div id="tblBT"></div>
 <div class="key"><b>Cách dùng:</b> người Đông tứ mệnh hợp nhà Đông tứ trạch, Tây hợp Tây. Cửa chính, bàn làm việc, đầu giường nên nhìn về hướng cát. Bếp theo lệ <b>“tọa hung hướng cát”</b>: thân bếp đặt ở phương hung, miệng bếp hướng về phương cát. Nhà vệ sinh, kho đặt ở phương hung.</div>
+<details class="cg"><summary>📝 Chú giải – vì sao như vậy</summary><div><p><b>Cung phi (mệnh quái)</b> là quẻ đại diện cho người, tính từ năm sinh theo Lạc Thư. Cách gốc: nam Thượng nguyên khởi từ Khảm (1) đếm nghịch, nữ khởi từ Trung (5) đếm thuận, mỗi năm một cung. Công thức “11 − S” và “4 + S” chỉ là đường tắt của phép đếm này.</p>
+<p><b>Vì sao ra 5 thì nam lấy Khôn, nữ lấy Cấn?</b> 5 không có quẻ. Lệ cổ cho nam “ký” Khôn (mẹ, nhận sự bao bọc), nữ “ký” Cấn. Có phái cho cả hai đều ký Khôn khi Trung nguyên; ở đây theo lệ phổ biến.</p>
+<p><b>Vì sao chia Đông / Tây tứ?</b> Bốn quẻ trong mỗi nhóm có ngũ hành sinh nhau: Đông là Khảm (Thủy) → Chấn, Tốn (Mộc) → Ly (Hỏa); Tây là Khôn, Cấn (Thổ) → Càn, Đoài (Kim). Cùng nhóm thì tương sinh, khác nhóm thì xung khắc.</p>
+<p><b>Tám du niên:</b> cát gồm <b>Sinh khí</b> (phát triển, tài), <b>Thiên y</b> (sức khỏe, quý nhân), <b>Diên niên</b> (hòa thuận, tuổi thọ), <b>Phục vị</b> (yên ổn); hung gồm <b>Tuyệt mệnh</b> (nặng nhất), <b>Ngũ quỷ</b> (thị phi, hỏa hoạn), <b>Lục sát</b> (tình cảm, kiện tụng), <b>Họa hại</b> (nhẹ nhất). Du niên tìm bằng cách biến các hào của quẻ mệnh (bài ca “Đại du niên”).</p></div></details>
 </div></details>
 
 <details><summary>12. Hoàng tuyền và Bát sát</summary><div>
@@ -267,6 +321,19 @@ Dương (+) thì bay thuận, âm (−) thì bay nghịch.</div>
 <tr><td>Giáp, Quý</td><td>Cấn</td><td>Cấn</td><td>Giáp, Quý</td></tr>
 <tr><td>Tân, Nhâm</td><td>Càn</td><td>Càn</td><td>Tân, Nhâm</td></tr></table>
 <div class="tip">Nhiều sách phân biệt: nước <b>chảy đến</b> từ phương hoàng tuyền là <b>sát nhân hoàng tuyền</b> (hung); nước <b>chảy đi</b> ra phương đó gọi là <b>cứu bần hoàng tuyền</b>, không hại, có khi còn cát. Với nhà ở, thường lấy nước là đường, lối đi, cửa phụ, rãnh thoát nước.</div>
+<details class="cg"><summary>📝 Chú giải – vì sao như vậy</summary><div><p><b>“Hoàng tuyền”</b> nghĩa đen là suối vàng (cõi chết), ý chỉ phương nguy hiểm nhất. <b>Bát sát</b> là “tám sát” ứng với 8 cung tọa.</p>
+<p><b>Vì sao Khảm kỵ Thìn, Khôn kỵ Mão…?</b> Mỗi quẻ có nạp giáp (gán can chi cho 6 hào). Trong đó có một địa chi khắc hành của chính quẻ, gọi là <b>quan quỷ</b>:</p>
+<table><tr><th>Quẻ tọa (hành)</th><th>Hào quan quỷ</th><th>Vì sao khắc</th></tr>
+<tr><td>Khảm (Thủy)</td><td>Mậu Thìn</td><td>Thổ khắc Thủy</td></tr>
+<tr><td>Khôn (Thổ)</td><td>Ất Mão</td><td>Mộc khắc Thổ</td></tr>
+<tr><td>Chấn (Mộc)</td><td>Canh Thân</td><td>Kim khắc Mộc</td></tr>
+<tr><td>Tốn (Mộc)</td><td>Tân Dậu</td><td>Kim khắc Mộc</td></tr>
+<tr><td>Càn (Kim)</td><td>Nhâm Ngọ</td><td>Hỏa khắc Kim</td></tr>
+<tr><td>Đoài (Kim)</td><td>Đinh Tỵ</td><td>Hỏa khắc Kim</td></tr>
+<tr><td>Cấn (Thổ)</td><td>Bính Dần</td><td>Mộc khắc Thổ</td></tr>
+<tr><td>Ly (Hỏa)</td><td>Kỷ Hợi</td><td>Thủy khắc Hỏa</td></tr></table>
+<p>Phương của chi quan quỷ đó là phương bát sát: mở cửa, đón đường đâm vào từ đấy là “rước quỷ vào nhà”.</p>
+<p><b>Sát nhân / cứu bần:</b> nước (đường, dòng chảy) đi vào từ phương hoàng tuyền thì đem hung khí vào; nước thoát ra ở phương đó thì cuốn hung khí đi, nên được gọi là “cứu bần” (cứu nghèo).</p></div></details>
 </div></details>
 <details><summary>13. Tam yếu – Cửa, Phòng chủ, Bếp</summary><div>
 <p>Sách <b>Bát Trạch Minh Kính</b> coi ba thứ quan trọng nhất của dương trạch là <b>Môn</b> (cửa chính), <b>Chủ</b> (phòng ngủ chủ nhà) và <b>Táo</b> (bếp). Lấy cung của từng thứ tính từ tâm nhà rồi phối với nhau theo bảng du niên ở bài 11, giống cách phối mệnh với hướng.</p>
@@ -275,6 +342,9 @@ Dương (+) thì bay thuận, âm (−) thì bay nghịch.</div>
 <li><b>Môn phối Táo:</b> cửa so với bếp, cát thì tài lộc, ăn uống tốt.</li>
 <li><b>Theo mệnh:</b> cửa và phòng chủ ở phương cát của chủ; <b>bếp đặt ở phương hung</b> để đè hung, <b>miệng bếp nhìn về phương cát</b>.</li></ul>
 <div class="tip">Khi cửa, phòng, bếp đều cùng nhóm Đông hoặc Tây tứ trạch với nhau thì gọi là “thuần”, tốt nhất. Lẫn lộn hai nhóm là “tạp”.</div>
+<details class="cg"><summary>📝 Chú giải – vì sao như vậy</summary><div><p><b>Tâm nhà</b> lấy ở giao điểm hai đường chéo của mặt bằng (bỏ qua phần lồi lõm nhỏ dưới khoảng 1/3 cạnh). Từ tâm chia 8 cung, mỗi cung 45°, để xác định cửa, phòng, bếp nằm cung nào.</p>
+<p><b>Vì sao bếp đặt ở phương hung?</b> Lửa bếp có sức “trấn” (đè) hung khí, nên đặt thân bếp ở phương xấu để khóa nó lại. <b>Miệng bếp</b> (xưa là cửa lò đưa củi vào, nay thường hiểu là phía núm vặn / chỗ cấp năng lượng) quay về phương cát để nạp khí tốt. Cách hiểu miệng bếp với bếp gas, bếp từ hiện nay còn khác nhau giữa các thầy.</p>
+<p><b>Thuần và tạp:</b> cửa, phòng chủ, bếp cùng một nhóm Đông hoặc Tây thì khí các nơi tương sinh (xem chú giải bài 11); lẫn nhóm thì các nơi khắc nhau.</p></div></details>
 </div></details>
 
 <details><summary>14. Bát tự (Tứ trụ) – nhập môn</summary><div>
@@ -292,6 +362,13 @@ Dương (+) thì bay thuận, âm (−) thì bay nghịch.</div>
 <tr><td>Sinh nhật chủ</td><td>Thiên ấn</td><td>Chính ấn</td></tr></table>
 <p><b>Đại vận:</b> nam sinh năm can dương và nữ sinh năm can âm thì đi thuận; ngược lại thì đi nghịch. Đếm số ngày từ lúc sinh đến tiết kế tiếp (thuận) hoặc tiết vừa qua (nghịch), cứ <b>3 ngày = 1 năm</b> để ra tuổi khởi vận. Mỗi đại vận 10 năm.</p>
 <div class="key"><b>Trình tự luận cơ bản:</b> 1) Nhật chủ thuộc hành gì; 2) sinh tháng nào, có đắc lệnh không; 3) đếm lực sinh trợ và khắc tiết để định thân vượng hay nhược; 4) chọn hỷ dụng thần cân bằng; 5) xét hợp, xung, thần sát; 6) xem đại vận, lưu niên gặp hỷ hay kỵ thần.</div>
+<details class="cg"><summary>📝 Chú giải – vì sao như vậy</summary><div><p><b>Thiên can và địa chi:</b> 10 can (Giáp Ất Mộc, Bính Đinh Hỏa, Mậu Kỷ Thổ, Canh Tân Kim, Nhâm Quý Thủy; can lẻ là dương, chẵn là âm) và 12 chi (Tý Thủy, Sửu Thổ, Dần Mão Mộc, Thìn Thổ, Tỵ Ngọ Hỏa, Mùi Thổ, Thân Dậu Kim, Tuất Thổ, Hợi Thủy). Ghép lần lượt ra vòng 60 <b>hoa giáp</b>.</p>
+<p><b>Tiết và khí:</b> năm có 24 tiết khí; 12 <b>tiết</b> (Lập Xuân, Kinh Trập, Thanh Minh…) mở đầu tháng can chi, 12 <b>khí</b> (Vũ Thủy, Xuân Phân…) nằm giữa tháng. Vì vậy tháng trong bát tự là tháng theo mặt trời, không theo mặt trăng.</p>
+<p><b>Ngũ hổ độn, ngũ thử độn:</b> “hổ” là Dần (tháng đầu năm), “thử” là Tý (giờ đầu ngày). Chỉ cần biết can tháng Dần (hay can giờ Tý) là đếm được can các tháng, giờ còn lại.</p>
+<p><b>Giờ Tý</b> (23h–1h) vắt qua nửa đêm. Phần mềm đổi ngày lúc 23h; có phái chia “Tý sớm” (0–1h, ngày mới) và “Tý muộn” (23–24h, vẫn ngày cũ).</p>
+<p><b>Ý nghĩa thập thần:</b> Tỷ kiếp (anh em, bạn bè, cạnh tranh), Thực thương (tài năng, diễn đạt; với nữ là con), Tài (tiền bạc; với nam là vợ), Quan sát (sự nghiệp, kỷ luật, áp lực; với nữ là chồng), Ấn (học vấn, che chở, mẹ).</p>
+<p><b>Đắc lệnh, thân vượng, dụng thần:</b> đắc lệnh là nhật chủ sinh vào tháng mà hành của mình mạnh. Thân vượng thì cần tiết, khắc bớt; thân nhược thì cần sinh, trợ. Hành giúp lá số cân bằng là <b>dụng thần</b>, hành hỗ trợ dụng thần là <b>hỷ thần</b>, hành phá cân bằng là <b>kỵ thần</b>.</p>
+<p><b>Vì sao 3 ngày = 1 năm?</b> Một tháng tiết khí (~30 ngày) ứng với 10 năm đại vận, nên 3 ngày ứng 1 năm, 1 ngày ứng 4 tháng.</p></div></details>
 </div></details>
 <details><summary>15. Vật phẩm phong thủy – nguyên tắc dùng</summary><div>
 <p>Vật phẩm có hai việc: <b>hóa sát</b> (giảm khí xấu từ hình thế hoặc sao xấu) và <b>kích hoạt</b> (tăng khí tốt cho tài, danh, sức khỏe, tình cảm, học hành). Trang trí thuần túy không tính là phong thủy.</p>
@@ -300,6 +377,9 @@ Dương (+) thì bay thuận, âm (−) thì bay nghịch.</div>
 <p><b>Chọn vật phẩm cho nhà:</b> lấy tinh bàn Huyền Không làm gốc. Cung có 2, 5 thì dùng kim khí (chuông đồng 6 ống, hồ lô đồng); cung có sao vượng thì kích (cửa, đèn, nước với hướng tinh; vật cao, đá với sơn tinh); các vị trí Văn xương, Đào hoa, Dịch mã, Nghênh lộc dùng cho mục đích riêng.</p>
 <div class="key"><b>Ba nguyên tắc:</b> 1) Hóa sát trước, kích hoạt sau. 2) Vật phẩm theo ngũ hành của cung và của sao, không đặt bừa. 3) Ít mà đúng chỗ hơn nhiều mà sai chỗ: gương, bát quái, vật hung (đao, kiếm, đại bàng vồ mồi) đặt sai dễ phản tác dụng.</div>
 <p>Tab <b>🧿 Vật phẩm</b> tự lập bản đồ bố trí cho nhà đang chọn và tra cứu toàn bộ phần này.</p>
+<details class="cg"><summary>📝 Chú giải – vì sao như vậy</summary><div><p><b>Ngũ hành sinh khắc:</b> sinh là Mộc → Hỏa → Thổ → Kim → Thủy → Mộc; khắc là Mộc khắc Thổ, Thổ khắc Thủy, Thủy khắc Hỏa, Hỏa khắc Kim, Kim khắc Mộc. Màu đại diện: Mộc xanh lá, Hỏa đỏ/tím, Thổ vàng/nâu, Kim trắng/ánh kim, Thủy đen/xanh đậm.</p>
+<p><b>Nạp âm</b> là hành gán cho từng cặp can chi trong vòng 60 hoa giáp (ví dụ Giáp Tý, Ất Sửu là Hải trung Kim). Cách chọn theo nạp âm năm sinh chỉ dùng 1/8 lá số và không phải hành thật của can chi, nên kém chính xác hơn dụng thần bát tự.</p>
+<p><b>Vì sao hóa sát trước?</b> Kích hoạt một cung khi sát khí chưa xử lý thì làm sát mạnh thêm (“động thì ứng”).</p></div></details>
 </div></details>
 <details><summary>16. Tử vi đẩu số – nhập môn</summary><div>
 <p>Tử vi chia đời người thành <b>12 cung</b> xếp theo 12 địa chi, mỗi cung chủ một mặt: Mệnh, Phụ Mẫu, Phúc Đức, Điền Trạch, Quan Lộc, Nô Bộc, Thiên Di, Tật Ách, Tài Bạch, Tử Tức, Phu Thê, Huynh Đệ (đi ngược chiều kim đồng hồ từ Mệnh).</p>
@@ -310,6 +390,12 @@ Dương (+) thì bay thuận, âm (−) thì bay nghịch.</div>
 <li><b>Đại hạn 10 năm:</b> dương nam, âm nữ đi thuận; âm nam, dương nữ đi nghịch.</li></ol>
 <div class="key"><b>Đọc lá số:</b> xem cung Mệnh cùng <b>tam phương tứ chính</b> (Mệnh, Tài Bạch, Quan Lộc và Thiên Di xung chiếu), rồi đến Tứ hóa (Lộc, Quyền, Khoa tốt; Kỵ trở ngại), sau cùng là đại hạn đang đi.</div>
 <p>Tab <b>🌟 Tử vi</b> lập lá số tự động; dùng chung ngày giờ sinh với tab Bát tự.</p>
+<details class="cg"><summary>📝 Chú giải – vì sao như vậy</summary><div><p><b>Tam phương tứ chính:</b> một cung luôn được xét cùng hai cung tam hợp với nó và cung đối diện (xung chiếu). Với cung Mệnh là Mệnh – Tài Bạch – Quan Lộc (tam hợp) và Thiên Di (đối). Sao ở 4 cung này đều ảnh hưởng tới Mệnh.</p>
+<p><b>Cục</b> lấy từ nạp âm của cung Mệnh, quyết định vị trí sao Tử Vi và tuổi bắt đầu đại hạn.</p>
+<p><b>Cung Thân</b> chỉ xu hướng hậu vận (từ trung niên), đóng chung với một trong các cung Mệnh, Phúc, Quan, Di, Tài, Phối.</p>
+<p><b>Tứ hóa</b> (Hóa Lộc, Hóa Quyền, Hóa Khoa, Hóa Kỵ) sinh theo can năm sinh, “nhuộm” 4 sao trong lá số: Lộc thêm thuận lợi, tài; Quyền thêm quyền lực; Khoa thêm danh, học; Kỵ thêm trắc trở.</p>
+<p><b>Miếu, vượng, đắc, hãm</b> là độ sáng của sao theo cung: cùng một sao, đóng ở cung miếu vượng thì phát huy tốt, đóng ở cung hãm thì yếu hoặc ứng xấu.</p>
+<p>Tử vi có nhiều phái (Nam phái, Bắc phái, Tam hợp, Phi tinh), cách an một số phụ tinh khác nhau; phần mềm theo bản artifact của anh.</p></div></details>
 </div></details>
 <details><summary>17. Dịch lý: Mai Hoa và Lục hào</summary><div>
 <p><b>Mai Hoa dịch số</b> lập quẻ từ con số của thời điểm hay sự vật: thượng quái = tổng chia 8 lấy dư, hạ quái cộng thêm giờ chia 8, hào động chia 6 (dư 0 lấy 8 hoặc 6). Số tiên thiên: Càn 1, Đoài 2, Ly 3, Chấn 4, Tốn 5, Khảm 6, Cấn 7, Khôn 8.</p>
@@ -318,6 +404,10 @@ Dương (+) thì bay thuận, âm (−) thì bay nghịch.</div>
 <li>Dịch lý Việt Nam thêm <b>Chánh biến</b>: quái động đặt lên trên quái đã biến.</li></ul>
 <p><b>Lục hào (Bốc Dịch)</b> gieo 3 đồng xu 6 lần, an nạp giáp, lục thân (Huynh Đệ, Tử Tôn, Thê Tài, Quan Quỷ, Phụ Mẫu), Thế Ứng, lục thú. Chọn <b>Dụng thần</b> theo việc hỏi rồi xét vượng suy theo tháng (tiết khí), sinh khắc theo ngày, tuần không, nguyệt phá và hào động.</p>
 <p>Tab <b>☯️ Dịch lý</b> gồm: đổi lịch âm dương và can chi, lập quẻ Mai Hoa, an quẻ Lục hào, chọn giờ cúng theo quẻ, tra 64 quẻ, bảng kiểm chứng lỗi của bộ tài liệu Dịch lý.</p>
+<details class="cg"><summary>📝 Chú giải – vì sao như vậy</summary><div><p><b>Tiên thiên và hậu thiên:</b> số tiên thiên (Càn 1 … Khôn 8) dùng để lập quẻ trong Mai Hoa; phương vị và ngũ hành khi luận lại dùng hậu thiên. Đừng lẫn với số Lạc Thư (Khảm 1, Khôn 2…).</p>
+<p><b>Hào</b> đếm từ dưới lên: hào 1 dưới cùng, hào 6 trên cùng. Ba hào dưới là hạ quái (nội), ba hào trên là thượng quái (ngoại).</p>
+<p><b>Thế, Ứng:</b> trong lục hào, hào Thế là mình (người hỏi), hào Ứng là đối phương / sự việc. <b>Lục thân</b> lấy hành của từng hào so với hành của cung quẻ (cùng cách so như thập thần trong bát tự). <b>Lục thú</b> (Thanh Long, Chu Tước, Câu Trần, Đằng Xà, Bạch Hổ, Huyền Vũ) an theo can ngày, cho thêm sắc thái.</p>
+<p><b>Tuần không:</b> mỗi tuần 10 ngày (Giáp Tý đến Quý Dậu…) ghép 10 can với 10 chi, dư 2 chi không có can; hào mang 2 chi đó là “không”, tạm thời vô lực. <b>Nguyệt phá</b> là hào có chi xung với chi tháng, bị phá.</p></div></details>
 </div></details>
 <details><summary>18. Tam sát, Thái Tuế, Tuế phá</summary><div>
 <p><b>Tam sát</b> (Kiếp sát, Tai sát, Tuế sát) mỗi năm nằm ở phương đối xung với hành của tam hợp năm đó:</p>
@@ -332,7 +422,15 @@ Dương (+) thì bay thuận, âm (−) thì bay nghịch.</div>
 <li><b>Tuế phá</b> là phương đối xung Thái Tuế (2026: Tý), xấu hơn Thái Tuế, tránh khởi công hướng này.</li>
 <li>Kết hợp thêm <b>Ngũ hoàng, Nhị hắc</b> niên tinh (bài 8).</li></ul>
 <p>Tab Lập bàn có thẻ <b>⚠️ Tam sát và sát khí năm</b> và bảng 12 năm cho nhà đang xét; la bàn đánh dấu vùng Tam sát năm nay; bản đồ Vật phẩm tô đỏ cung Tam sát.</p>
+<details class="cg"><summary>📝 Chú giải – vì sao như vậy</summary><div><p><b>Tam sát gồm 3 chi:</b> Kiếp sát, Tai sát, Tuế sát. Năm Thân Tý Thìn thì Kiếp sát Tỵ, Tai sát Ngọ, Tuế sát Mùi; các nhóm khác suy tương tự.</p>
+<p><b>Vì sao lại ở phương đó?</b> Ba chi năm hợp thành một cục (Thân Tý Thìn hợp Thủy cục, vượng ở Tý – Bắc). Phương đối xung với cục (Nam: Tỵ Ngọ Mùi) là nơi khí của năm bị xung phá dữ nhất. Đồng thời Tỵ là chỗ “tuyệt” của Thủy theo vòng trường sinh, nên còn gọi là Kiếp sát.</p>
+<p><b>Vì sao “khả tọa bất khả hướng”?</b> Tọa là lưng dựa, ngồi lên để chế ngự; hướng là mặt đón, nhìn thẳng tức là rước sát vào. Đặc biệt kỵ khởi công, đổ móng phía đó.</p>
+<p><b>Thái Tuế</b> là thần năm, ứng với sao Mộc (Tuế tinh) đi một chi mỗi năm. Câu dân gian “Thái Tuế đầu thượng động thổ” (động thổ trên đầu Thái Tuế) chỉ việc liều lĩnh. <b>Tuế phá</b> là phương đối xung Thái Tuế, bị coi nặng hơn vì “xung” trực diện.</p>
+<p>Các sát năm chỉ ứng khi có <b>động</b> (khởi công, đào phá, sửa chữa, mở cửa mới). Nhà ở ổn định, không động thì không đáng lo.</p></div></details>
 </div></details>
+<details id="glossary"><summary>📚 Từ điển thuật ngữ</summary><div>
+<input id="glQ" placeholder="Gõ để tìm thuật ngữ…" style="margin-bottom:8px">
+<div id="glList"></div></div></details>
 <p class="mut" style="text-align:center">Nội dung tổng hợp từ học thuật Huyền Không truyền thống (Thẩm thị Huyền Không), để tham khảo và học tập.</p>
 </section>
 
@@ -552,6 +650,7 @@ Khung đỏ: cung hướng · Khung xám: cung tọa ·
 </div>
 </section>
 </main>
+<div id="glPop"><button aria-label="Đóng">×</button><div></div></div>
 
 <script>
 (function(){
@@ -1782,6 +1881,29 @@ $('lbApply').onclick=()=>{
 load();if(!$('lbYear').value)$('lbYear').value=new Date().getFullYear();drawDial();
 }
 
+// ---------- chú giải thuật ngữ ----------
+{const GL=[["Lạc Thư", "Ma phương 3×3 các số 1–9 (tổng mỗi hàng 15), gốc của phi tinh; mỗi số ứng một quẻ hậu thiên."], ["Hà Đồ", "Đồ hình số cổ (1-6 Thủy, 2-7 Hỏa, 3-8 Mộc, 4-9 Kim, 5-10 Thổ), đi đôi với Lạc Thư."], ["Hậu thiên bát quái", "Bát quái của Văn Vương, dùng cho phương vị: Ly Nam, Khảm Bắc, Chấn Đông, Đoài Tây…"], ["Tiên thiên", "Bát quái của Phục Hy (Càn Nam, Khôn Bắc), số Càn 1 … Khôn 8; dùng lập quẻ Mai Hoa."], ["Trung cung", "Ô giữa của cửu cung; nơi đặt số nhập trung trước khi bay."], ["nhập trung", "Đưa một số vào trung cung làm điểm xuất phát để bay ra 8 cung."], ["Phi tinh", "Sao bay: số di chuyển qua các cung theo đường 5→6→7→8→9→1→2→3→4."], ["Bay thuận", "Số tăng dần theo đường bay (5,6,7…)."], ["Bay nghịch", "Số giảm dần theo đường bay (5,4,3…)."], ["Cửu tinh", "Chín sao 1–9 (Tham Lang … Hữu Bật), mỗi sao một hành, một màu."], ["Tam bạch", "Ba sao 1, 6, 8 – cát tinh bền."], ["Ngũ Hoàng", "Sao 5 (Liêm Trinh, Thổ) – đại sát khi bay ra các cung."], ["Nhị hắc", "Sao 2 (Cự Môn, Thổ) – sao bệnh phù."], ["Tam nguyên cửu vận", "Chu kỳ 180 năm = 3 nguyên × 3 vận × 20 năm."], ["Vận bàn", "Bàn số đặt sao vận vào trung cung bay thuận; còn gọi thiên bàn."], ["Sơn tinh", "Số trái ô; sao lấy từ cung tọa, chủ nhân đinh. Cần gặp núi, vật cao."], ["Hướng tinh", "Số phải ô; sao lấy từ cung hướng, chủ tài lộc. Cần gặp thủy, khoảng trống."], ["Vận tinh", "Số dưới ô, từ vận bàn."], ["Vượng khí", "Sao đang cầm vận (vận 9: sao 9), cát nhất."], ["Sinh khí", "Trong Huyền Không: sao của vận sắp tới. Trong Bát trạch: du niên cát số một."], ["Thoái khí", "Sao vừa qua vận, còn tốt nhẹ."], ["Tử khí", "Sao đã qua vận lâu, dễ gây hung."], ["Lập Xuân", "Tiết khí khi Mặt Trời ở 315° hoàng kinh (~4/2); mốc đổi năm can chi."], ["24 sơn", "24 phần của la bàn, mỗi phần 15°: 12 chi + 8 can + 4 quẻ góc."], ["Địa nguyên", "Sơn đầu mỗi cung (theo chiều kim đồng hồ), vd Nhâm."], ["Thiên nguyên", "Sơn giữa mỗi cung, vd Tý, Càn."], ["Nhân nguyên", "Sơn cuối mỗi cung, vd Quý."], ["tam nguyên long", "Thuyết khí đi theo cùng nguyên (địa – thiên – nhân); cơ sở của việc lấy sơn cùng vị trí."], ["Tọa", "Phía sau lưng nhà, đối diện hướng."], ["Hướng", "Phía mặt tiền, nơi nhà đón khí."], ["nhân đinh", "Người trong nhà: con cháu, sức khỏe, quan hệ."], ["Vượng sơn vượng hướng", "Sơn tinh vượng ở tọa, hướng tinh vượng ở hướng – cách tốt nhất."], ["Thượng sơn hạ thủy", "Sao vượng của sơn chạy ra hướng, của hướng chạy về tọa – đặt sai chỗ."], ["Song tinh đáo hướng", "Cả hai sao vượng cùng ở cung hướng."], ["Song tinh đáo tọa", "Cả hai sao vượng cùng ở cung tọa."], ["Phục ngâm", "Bàn sao trùng y nguyên bàn Lạc Thư; khí ứ đọng."], ["Phản ngâm", "Bàn sao đảo ngược nguyên bàn (10 − số); khí đảo lộn."], ["Hợp thập", "Vận tinh + sao = 10 ở mọi cung; khí thông."], ["Liên châu tam ban quái", "Ba số mỗi cung liên tiếp (vd 7-8-9)."], ["Phụ mẫu tam ban quái", "Mỗi cung có đủ bộ 1-4-7, 2-5-8 hoặc 3-6-9."], ["Niên tinh", "Sao lưu niên của năm, nhập trung bay thuận, mỗi năm giảm 1."], ["Lưu niên", "Năm đang xét; sao năm bay chồng lên tinh bàn nhà."], ["Thông quan", "Hành trung gian biến khắc thành sinh (Hỏa – Thổ – Kim)."], ["Đại không vong", "Hướng nằm đúng ranh giới hai cung (vd 22,5°)."], ["Tiểu không vong", "Hướng nằm đúng ranh giới hai sơn."], ["Kiêm hướng", "Hướng lệch quá 3° khỏi giữa sơn, pha khí sơn bên cạnh."], ["Hạ quái", "Cách lập bàn gốc, dùng khi chính hướng."], ["Thế quái", "Cách lập bàn thay sao nhập trung bằng thế tinh, dùng khi kiêm hướng."], ["Thế tinh", "Sao thay thế khi lập thế quái, tra theo khẩu quyết."], ["Cung phi", "Quẻ mệnh của người theo năm sinh và giới tính (Bát trạch)."], ["Đông tứ mệnh", "Mệnh Khảm, Ly, Chấn, Tốn."], ["Tây tứ mệnh", "Mệnh Càn, Khôn, Cấn, Đoài."], ["Du niên", "Tám quan hệ giữa hai quẻ: Sinh khí, Thiên y, Diên niên, Phục vị, Họa hại, Lục sát, Ngũ quỷ, Tuyệt mệnh."], ["Thiên y", "Du niên cát: sức khỏe, quý nhân."], ["Diên niên", "Du niên cát: hòa thuận, bền lâu."], ["Phục vị", "Du niên cát nhẹ: yên ổn."], ["Tuyệt mệnh", "Du niên hung nặng nhất."], ["Ngũ quỷ", "Du niên hung: thị phi, hỏa hoạn."], ["Lục sát", "Du niên hung: tình cảm, kiện tụng."], ["Họa hại", "Du niên hung nhẹ nhất."], ["Bát sát", "Phương kỵ theo cung tọa, do chi quan quỷ trong nạp giáp khắc quẻ."], ["Hoàng tuyền", "“Suối vàng” – phương kỵ thủy, cửa, đường đâm."], ["Tứ lộ hoàng tuyền", "Hoàng tuyền xét theo sơn hướng (Canh Đinh kỵ Khôn…)."], ["Nạp giáp", "Phép gán can chi vào 6 hào của quẻ."], ["Quan quỷ", "Hào/chi có hành khắc hành của quẻ chủ."], ["Tam yếu", "Ba yếu tố chính của nhà: Môn (cửa), Chủ (phòng chủ), Táo (bếp)."], ["Tâm nhà", "Giao điểm hai đường chéo mặt bằng; nơi đặt la bàn chia cung."], ["Bát tự", "Tám chữ can chi của năm, tháng, ngày, giờ sinh; còn gọi Tứ trụ."], ["Thiên can", "10 can: Giáp Ất Bính Đinh Mậu Kỷ Canh Tân Nhâm Quý."], ["Địa chi", "12 chi: Tý Sửu Dần Mão Thìn Tỵ Ngọ Mùi Thân Dậu Tuất Hợi."], ["Nhật chủ", "Can ngày sinh, đại diện cho bản thân trong bát tự."], ["Thập thần", "Mười quan hệ của các can với nhật chủ (Tỷ kiên … Chính ấn)."], ["Ngũ hổ độn", "Quy tắc tìm can tháng Dần theo can năm."], ["Ngũ thử độn", "Quy tắc tìm can giờ Tý theo can ngày."], ["Đại vận", "Chu kỳ 10 năm trong bát tự, thuận hoặc nghịch theo giới tính và can năm."], ["Đắc lệnh", "Nhật chủ sinh vào tháng hành mình mạnh."], ["Dụng thần", "Bát tự: hành giúp lá số cân bằng nhất. Lục hào: hào đại diện cho việc được hỏi."], ["Hỷ thần", "Hành hỗ trợ dụng thần."], ["Kỵ thần", "Hành phá sự cân bằng của lá số."], ["Tàng can", "Các can ẩn trong mỗi địa chi (vd Dần tàng Giáp, Bính, Mậu)."], ["Nạp âm", "Hành gán cho từng cặp can chi trong 60 hoa giáp (vd Giáp Tý – Hải trung Kim)."], ["hoa giáp", "Vòng 60 cặp can chi, từ Giáp Tý đến Quý Hợi."], ["tiết khí", "24 mốc theo vị trí Mặt Trời, 15° một mốc; 12 tiết mở tháng can chi."], ["Hóa sát", "Giảm khí xấu bằng bố cục hoặc vật phẩm."], ["Kích hoạt", "Làm cung có sao tốt “động” lên (cửa, đèn, người qua lại, nước…)."], ["Văn xương", "Vị trí/tổ hợp lợi học hành, thi cử (vd tổ hợp 1–4)."], ["Đào hoa", "Vị trí lợi tình duyên, giao tế."], ["Dịch mã", "Vị trí chủ đi lại, thay đổi, xuất ngoại."], ["Tam phương tứ chính", "Một cung cùng hai cung tam hợp và cung xung chiếu."], ["Tứ hóa", "Hóa Lộc, Quyền, Khoa, Kỵ – sinh theo can năm."], ["Cục", "Thủy 2, Mộc 3, Kim 4, Thổ 5, Hỏa 6 – theo nạp âm cung Mệnh (Tử vi)."], ["Đại hạn", "Vận 10 năm trong Tử vi."], ["Chánh quẻ", "Quẻ gốc lập ra – hiện trạng sự việc."], ["Hộ quẻ", "Quẻ lấy hào 2–4 và 3–5 của chánh quẻ – diễn biến bên trong."], ["Biến quẻ", "Quẻ sau khi đổi hào động – kết quả."], ["Hào động", "Hào biến âm thành dương hoặc ngược lại."], ["Thể", "Trong Mai Hoa: quái không có hào động, đại diện cho mình."], ["Dụng", "Trong Mai Hoa: quái có hào động, đại diện cho việc."], ["Thế Ứng", "Hào Thế là mình, hào Ứng là đối phương (Lục hào)."], ["Lục thân", "Huynh Đệ, Tử Tôn, Thê Tài, Quan Quỷ, Phụ Mẫu – theo hành hào so với cung quẻ."], ["Lục thú", "Thanh Long, Chu Tước, Câu Trần, Đằng Xà, Bạch Hổ, Huyền Vũ – an theo can ngày."], ["Tuần không", "Hai chi không có can trong tuần 10 ngày; hào mang chi đó tạm vô lực."], ["Nguyệt phá", "Hào có chi xung chi tháng."], ["Tam sát", "Kiếp sát, Tai sát, Tuế sát – phương đối xung tam hợp cục của năm."], ["Thái Tuế", "Thần năm, ở sơn của chi năm; kỵ động thổ, kỵ đối đầu."], ["Tuế phá", "Phương đối xung Thái Tuế."], ["Tam hợp", "Ba chi cách nhau 4 hợp thành cục (Thân Tý Thìn – Thủy…)."], ["Hoàng đạo", "Ngày/giờ do 6 thần tốt trong 12 thần quản."], ["Trực", "12 trực (Kiến, Trừ, Mãn, Bình, Định, Chấp, Phá, Nguy, Thành, Thu, Khai, Bế) – sắc thái mỗi ngày."]];
+ const NOAUTO=new Set(['Hướng','Tọa','Thể','Dụng','Cục','Trực','Tiên thiên','Sinh khí','Lưu niên','Kích hoạt','Hóa sát','Tam hợp','Đại hạn','Đại vận','Hướng tinh','Sơn tinh']);
+ const map=new Map(GL.map(([t,d])=>[t.toLowerCase(),[t,d]]));
+ const pop=$('glPop'),show=(t)=>{const e=map.get(t.toLowerCase());if(!e)return;pop.querySelector('div').innerHTML='<b>'+e[0]+'</b>: '+e[1];pop.style.display='block'};
+ pop.querySelector('button').onclick=()=>pop.style.display='none';
+ document.addEventListener('click',e=>{const g=e.target.closest&&e.target.closest('.gl');if(g){show(g.dataset.t);e.preventDefault();return}if(!pop.contains(e.target))pop.style.display='none'});
+ const terms=GL.map(x=>x[0]).filter(t=>!NOAUTO.has(t)).sort((a,b)=>b.length-a.length);
+ const esc=t=>t.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+let re;try{re=new RegExp('(?<![\\p{L}\\p{N}])('+terms.map(esc).join('|')+')(?![\\p{L}\\p{N}])','iu')}catch(e){re=null}
+ const mark=(root)=>{const used=new Set();const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>n.parentElement.closest('summary,.gl,button,select,a,#glossary,th')?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT});
+  const nodes=[];while(w.nextNode())nodes.push(w.currentNode);
+  for(let n of nodes){let txt=n.nodeValue,m,guard=0;
+   while(txt&&(m=re.exec(txt))&&guard++<20){const k=m[1].toLowerCase();if(used.has(k)){const rest=txt.slice(m.index+m[1].length);const tail=document.createTextNode(rest);
+      // skip this occurrence: split and continue on tail
+      n.nodeValue=txt.slice(0,m.index+m[1].length);n.after(tail);n=tail;txt=rest;continue}
+    used.add(k);const sp=document.createElement('span');sp.className='gl';sp.dataset.t=map.get(k)[0];sp.textContent=m[1];
+    const after=document.createTextNode(txt.slice(m.index+m[1].length));n.nodeValue=txt.slice(0,m.index);n.after(sp,after);n=after;txt=after.nodeValue}}};
+ if(re)try{document.querySelectorAll('#hoc>details:not(#glossary)').forEach(mark)}catch(e){}
+ const list=$('glList'),draw=q=>{q=(q||'').trim().toLowerCase();const it=[...GL].sort((a,b)=>a[0].localeCompare(b[0],'vi')).filter(([t,d])=>!q||t.toLowerCase().includes(q)||d.toLowerCase().includes(q));
+  list.innerHTML=it.length?'<dl>'+it.map(([t,d])=>'<dt>'+t+'</dt><dd>'+d+'</dd>').join('')+'</dl>':'<p class="mut">Không tìm thấy.</p>'};
+ draw();$('glQ').oninput=e=>draw(e.target.value);
+}
 // ---------- tabs ----------
 document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{try{b.scrollIntoView({inline:'center',block:'nearest'})}catch(_){};
  document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('on',x===b));
