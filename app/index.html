@@ -103,6 +103,10 @@ select,input{width:100%;padding:9px;border:1px solid var(--line);border-radius:9
 .opt{display:block;width:100%;text-align:left;margin:6px 0;padding:10px;border-radius:9px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer;font-size:.92rem}
 .opt.ok{background:var(--good-bg);border-color:var(--good)}.opt.no{background:var(--bad-bg);border-color:var(--bad)}
 .lst{margin:4px 0;padding-left:18px}
+.lsw{margin-top:4px}.lsw-t{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;margin-bottom:4px}
+.lsw-t button{border:0;background:var(--card);color:var(--ink);padding:4px 10px;font-size:.8rem;cursor:pointer}.lsw-t button.on{background:var(--acc);color:#fff}
+.lsw-r{display:flex;flex-wrap:wrap;gap:6px}.lsw-r>*{flex:1 1 72px;min-width:0;padding:7px 4px}.lsw-l{display:flex;align-items:center;gap:6px;margin:4px 0 0}.lsw-l input{width:auto}
+
 details.cg{background:var(--neu-bg);border-style:dashed;margin:12px 0 0}
 details.cg summary{color:var(--ink);font-weight:600;font-size:.9rem;padding:9px 0}
 details.cg>div{font-size:.9rem}
@@ -1903,6 +1907,38 @@ let re;try{re=new RegExp('(?<![\\p{L}\\p{N}])('+terms.map(esc).join('|')+')(?![\
  const list=$('glList'),draw=q=>{q=(q||'').trim().toLowerCase();const it=[...GL].sort((a,b)=>a[0].localeCompare(b[0],'vi')).filter(([t,d])=>!q||t.toLowerCase().includes(q)||d.toLowerCase().includes(q));
   list.innerHTML=it.length?'<dl>'+it.map(([t,d])=>'<dt>'+t+'</dt><dd>'+d+'</dd>').join('')+'</dl>':'<p class="mut">Không tìm thấy.</p>'};
  draw();$('glQ').oninput=e=>draw(e.target.value);
+}
+// ---------- ô chọn nhập Dương / Âm lịch ----------
+{const IDS=['lbDate','tuDate','tvDate','cnCheck','hDate'];
+ const z=n=>String(n).padStart(2,'0');
+ const l2s=(d,m,y,leap)=>{const j0=jdFromDate(1,1,y);for(let i=0;i<420;i++){const t=new Date((j0+i-2440588)*864e5),dd=t.getUTCDate(),mm=t.getUTCMonth()+1,yy=t.getUTCFullYear(),L=solar2lunar(dd,mm,yy);if(L.d===d&&L.m===m&&L.y===y&&!!L.leap===!!leap)return[dd,mm,yy]}return null};
+ const fire=el=>{el.dispatchEvent(new Event('input',{bubbles:true}));el.dispatchEvent(new Event('change',{bubbles:true}))};
+ IDS.forEach(id=>{const inp=$(id);if(!inp)return;
+  const lab=inp.previousElementSibling&&inp.previousElementSibling.tagName==='LABEL'?inp.previousElementSibling:null;
+  const box=document.createElement('div');box.className='lsw';
+  box.innerHTML=`<div class="lsw-t"><button type="button" data-m="d" class="on">Dương lịch</button><button type="button" data-m="a">Âm lịch</button></div>
+  <div class="lsw-a" hidden><div class="lsw-r"><select data-k="d" aria-label="Ngày âm">${Array.from({length:30},(_,i)=>`<option>${i+1}</option>`).join('')}</select>
+  <select data-k="m" aria-label="Tháng âm">${Array.from({length:12},(_,i)=>`<option value="${i+1}">Th ${i+1}</option>`).join('')}</select>
+  <input data-k="y" type="number" min="1900" max="2100" aria-label="Năm âm"></div>
+  <label class="lsw-l"><input type="checkbox" data-k="l"> Tháng nhuận</label><div class="lsw-o mut"></div></div>`;
+  inp.after(box);
+  const A=box.querySelector('.lsw-a'),g=k=>box.querySelector(`[data-k="${k}"]`),out=box.querySelector('.lsw-o');
+  const setMode=(m,save)=>{box.querySelectorAll('.lsw-t button').forEach(b=>b.classList.toggle('on',b.dataset.m===m));
+   A.hidden=m!=='a';inp.style.display=m==='a'?'none':'';
+   if(lab)lab.textContent=lab.textContent.replace(/\((dương|âm) lịch\)/,m==='a'?'(âm lịch)':'(dương lịch)').replace(/^Ngày (dương|âm) lịch$/,m==='a'?'Ngày âm lịch':'Ngày dương lịch');
+   if(m==='a'){const v=inp.value;if(v){const[y,mo,d]=v.split('-').map(Number),L=solar2lunar(d,mo,y);g('d').value=L.d;g('m').value=L.m;g('y').value=L.y;g('l').checked=!!L.leap}else if(!g('y').value)g('y').value=new Date().getFullYear();conv(false)}
+   if(save)try{localStorage.setItem('lsw_'+id,m)}catch(e){}};
+  const conv=(f=true)=>{const d=+g('d').value,m=+g('m').value,y=+g('y').value,lp=g('l').checked;if(!y){out.textContent='';return}
+   const r=l2s(d,m,y,lp);
+   if(!r){out.innerHTML='<span style="color:var(--bad)">Không có ngày âm này'+(lp?' (năm '+y+' không nhuận tháng '+m+')':' (tháng này chỉ có 29 ngày)')+'.</span>';return}
+   out.textContent='→ Dương lịch: '+z(r[0])+'/'+z(r[1])+'/'+r[2];const nv=r[2]+'-'+z(r[1])+'-'+z(r[0]);if(inp.value!==nv){inp.value=nv;if(f)fire(inp)}};
+  box.querySelectorAll('.lsw-t button').forEach(b=>b.onclick=()=>setMode(b.dataset.m,true));
+  ['d','m','y','l'].forEach(k=>{g(k).addEventListener('change',()=>conv());g(k).addEventListener('input',()=>conv())});
+  const refill=()=>{if(A.hidden||!inp.value)return;const[y,mo,d]=inp.value.split('-').map(Number),L=solar2lunar(d,mo,y);if(+g('d').value===L.d&&+g('m').value===L.m&&+g('y').value===L.y&&g('l').checked===!!L.leap)return;g('d').value=L.d;g('m').value=L.m;g('y').value=L.y;g('l').checked=!!L.leap;conv(false)};
+  inp.addEventListener('input',refill);inp.addEventListener('change',refill);
+  let m0='d';try{m0=localStorage.getItem('lsw_'+id)||'d'}catch(e){}
+  if(m0==='a')setMode('a',false);
+ });
 }
 // ---------- tabs ----------
 document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{try{b.scrollIntoView({inline:'center',block:'nearest'})}catch(_){};
