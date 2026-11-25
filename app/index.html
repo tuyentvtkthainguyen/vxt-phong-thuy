@@ -319,6 +319,20 @@ Dương (+) thì bay thuận, âm (−) thì bay nghịch.</div>
 <p><b>Lục hào (Bốc Dịch)</b> gieo 3 đồng xu 6 lần, an nạp giáp, lục thân (Huynh Đệ, Tử Tôn, Thê Tài, Quan Quỷ, Phụ Mẫu), Thế Ứng, lục thú. Chọn <b>Dụng thần</b> theo việc hỏi rồi xét vượng suy theo tháng (tiết khí), sinh khắc theo ngày, tuần không, nguyệt phá và hào động.</p>
 <p>Tab <b>☯️ Dịch lý</b> gồm: đổi lịch âm dương và can chi, lập quẻ Mai Hoa, an quẻ Lục hào, chọn giờ cúng theo quẻ, tra 64 quẻ, bảng kiểm chứng lỗi của bộ tài liệu Dịch lý.</p>
 </div></details>
+<details><summary>18. Tam sát, Thái Tuế, Tuế phá</summary><div>
+<p><b>Tam sát</b> (Kiếp sát, Tai sát, Tuế sát) mỗi năm nằm ở phương đối xung với hành của tam hợp năm đó:</p>
+<table><tr><th>Năm (chi)</th><th>Tam hợp cục</th><th>Tam sát ở</th></tr>
+<tr><td>Thân, Tý, Thìn</td><td>Thủy</td><td><b>Nam</b>: Tỵ, Ngọ, Mùi</td></tr>
+<tr><td>Dần, Ngọ, Tuất</td><td>Hỏa</td><td><b>Bắc</b>: Hợi, Tý, Sửu</td></tr>
+<tr><td>Tỵ, Dậu, Sửu</td><td>Kim</td><td><b>Đông</b>: Dần, Mão, Thìn</td></tr>
+<tr><td>Hợi, Mão, Mùi</td><td>Mộc</td><td><b>Tây</b>: Thân, Dậu, Tuất</td></tr></table>
+<ul class="lst"><li><b>“Tam sát khả tọa bất khả hướng”:</b> ngồi lưng dựa vào Tam sát thì được, ngồi hoặc mở cửa nhìn thẳng vào thì xấu.</li>
+<li>Năm đó không động thổ, đào móng, đập phá, sửa cửa ở phương Tam sát.</li>
+<li><b>Thái Tuế</b> là sơn của chi năm (2026 Bính Ngọ: sơn Ngọ). Không động thổ phương Thái Tuế, không đối đầu (ngồi nhìn thẳng vào).</li>
+<li><b>Tuế phá</b> là phương đối xung Thái Tuế (2026: Tý), xấu hơn Thái Tuế, tránh khởi công hướng này.</li>
+<li>Kết hợp thêm <b>Ngũ hoàng, Nhị hắc</b> niên tinh (bài 8).</li></ul>
+<p>Tab Lập bàn có thẻ <b>⚠️ Tam sát và sát khí năm</b> và bảng 12 năm cho nhà đang xét; la bàn đánh dấu vùng Tam sát năm nay; bản đồ Vật phẩm tô đỏ cung Tam sát.</p>
+</div></details>
 <p class="mut" style="text-align:center">Nội dung tổng hợp từ học thuật Huyền Không truyền thống (Thẩm thị Huyền Không), để tham khảo và học tập.</p>
 </section>
 
@@ -380,6 +394,7 @@ Khung đỏ: cung hướng · Khung xám: cung tọa ·
 <div id="lotImgBox" style="display:none"><p class="mut">Nhấn giữ (điện thoại) hoặc chuột phải vào ảnh để lưu. <a id="lotDl" download="tinh-ban-thua-dat.jpg" href="#">Tải ảnh về máy</a></p><img id="lotImg" style="width:100%;border-radius:10px"></div>
 <div class="tip">Hướng Bắc lấy theo một trong hai cách: chấm mũi tên Bắc có trên trích lục/sổ đỏ (chính xác nhất), hoặc chấm mặt tiền để trang tự xoay theo độ hướng đã nhập ở trên. Cửu cung 3×3 chia theo trục nhà (ô giữa mặt tiền là cung hướng), hợp nhà phố; Bát quái 45° chia theo la bàn từ tâm thửa, có thêm vạch 24 sơn. Ảnh chỉ xử lý trong trình duyệt, không gửi đi đâu.</div>
 </div></div>
+<div class="card"><b>⚠️ Tam sát và sát khí năm</b> <span class="mut">(theo năm lưu niên ở trên)</span><div id="satNam"></div></div>
 <div class="card"><b>Cách cục</b><div id="cuc"></div><div id="steps" class="mut" style="margin-top:8px"></div></div>
 <div class="card"><b>Luận từng cung</b> <span class="mut">(chạm vào ô để xem nhanh)</span><div id="luan"></div></div>
 </section>
@@ -1273,6 +1288,7 @@ function renderVP(){
  const nl=NL[hi];add(chiPal(nl),'Nghênh lộc','g');
  const yC=md(LAST.ln-4,10);add(chiPal(LOCTON[yC]),'Lộc tồn '+LAST.ln,'g');
  add(palOfSon(BATSAT[tP]),'Bát sát hoàng tuyền','b');
+ {const T=tamSat(LAST.ln);add(chiPal(T.chi[1]),'Tam sát '+LAST.ln,'b');}
  let y=+$('btYear').value;if($('btLX').checked)y--;
  let tuoiTxt='';
  if(y>1000){const yb=md(y-4,12),g=TAMHOP.findIndex(x=>x.includes(yb));
@@ -1285,7 +1301,7 @@ function renderVP(){
  $('vpGrid').innerHTML=layout.map(p=>{
   if(p===5)return `<div class="cell" data-p="5"><div class="nm">Trung cung</div><div class="v" style="font-size:.8rem;color:var(--ink)">${c.S[5]} ${c.H[5]} · ${c.V[5]}</div><div class="nm">niên ${N[5]}</div></div>`;
   const st=starTips(p,c,N),tg=tags[p]||[];
-  const bad=st.some(x=>x[0]==='b')||tg.some(x=>x[1].startsWith('Bát sát')),good=st.some(x=>x[0]==='g');
+  const bad=st.some(x=>x[0]==='b')||tg.some(x=>x[1].startsWith('Bát sát')||x[1].startsWith('Tam sát')),good=st.some(x=>x[0]==='g');
   return `<div class="cell${p===hP?' huong':p===tP?' toa':''}" data-p="${p}" style="aspect-ratio:auto;min-height:96px;justify-content:flex-start;gap:3px;${bad&&good?'background:var(--warn-bg)':bad?'background:var(--bad-bg)':good?'background:var(--good-bg)':''}">
   <div class="nm">${PNAME[p]} · ${PDIR[p]}<br><b>${c.S[p]}·${c.H[p]}</b> <span style="color:var(--acc2)">${N[p]}</span></div>
   <div style="font-size:.66rem;line-height:1.25">${tg.map(t=>`<span class="tag ${t[0]}" style="font-size:.62rem;padding:1px 5px;margin:1px">${t[1]}</span>`).join('')}</div>
@@ -1294,7 +1310,7 @@ function renderVP(){
   const st=starTips(p,c,N),tg=tags[p]||[];
   $('vpCell').innerHTML=`<div class="card" style="margin-top:8px"><b>${PNAME[p]} (${PDIR[p]})</b> · sơn ${c.S[p]}, hướng ${c.H[p]}, niên ${N[p]}
   <ul class="lst">${st.map(x=>`<li class="${x[0]==='b'?'s-tu':x[0]==='g'?'s-vuong':''}">${x[1]}</li>`).join('')}
-  ${tg.map(t=>`<li>${t[1]}: ${({'Văn xương':'treo bằng khen, đặt bàn học, chậu cây, mở cửa, quạt','Đào hoa':'hồ cá, bình hoa tươi, quạt, mở cửa sổ, ngồi làm việc ở đây','Dịch mã':'hồ nước, quạt, trồng cây nếu đất trống','Nghênh lộc':'két sắt, tủ tiền','Bát sát hoàng tuyền':'không mở cửa, không để nước chảy đến, tránh đường đâm, góc nhọn','Đào hoa tuổi':'bình hoa tươi trong phòng người cần kích','Đào hoa sát tuổi':'không kích; có thể đặt kéo, vật kim để cắt đào hoa xấu'})[t[1]]||(t[1].startsWith('Lộc tồn')?'kích tài năm nay: két sắt, tỳ hưu, đèn sáng':'')}</li>`).join('')}
+  ${tg.map(t=>`<li>${t[1]}: ${({'Văn xương':'treo bằng khen, đặt bàn học, chậu cây, mở cửa, quạt','Đào hoa':'hồ cá, bình hoa tươi, quạt, mở cửa sổ, ngồi làm việc ở đây','Dịch mã':'hồ nước, quạt, trồng cây nếu đất trống','Nghênh lộc':'két sắt, tủ tiền','Bát sát hoàng tuyền':'không mở cửa, không để nước chảy đến, tránh đường đâm, góc nhọn','Đào hoa tuổi':'bình hoa tươi trong phòng người cần kích','Đào hoa sát tuổi':'không kích; có thể đặt kéo, vật kim để cắt đào hoa xấu'})[t[1]]||(t[1].startsWith('Lộc tồn')?'kích tài năm nay: két sắt, tỳ hưu, đèn sáng':t[1].startsWith('Tam sát')?'không động thổ, đục phá phương này trong năm; ngồi quay lưng về Tam sát thì được, không ngồi nhìn thẳng vào; hóa bằng tam kỳ lân, ba con giáp tam hợp (theo năm) hướng về phương sát':'')}</li>`).join('')}
   ${!st.length&&!tg.length?'<li class="mut">Không có gì đặc biệt, bố trí bình thường.</li>':''}</ul></div>`};
  document.querySelectorAll('#vpGrid .cell').forEach(el=>el.onclick=()=>showCell(+el.dataset.p));
  showCell(hP);
@@ -1649,6 +1665,38 @@ $('qFind').oninput=qGrid;qGrid();
 let saved='lich';try{saved=localStorage.getItem('vxt_dl')||'lich'}catch(_){}
 show(saved);renderLich();maiHoa();luchao();
 }
+// ---------- Tam sát, Thái Tuế, Tuế phá theo năm ----------
+function yearChi(y){return ((y-4)%12+12)%12}
+function inArc(d,lo,len){return (((d-lo)%360)+360)%360<len}
+function tamSat(y){const TS_GROUP=[[8,0,4],[2,6,10],[5,9,1],[11,3,7]],TS_CHI=[[5,6,7],[11,0,1],[2,3,4],[8,9,10]],TS_DIR=['Nam','Bắc','Đông','Tây'];const yb=yearChi(y),g=TS_GROUP.findIndex(x=>x.includes(yb)),c=TS_CHI[g];
+ const a=(345+15*(2*c[0]+1))%360,lo=(a-7.5+360)%360; // từ đầu sơn Kiếp sát qua 5 sơn (75°)
+ return{yb,g,chi:c,dir:TS_DIR[g],lo,hi:(lo+75)%360,sons:[0,1,2,3,4].map(k=>(2*c[0]+1+k)%24)}}
+function yearSat(y){const T=tamSat(y),tt=2*T.yb+1,tp=(tt+12)%24,nt=nienTinh(y),N=fly(nt,true);
+ const p5=[1,2,3,4,6,7,8,9].find(p=>N[p]===5),p2=[1,2,3,4,6,7,8,9].find(p=>N[p]===2);
+ return{T,tt,tp,p5,p2,nt}}
+function houseSat(y,hDeg){const S=yearSat(y),tDeg=(hDeg+180)%360,hs=Math.floor((((hDeg-337.5)%360)+360)%360/15),ts=(hs+12)%24;
+ const hp=SONP[Math.floor(hs/3)],tp=SONP[Math.floor(ts/3)],w=[];
+ if(inArc(hDeg,S.T.lo,75))w.push(['b',`Hướng nhà nằm trong <b>Tam sát</b> năm ${y} (phương ${S.T.dir}): kỵ khởi công, sửa cửa chính, đào móng phía trước. Câu cổ: “Tam sát khả tọa bất khả hướng”.`]);
+ if(inArc(tDeg,S.T.lo,75))w.push(['n',`Tọa nhà nằm trong Tam sát năm ${y}: tọa Tam sát thì được (lấy lưng chặn sát), nhưng vẫn tránh đào, đập phía sau nhà trong năm này.`]);
+ if(hs===S.tt)w.push(['n',`Hướng nhà trùng <b>Thái Tuế</b> năm ${y} (${SON[S.tt]}): “hướng Thái Tuế” tránh động thổ, sửa chữa lớn ở mặt tiền.`]);
+ if(ts===S.tt)w.push(['n',`Tọa nhà trùng Thái Tuế năm ${y} (${SON[S.tt]}): tọa Thái Tuế thì được, nhưng không động thổ, đập phá phía sau nhà.`]);
+ if(hs===S.tp)w.push(['b',`Hướng nhà phạm <b>Tuế phá</b> năm ${y} (${SON[S.tp]}): kỵ khởi công, nhập trạch hướng này.`]);
+ if(ts===S.tp)w.push(['b',`Tọa nhà phạm <b>Tuế phá</b> năm ${y} (${SON[S.tp]}): kỵ động thổ phía sau.`]);
+ if(hp===S.p5)w.push(['b',`<b>Ngũ hoàng</b> năm ${y} bay vào cung hướng (${PNAME[hp]}): cửa chính cần treo chuông đồng 6 ống hoặc hồ lô đồng, không sửa cửa.`]);
+ if(tp===S.p5)w.push(['b',`Ngũ hoàng năm ${y} bay vào cung tọa (${PNAME[tp]}): không đào, đập phía sau nhà.`]);
+ if(hp===S.p2)w.push(['n',`Nhị hắc năm ${y} vào cung hướng: hóa bằng kim khí, chú ý sức khỏe.`]);
+ return w.filter(x=>!x[1].endsWith('?'))}
+function satRow(y){const S=yearSat(y);return `<b>${y}</b> ${gz(((y-4)%60+60)%60)}: Tam sát <b>${S.T.dir}</b> (${S.T.sons.map(i=>SON[i]).join(' ')}) · Thái Tuế ${SON[S.tt]} · Tuế phá ${SON[S.tp]} · Ngũ hoàng ${PNAME[S.p5]} · Nhị hắc ${PNAME[S.p2]}`}
+function renderSat(){if(!$('satNam'))return;const ln=+$('inLN').value||new Date().getFullYear(),h=facingDeg(),now=new Date().getFullYear();
+ const w=houseSat(ln,h);
+ let t=`<p>${satRow(ln)}</p>`+(w.length?w.map(x=>`<div class="${x[0]==='b'?'tip':'key'}">${x[1]}</div>`).join(''):`<div class="key">Năm ${ln} hướng và tọa nhà không phạm Tam sát, Thái Tuế, Tuế phá, Ngũ hoàng.</div>`);
+ t+=`<details style="margin-top:8px"><summary>Bảng 12 năm (${now-1}–${now+10}) cho nhà này</summary><div><div style="overflow-x:auto"><table><tr><th>Năm</th><th>Tam sát</th><th>Thái Tuế / Tuế phá</th><th>Ngũ hoàng · Nhị hắc</th><th>Nhà này</th></tr>`;
+ for(let y=now-1;y<=now+10;y++){const S=yearSat(y),hw=houseSat(y,h),bad=hw.some(x=>x[0]==='b');
+  t+=`<tr${y===ln?' style="outline:2px solid var(--acc)"':''}${bad?' style="background:var(--bad-bg)"':''}><td><b>${y}</b><br><span class="mut">${gz(((y-4)%60+60)%60)}</span></td><td>${S.T.dir}<br><span class="mut">${S.T.chi.map(c=>CHI[c]).join(', ')}</span></td><td>${SON[S.tt]} / ${SON[S.tp]}</td><td>${PNAME[S.p5]} · ${PNAME[S.p2]}</td><td style="font-size:.78rem">${hw.length?hw.map(x=>x[1].replace(/<[^>]+>/g,'').split(':')[0]).join('; '):'<span class="s-vuong">Không phạm</span>'}</td></tr>`}
+ t+=`</table></div><p class="mut">Năm tính từ Lập Xuân (~4/2). Ngũ hoàng, Nhị hắc là niên tinh 5 và 2 bay theo năm.</p></div></details>`;
+ $('satNam').innerHTML=t}
+const _rSat=render;render=function(){_rSat();renderSat()};
+
 // ---------- La bàn theo tuổi + hồ sơ chủ nhà ----------
 {
 const LB={head:null,live:false,lock:null};
@@ -1678,6 +1726,7 @@ function drawDial(){
  // tâm: 8 quái + hướng
  [1,8,3,4,9,2,7,6].forEach(pa=>{s+=txt(PCEN[pa],48,{1:'B',8:'ĐB',3:'Đ',4:'ĐN',9:'N',2:'TN',7:'T',6:'TB'}[pa],7,'var(--mut)',1)});
  s+=`<circle r="38" fill="var(--card)" stroke="var(--line)"/>`;
+ {const yy=new Date().getFullYear(),T=tamSat(yy),a1=T.lo,a2=T.lo+75;s+=arc(a1,a2,108,111,'#c53030')+txt(a1+12,131,'TAM SÁT '+yy,5.5,'#c53030',1);}
  s+=txt(0,128,'B',9,'#c53030',1);
  // kim chỉ: luôn lên trên = hướng đang đo
  s=`<g>${s}</g><line x1="0" y1="30" x2="0" y2="-118" stroke="#9b2c2c" stroke-width="2"/><polygon points="0,-130 -6,-116 6,-116" fill="#9b2c2c"/><line x1="0" y1="30" x2="0" y2="118" stroke="#7a6f66" stroke-width="1" stroke-dasharray="3 3"/>`;
@@ -1690,6 +1739,7 @@ function drawDial(){
  if(d!==null){const hp=palOf(d),toa=norm(d+180),tp=palOf(toa),si=sonIdx(d),off=norm(d-337.5)%15,fc=Math.abs(off-7.5),pe=Math.min(norm(d-22.5)%45,45-norm(d-22.5)%45);
   h+=`<p><b>Hướng ${d.toFixed(1)}°</b>: sơn <b>${SON[si]}</b> (${NGUYEN[si%3]}), cung ${PNAME[hp]} – ${PDIR[hp]}. Tọa ${SON[sonIdx(toa)]} (${toa.toFixed(1)}°), trạch ${PNAME[tp]}: <b>${grp(tp)} trạch</b>.</p>`;
   if(pe<=1.5)h+='<div class="tip">⚠️ Gần <b>Đại không vong</b>, nên đo lại.</div>';else if(Math.min(off,15-off)<=1.5)h+='<div class="tip">⚠️ Gần <b>Tiểu không vong</b>, nên đo lại.</div>';else if(fc>3)h+=`<div class="tip">Kiêm ${fc.toFixed(1)}° → tinh bàn sẽ dùng <b>Thế quái</b>.</div>`;
+  {const yy=new Date().getFullYear(),hw=houseSat(yy,d);hw.forEach(x=>h+=`<div class="${x[0]==='b'?'tip':'key'}">${x[1]}</div>`);if(!hw.length)h+=`<p class="mut">Năm ${yy}: hướng này không phạm Tam sát, Thái Tuế, Tuế phá, Ngũ hoàng.</p>`}
   if(M){const dn=DN[dnAt(M.cp,hp)],same=grp(M.cp)===grp(tp);
    h+=`<p>Chủ nhà${p.name?' '+p.name:''}: năm âm ${M.Y}, cung phi <b>${PNAME[M.cp]}</b> (${grp(M.cp)} mệnh).</p><p><span class="tag ${dn.g?'g':'b'}">Hướng nhà là ${dn.t}</span> <span class="tag ${same?'g':'b'}">${same?'Mệnh hợp trạch':'Mệnh khác nhóm trạch'}</span></p><p class="mut">${dn.y}. 4 hướng tốt: ${BT[M.cp].slice(0,4).map((pa,i)=>`${DN[i].t} ${PDIR[pa]}`).join(' · ')}.</p>`}
   else h+='<p class="mut">Nhập ngày sinh chủ nhà để vòng la bàn hiện 8 du niên tốt xấu theo tuổi.</p>'}
@@ -1776,6 +1826,9 @@ cards.push(['Đường bay của phi tinh?','Trung → Càn → Đoài → Cấn
 ['Cách chọn vật phẩm cho người sát nhất?','Theo dụng thần Bát tự'],['Bể cá kỵ đặt ở đâu?','Dưới tượng thần, bếp, phòng ăn; không dùng bể tam giác'],
 ['Hòn non bộ nên mấy hòn?','Số lẻ 3, 5, 7 và không bằng nhau'],
 ['Tam yếu của Bát Trạch Minh Kính?','Cửa chính, phòng chủ, bếp'],
+['Năm Thân Tý Thìn Tam sát ở đâu?','Phương Nam: Tỵ, Ngọ, Mùi'],['Năm Dần Ngọ Tuất Tam sát ở đâu?','Phương Bắc: Hợi, Tý, Sửu'],
+['Năm Tỵ Dậu Sửu Tam sát ở đâu?','Phương Đông: Dần, Mão, Thìn'],['Năm Hợi Mão Mùi Tam sát ở đâu?','Phương Tây: Thân, Dậu, Tuất'],
+['Câu quyết về Tam sát?','Tam sát khả tọa bất khả hướng'],['Tuế phá là gì?','Phương đối xung với Thái Tuế (chi năm)'],
 ['Số tiên thiên của 8 quái?','Càn 1, Đoài 2, Ly 3, Chấn 4, Tốn 5, Khảm 6, Cấn 7, Khôn 8'],
 ['Mai Hoa: hào động tính thế nào?','Tổng số chia 6 lấy dư (dư 0 là hào 6)'],['Hộ quẻ lấy từ các hào nào?','Hào 2–3–4 làm hạ quái, 3–4–5 làm thượng quái'],
 ['Thể và Dụng trong Mai Hoa?','Quái không động là Thể, quái có hào động là Dụng'],['Lục thân trong Lục hào?','Huynh Đệ, Tử Tôn, Thê Tài, Quan Quỷ, Phụ Mẫu'],
