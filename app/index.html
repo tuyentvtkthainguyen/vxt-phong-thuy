@@ -114,6 +114,7 @@ select,input{width:100%;padding:9px;border:1px solid var(--line);border-radius:9
 <div id="updBar"></div>
 <nav>
 <button data-t="hoc" class="on">📖 Học</button>
+<button data-t="lb">🧲 La bàn</button>
 <button data-t="lap">🧭 Lập bàn</button>
 <button data-t="bt">☯ Bát trạch</button>
 <button data-t="tu">🀄 Bát tự</button>
@@ -322,6 +323,24 @@ Dương (+) thì bay thuận, âm (−) thì bay nghịch.</div>
 </section>
 
 <!-- ================= LẬP BÀN ================= -->
+<section id="lb">
+<div class="card"><b>Thông tin chủ nhà</b> <span class="mut">(lưu trên máy này, không gửi đi đâu)</span>
+<label>Họ tên</label><input id="lbName">
+<div class="row"><div><label>Ngày sinh (dương lịch)</label><input type="date" id="lbDate"></div><div><label>Giờ sinh</label><input type="time" id="lbTime" value="12:00"></div></div>
+<div class="row"><div><label>Giới tính</label><select id="lbSex"><option value="nam">Nam</option><option value="nu">Nữ</option></select></div><div><label>Năm hoàn thiện / nhập trạch</label><input type="number" id="lbYear"></div></div>
+</div>
+<div class="card"><b>La bàn theo tuổi</b>
+<svg id="lbSvg" viewBox="-135 -135 270 270" style="width:100%;max-width:420px;display:block;margin:6px auto;touch-action:manipulation"></svg>
+<div class="row"><div><label>Hướng nhà (độ, đầu máy chỉ ra mặt tiền)</label><input type="number" id="lbDeg" step="0.1" min="0" max="360" placeholder="vd 185.5"></div><div><label>Hiệu chỉnh từ thiên (độ)</label><input type="number" id="lbDecl" step="0.1" value="0"></div></div>
+<button class="btn" id="lbSensor">📡 Bật cảm biến</button><button class="btn alt" id="lbLock">📌 Chốt hướng</button>
+<p class="mut" id="lbStat">Đứng trong nhà sát cửa chính, nhìn thẳng ra ngoài; cầm máy nằm ngang, đầu máy chỉ ra phía trước. Tránh xa sắt thép, xe máy, thiết bị điện.</p>
+<div id="lbInfo"></div>
+<button class="btn" id="lbApply" style="width:100%;margin-top:8px">✅ Áp dụng: lập tinh bàn, Bát trạch, Bát tự, Tử vi</button>
+<div id="lbDone"></div>
+<div class="tip">Vòng trong tô <b style="color:#2f855a">xanh</b> là 4 hướng tốt, <b style="color:#c53030">đỏ</b> là 4 hướng xấu theo cung phi của chủ nhà; vòng ngoài là 24 sơn (chữ đỏ: sơn dương). Cảm biến điện thoại chỉ đúng khi máy đã hiệu chỉnh (lắc hình số 8) và chỉ chạy trên bản cài điện thoại hoặc trình duyệt di động; độ lệch thường 2–5°, việc quan trọng nên đo lại bằng la bàn chuyên dụng.</div>
+</div>
+</section>
+
 <section id="lap">
 <div class="card">
 <div class="row">
@@ -1630,6 +1649,89 @@ $('qFind').oninput=qGrid;qGrid();
 let saved='lich';try{saved=localStorage.getItem('vxt_dl')||'lich'}catch(_){}
 show(saved);renderLich();maiHoa();luchao();
 }
+// ---------- La bàn theo tuổi + hồ sơ chủ nhà ----------
+{
+const LB={head:null,live:false,lock:null};
+const PCEN={1:0,8:45,3:90,4:135,9:180,2:225,7:270,6:315};
+const sonIdx=d=>Math.floor((((d-337.5)%360)+360)%360/15);
+const palOf=d=>SONP[Math.floor(sonIdx(d)/3)];
+const norm=d=>((d%360)+360)%360;
+function prof(){return{name:$('lbName').value.trim(),date:$('lbDate').value,time:$('lbTime').value||'12:00',sex:$('lbSex').value,year:+$('lbYear').value||new Date().getFullYear(),decl:parseFloat($('lbDecl').value)||0}}
+function menhOf(p){if(!p.date)return null;const [y,mo,d]=p.date.split('-').map(Number),[h,mi]=p.time.split(':').map(Number);const R=batTu(y,mo,d,h,mi,7,true);return{Y:R.Y,cp:cungPhi(R.Y,p.sex)}}
+function save(){try{localStorage.setItem('vxt_chunha',JSON.stringify(prof()))}catch(e){}}
+function load(){try{const p=JSON.parse(localStorage.getItem('vxt_chunha')||'null');if(!p)return;$('lbName').value=p.name||'';$('lbDate').value=p.date||'';$('lbTime').value=p.time||'';$('lbSex').value=p.sex||'nam';$('lbYear').value=p.year||'';$('lbDecl').value=p.decl||0}catch(e){}}
+function curDeg(){const m=parseFloat($('lbDeg').value);return isNaN(m)?null:norm(m)}
+function drawDial(){
+ const p=prof(),M=menhOf(p),d=curDeg(),rot=d===null?0:-d;
+ const P=(a,r)=>{const t=(a+rot)*Math.PI/180;return[(r*Math.sin(t)).toFixed(1),(-r*Math.cos(t)).toFixed(1)]};
+ const arc=(a1,a2,r1,r2,fill)=>{const[x1,y1]=P(a1,r2),[x2,y2]=P(a2,r2),[x3,y3]=P(a2,r1),[x4,y4]=P(a1,r1);return `<path d="M${x1} ${y1}A${r2} ${r2} 0 0 1 ${x2} ${y2}L${x3} ${y3}A${r1} ${r1} 0 0 0 ${x4} ${y4}Z" fill="${fill}" stroke="var(--line)" stroke-width=".5"/>`};
+ const txt=(a,r,t,fs,col,b)=>{const[x,y]=P(a,r);return `<text x="${x}" y="${y}" font-size="${fs}" fill="${col}" ${b?'font-weight="700"':''} text-anchor="middle" dominant-baseline="middle" transform="rotate(${a+rot} ${x} ${y})">${t}</text>`};
+ let s='';
+ // vòng du niên theo tuổi
+ [1,8,3,4,9,2,7,6].forEach(pa=>{const c=PCEN[pa];let col='var(--neu-bg)',lab=PNAME[pa];
+  if(M){const k=dnAt(M.cp,pa),dn=DN[k];col=dn.g?'rgba(47,133,90,.28)':'rgba(197,48,48,.22)';lab=dn.t}
+  s+=arc(c-22.5,c+22.5,62,88,col)+txt(c,75,lab,7.5,M?(DN[dnAt(M.cp,pa)].g?'#2f855a':'#c53030'):'var(--ink)',1)});
+ // vòng 24 sơn
+ for(let i=0;i<24;i++){const c=norm(345+15*i);s+=arc(c-7.5,c+7.5,88,108,i%3===1?'var(--card)':'var(--bg)')+txt(c,98,SON[i],6.8,YY[SONP[Math.floor(i/3)]][i%3]==='+'?'var(--acc)':'var(--ink)',i%3===1)}
+ // vạch độ
+ for(let a=0;a<360;a+=5){const[x1,y1]=P(a,110),[x2,y2]=P(a,a%15===0?117:113);s+=`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="var(--mut)" stroke-width="${a%45===0?1.2:.5}"/>`;if(a%30===0)s+=txt(a,123,a,6,'var(--mut)')}
+ // tâm: 8 quái + hướng
+ [1,8,3,4,9,2,7,6].forEach(pa=>{s+=txt(PCEN[pa],48,{1:'B',8:'ĐB',3:'Đ',4:'ĐN',9:'N',2:'TN',7:'T',6:'TB'}[pa],7,'var(--mut)',1)});
+ s+=`<circle r="38" fill="var(--card)" stroke="var(--line)"/>`;
+ s+=txt(0,128,'B',9,'#c53030',1);
+ // kim chỉ: luôn lên trên = hướng đang đo
+ s=`<g>${s}</g><line x1="0" y1="30" x2="0" y2="-118" stroke="#9b2c2c" stroke-width="2"/><polygon points="0,-130 -6,-116 6,-116" fill="#9b2c2c"/><line x1="0" y1="30" x2="0" y2="118" stroke="#7a6f66" stroke-width="1" stroke-dasharray="3 3"/>`;
+ const lab=d===null?'—':d.toFixed(1)+'°';
+ s+=`<text x="0" y="-6" text-anchor="middle" font-size="15" font-weight="700" fill="var(--ink)">${lab}</text>`;
+ if(d!==null){const si=sonIdx(d);s+=`<text x="0" y="12" text-anchor="middle" font-size="9" fill="var(--mut)">${SON[si]} · ${PNAME[palOf(d)]}</text>`}
+ $('lbSvg').innerHTML=s;
+ // thông tin
+ let h='';
+ if(d!==null){const hp=palOf(d),toa=norm(d+180),tp=palOf(toa),si=sonIdx(d),off=norm(d-337.5)%15,fc=Math.abs(off-7.5),pe=Math.min(norm(d-22.5)%45,45-norm(d-22.5)%45);
+  h+=`<p><b>Hướng ${d.toFixed(1)}°</b>: sơn <b>${SON[si]}</b> (${NGUYEN[si%3]}), cung ${PNAME[hp]} – ${PDIR[hp]}. Tọa ${SON[sonIdx(toa)]} (${toa.toFixed(1)}°), trạch ${PNAME[tp]}: <b>${grp(tp)} trạch</b>.</p>`;
+  if(pe<=1.5)h+='<div class="tip">⚠️ Gần <b>Đại không vong</b>, nên đo lại.</div>';else if(Math.min(off,15-off)<=1.5)h+='<div class="tip">⚠️ Gần <b>Tiểu không vong</b>, nên đo lại.</div>';else if(fc>3)h+=`<div class="tip">Kiêm ${fc.toFixed(1)}° → tinh bàn sẽ dùng <b>Thế quái</b>.</div>`;
+  if(M){const dn=DN[dnAt(M.cp,hp)],same=grp(M.cp)===grp(tp);
+   h+=`<p>Chủ nhà${p.name?' '+p.name:''}: năm âm ${M.Y}, cung phi <b>${PNAME[M.cp]}</b> (${grp(M.cp)} mệnh).</p><p><span class="tag ${dn.g?'g':'b'}">Hướng nhà là ${dn.t}</span> <span class="tag ${same?'g':'b'}">${same?'Mệnh hợp trạch':'Mệnh khác nhóm trạch'}</span></p><p class="mut">${dn.y}. 4 hướng tốt: ${BT[M.cp].slice(0,4).map((pa,i)=>`${DN[i].t} ${PDIR[pa]}`).join(' · ')}.</p>`}
+  else h+='<p class="mut">Nhập ngày sinh chủ nhà để vòng la bàn hiện 8 du niên tốt xấu theo tuổi.</p>'}
+ else h='<p class="mut">Bấm “Bật cảm biến” để đo bằng điện thoại, hoặc nhập số độ.</p>';
+ $('lbInfo').innerHTML=h;
+}
+function onOri(e){let hd=null;
+ if(typeof e.webkitCompassHeading==='number')hd=e.webkitCompassHeading;
+ else if(e.absolute&&typeof e.alpha==='number')hd=360-e.alpha;
+ if(hd===null)return;const so=(screen.orientation&&screen.orientation.angle)||window.orientation||0;
+ hd=norm(hd+so+(parseFloat($('lbDecl').value)||0));
+ LB.head=LB.head===null?hd:norm(LB.head+((((hd-LB.head)%360)+540)%360-180)*0.25);
+ if(LB.live){$('lbDeg').value=LB.head.toFixed(1);drawDial()}}
+$('lbSensor').onclick=async()=>{
+ try{if(typeof DeviceOrientationEvent!=='undefined'&&DeviceOrientationEvent.requestPermission){const r=await DeviceOrientationEvent.requestPermission();if(r!=='granted')throw 0}
+  if(!('ondeviceorientationabsolute' in window)&&!('ondeviceorientation' in window))throw 0;
+  window.addEventListener('deviceorientationabsolute',onOri);window.addEventListener('deviceorientation',onOri);LB.live=true;
+  $('lbStat').textContent='Đang đo… cầm máy nằm ngang, đầu máy chỉ ra phía trước nhà, rồi bấm “Chốt hướng”.';
+  setTimeout(()=>{if(LB.head===null)$('lbStat').textContent='Máy này không có cảm biến la bàn (hoặc trình duyệt chặn). Hãy đo bằng la bàn khác rồi nhập số độ.'},2500)}
+ catch(e){$('lbStat').textContent='Không bật được cảm biến. Hãy nhập số độ đo bằng la bàn khác.'}};
+$('lbLock').onclick=()=>{LB.live=false;$('lbStat').textContent=`Đã chốt hướng ${$('lbDeg').value||'—'}°. Bấm “Bật cảm biến” để đo lại.`;drawDial()};
+['lbDeg'].forEach(id=>$(id).oninput=()=>{LB.live=false;drawDial()});
+['lbName','lbDate','lbTime','lbSex','lbYear','lbDecl'].forEach(id=>$(id).addEventListener('input',()=>{save();drawDial()}));
+$('lbApply').onclick=()=>{
+ const p=prof(),d=curDeg();save();
+ if(d===null){$('lbStat').textContent='Chưa có hướng: đo hoặc nhập số độ trước.';return}
+ // Lập bàn
+ $('inYear').value=p.year;$('inVan').value=vanFromYear(p.year);$('inLN').value=new Date().getFullYear();
+ $('inDeg').value=d.toFixed(1);$('inSon').value=sonIdx(d);$('inQuai').value='auto';
+ // chủ nhà
+ if(p.date){const M=menhOf(p);$('btYear').value=M.Y;$('btLX').checked=false;$('btSex').value=p.sex;
+  $('tuDate').value=p.date;$('tuTime').value=p.time;$('tuSex').value=p.sex;
+  $('tvName').value=p.name;$('tvDate').value=p.date;$('tvTime').value=p.time;$('tvSex').value=p.sex==='nam'?'1':'0'}
+ render();renderBT();if(p.date){renderTu();$('tvGo').click()}
+ const c=LAST.c;
+ $('lbDone').innerHTML=`<div class="key">Đã liên kết: hướng ${d.toFixed(1)}° (${SON[sonIdx(d)]}), nhà vận ${c.van}${c.the?' (thế quái)':''}${p.date?`, chủ nhà ${p.name||''} sinh ${p.date.split('-').reverse().join('/')} ${p.time}`:''}. Cách cục: ${cachCuc(c).map(x=>x[1]).join(', ')||'không có cách đặc biệt'}.</div>
+ <div class="rotbar">${[['lap','🧭 Tinh bàn'],['bt','☯ Bát trạch'],['tu','🀄 Bát tự'],['tv','🌟 Tử vi'],['vp','🧿 Vật phẩm']].filter(x=>p.date||['lap','vp','bt'].includes(x[0])).map(x=>`<button data-go="${x[0]}">${x[1]}</button>`).join('')}</div>`;
+ document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>document.querySelector(`nav button[data-t=${b.dataset.go}]`).click());
+};
+load();if(!$('lbYear').value)$('lbYear').value=new Date().getFullYear();drawDial();
+}
+
 // ---------- tabs ----------
 document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{try{b.scrollIntoView({inline:'center',block:'nearest'})}catch(_){};
  document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('on',x===b));
