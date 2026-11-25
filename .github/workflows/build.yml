@@ -4,6 +4,10 @@ on:
   push:
     tags: ["v*"]
   workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag release cần build lại (vd v1.5.0)"
+        required: false
 
 permissions:
   contents: write
@@ -23,7 +27,7 @@ jobs:
         id: ver
         shell: pwsh
         run: |
-          $v = "${{ github.ref_name }}"
+          $v = "${{ inputs.tag || github.ref_name }}"
           if ($v -match '^v(\d+\.\d+\.\d+)$') { $v = $Matches[1] } else { $v = "1.0.0" }
           "version=$v" >> $env:GITHUB_OUTPUT
 
@@ -46,7 +50,17 @@ jobs:
           path: Output/*.exe
 
       - name: Đăng lên Releases (khi đẩy tag v*)
-        if: startsWith(github.ref, 'refs/tags/v')
-        uses: softprops/action-gh-release@v2
-        with:
-          files: Output/*.exe
+        if: startsWith(github.ref, 'refs/tags/v') || inputs.tag != ''
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $tag = "${{ inputs.tag || github.ref_name }}"
+          $files = Get-ChildItem Output\*.exe | ForEach-Object { $_.FullName }
+          for ($i = 1; $i -le 6; $i++) {
+            gh release upload $tag $files --clobber --repo "${{ github.repository }}"
+            if ($LASTEXITCODE -eq 0) { exit 0 }
+            Write-Host "Lỗi tải lên, thử lại lần $i sau 20 giây..."
+            Start-Sleep -Seconds 20
+          }
+          exit 1
