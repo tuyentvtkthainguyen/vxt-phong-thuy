@@ -103,6 +103,7 @@ select,input{width:100%;padding:9px;border:1px solid var(--line);border-radius:9
 .opt{display:block;width:100%;text-align:left;margin:6px 0;padding:10px;border-radius:9px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer;font-size:.92rem}
 .opt.ok{background:var(--good-bg);border-color:var(--good)}.opt.no{background:var(--bad-bg);border-color:var(--bad)}
 .lst{margin:4px 0;padding-left:18px}
+.why{margin-top:8px;padding:8px 10px;border-left:3px solid var(--acc);background:var(--neu-bg);border-radius:6px;font-size:.88rem}
 .lsw{margin-top:4px}.lsw-t{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;margin-bottom:4px}
 .lsw-t button{border:0;background:var(--card);color:var(--ink);padding:4px 10px;font-size:.8rem;cursor:pointer}.lsw-t button.on{background:var(--acc);color:#fff}
 .lsw-r{display:flex;flex-wrap:wrap;gap:6px}.lsw-r>*{flex:1 1 72px;min-width:0;padding:7px 4px}.lsw-l{display:flex;align-items:center;gap:6px;margin:4px 0 0}.lsw-l input{width:auto}
@@ -1174,25 +1175,46 @@ function luanGiai(o){
  const ord=[0,1,2,3,4].sort((a,b)=>G[b]-G[a]),miss=[0,1,2,3,4].filter(g=>G[g]<.3);
  const ky=[0,1,2,3,4].filter(e=>!hy.includes(e));
  const avg=W.reduce((a,b)=>a+b,0)/5,weak=[0,1,2,3,4].filter(e=>W[e]<.6),strong=[0,1,2,3,4].filter(e=>W[e]>avg*1.7);
- const sec=(t,h)=>`<details open><summary>${t}</summary><div>${h}</div></details>`;
+ const sec=(t,h,w)=>`<details open><summary>${t}</summary><div>${h}${w?`<div class="why"><b>💡 Giải thích để học:</b> ${w}</div>`:''}</div></details>`;
  let H='';
+ // 0 Cách cục, điều hậu, từng trụ
+ {const TRU=['Năm','Tháng','Ngày','Giờ'],AGE=['1–16 tuổi','17–32 tuổi','33–48 tuổi','49 tuổi về sau'],NG=['Tổ nghiệp, ông bà, gốc gác gia đình','Cha mẹ, anh em, môi trường lớn lên, sự nghiệp ban đầu','Bản thân (can) và vợ/chồng (chi – cung phu thê)','Con cái, cấp dưới, hậu vận'];
+  let tb='<div style="overflow-x:auto"><table><tr><th>Trụ</th><th>Can chi</th><th>Thập thần can</th><th>Tàng can (thập thần)</th><th>Trường sinh</th><th>Ứng với</th></tr>';
+  R.p.forEach((x,i)=>{tb+=`<tr><td><b>${TRU[i]}</b><br><span class="mut">${AGE[i]}</span></td><td><span ${ec(CANH[x[0]])}>${CAN[x[0]]}</span> <span ${ec(CHIH[x[1]])}>${CHI[x[1]]}</span></td><td>${i===2?'<b>Nhật chủ</b>':thapThan(D,x[0])}</td><td>${TANG[x[1]].map(c=>CAN[c]+' ('+thapThan(D,c)+')').join(', ')}</td><td>${truongSinh(D,x[1])}</td><td>${NG[i]}</td></tr>`});
+  tb+='</table></div>';
+  // cách cục: tàng can tháng nào lộ ra can năm/tháng/giờ thì lấy, không thì lấy chính khí
+  const mt=TANG[B[1]],lo=mt.find(c=>[C[0],C[1],C[3]].includes(c)),gc=lo!==undefined?lo:mt[0],tt=thapThan(D,gc);
+  const cName=tt==='Tỷ kiên'?'Kiến lộc cách':tt==='Kiếp tài'?(D%2===0?'Dương nhận cách':'Nguyệt kiếp cách'):tt+' cách';
+  const CY={'Chính quan':'người nề nếp, trọng danh dự, hợp làm việc trong tổ chức, nhà nước; sợ gặp Thương quan phá cách.','Thất sát':'quyết đoán, dám đương đầu, hợp quân sự, kỹ thuật, quản lý khó; cần Thực thần chế hoặc Ấn hóa thì thành quyền uy.','Chính tài':'cần cù, thực tế, giữ tiền, kiếm tiền bằng công sức; cần thân đủ mạnh để “gánh” tài.','Thiên tài':'nhạy bén, hào phóng, hợp kinh doanh, đầu tư, tiền đến từ nhiều nguồn; sợ Tỷ kiếp tranh đoạt.','Chính ấn':'hiền hòa, ham học, được che chở, hợp giáo dục, nghiên cứu; sợ Tài phá Ấn.','Thiên ấn':'tư duy độc lập, có năng khiếu đặc biệt (y, huyền học, nghệ thuật, kỹ thuật); sợ gặp Thực thần (Kiêu đoạt thực).','Thực thần':'ôn hòa, có tài ăn nói, hưởng thụ, sáng tạo; hợp nghệ thuật, ẩm thực, giáo dục.','Thương quan':'thông minh, sắc sảo, giỏi thể hiện, hay phá lệ; hợp nghề tự do, sáng tạo, kỹ thuật; nên có Ấn chế hoặc dùng Tài tiết.','Tỷ kiên':'','Kiếp tài':''};
+  const cDesc=tt==='Tỷ kiên'?'lệnh tháng là lộc của nhật chủ: tự lập, tự thân lập nghiệp, cần Tài Quan để thành.':tt==='Kiếp tài'?'lệnh tháng là Kiếp tài: cá tính mạnh, quyết liệt, dễ hao tài; cần Quan sát chế mới thành cách.':CY[tt];
+  // điều hậu
+  const sz=[1,1,0,0,0,2,2,2,3,3,3,1][B[1]],SZ=['mùa xuân','mùa đông','mùa hạ','mùa thu'];
+  const dh=sz===1?'Sinh mùa đông, khí hậu hàn lạnh: lá số cần <b>Hỏa</b> sưởi ấm (điều hậu). Có Hỏa lộ là đẹp; thiếu Hỏa thì dễ trầm, chậm, nên bổ sung màu đỏ, hướng Nam, nghề liên quan Hỏa.':sz===2?'Sinh mùa hạ, khí hậu nóng khô: lá số cần <b>Thủy</b> làm mát. Có Thủy (Nhâm, Quý, Hợi, Tý) là đẹp; thiếu Thủy dễ nóng vội, nên bổ sung màu đen/xanh dương, hướng Bắc.':sz===0?'Sinh mùa xuân, Mộc vượng: khí hậu ôn hòa, điều hậu không gấp; đầu xuân (tháng Dần) còn lạnh nên có chút Hỏa là tốt.':'Sinh mùa thu, Kim vượng, khí khô: nên có Thủy nhuận hoặc Hỏa luyện Kim tùy nhật chủ; điều hậu ở mức vừa.';
+  const has=e=>R.p.some(x=>CANH[x[0]]===e||CHIH[x[1]]===e);
+  const dhOk=sz===1?has(1):sz===2?has(4):true;
+  H+=sec('0. Phân tích từng trụ, cách cục và điều hậu',`${tb}
+  <p><b>Cách cục:</b> <b>${cName}</b> – ${cDesc}</p>
+  <p><b>Điều hậu:</b> sinh tháng ${CHI[B[1]]} (${SZ[sz]}). ${dh} ${sz===1||sz===2?(dhOk?'Lá số <b>có</b> hành điều hậu, tốt.':'Lá số <b>thiếu</b> hành điều hậu, cần bổ sung bằng môi trường sống, màu sắc, nghề nghiệp.'):''}</p>`,
+  `Cách đọc bảng: mỗi trụ có <b>can</b> (lộ ra ngoài, việc thể hiện rõ) và <b>chi</b> (gốc rễ, ẩn bên trong; tàng can là các can ẩn trong chi, can đầu là chính khí). Cột “thập thần” cho biết can đó là gì đối với bản thân. <b>Cách cục</b> lấy từ lệnh tháng: xem các tàng can của chi tháng ${CHI[B[1]]} (${mt.map(c=>CAN[c]).join(', ')}); can nào lộ ra ở thiên can thì lấy can đó, nếu không thì lấy chính khí. Ở đây lấy <b>${CAN[gc]}</b> là ${tt}${lo!==undefined?' (vì lộ ra thiên can)':' (chính khí, không lộ)'}. Cách cục cho biết “khung” của cả đời: nghề hợp, cách thành công. <b>Điều hậu</b> là cân bằng nóng – lạnh theo mùa sinh, nhiều thầy coi trọng ngang với vượng nhược.`);
+ }
  // 1 Tính cách
  const tsD=truongSinh(D,B[2]);
  H+=sec('1. Bản mệnh và tính cách',`<p>Nhật chủ ${NC[D]}</p>
  <p>Thân <b>${ratio>=.55?'vượng':ratio<=.45?'nhược':'gần trung hòa'}</b> (${Math.round(ratio*100)}%), ${dl?'đắc lệnh':'thất lệnh'}. ${ratio>=.55?'Người có nội lực, chủ kiến, chịu được áp lực, hợp tự mình gánh vác; cần nơi để “xả” năng lượng (Thực thương, Tài, Quan).':ratio<=.45?'Người cần môi trường hỗ trợ, quý nhân, tổ chức vững; nên học thêm, rèn sức khỏe, tránh ôm việc quá sức.':'Mệnh khá cân bằng, thuận nghịch tùy vận.'}</p>
- <p>Nhật chủ ngồi trên ${CHI[B[2]]} ở thế <b>${tsD}</b>: ${TSL[tsD]}.</p>`);
+ <p>Nhật chủ ngồi trên ${CHI[B[2]]} ở thế <b>${tsD}</b>: ${TSL[tsD]}.</p>`,`Nhật chủ là <b>can ngày</b> (${CAN[D]}), đại diện cho chính mình. Tính cách đọc trước hết từ can ngày và hành của nó. Thân vượng/nhược do chương trình cộng lực các can chi <i>sinh trợ</i> nhật chủ (cùng hành = Tỷ kiếp, hành sinh mình = Ấn) so với lực <i>khắc tiết hao</i> (Quan sát, Thực thương, Tài); chi tháng tính nặng nhất vì là “lệnh tháng”. ${dl?'Đắc lệnh vì hành tháng sinh '+CHI[B[1]]+' là hành của nhật chủ hoặc sinh cho nó.':'Thất lệnh vì hành tháng sinh '+CHI[B[1]]+' không trợ cho nhật chủ.'} Vòng trường sinh (Trường sinh → Dưỡng) cho biết can ngày ở chi ngày “khỏe” hay “yếu”: Lâm quan, Đế vượng là mạnh; Bệnh, Tử, Tuyệt là yếu.`);
  // 2 Thập thần
  H+=sec('2. Thập thần nổi bật',`<p>Mạnh nhất là <b>${GN[ord[0]]}</b> (${G[ord[0]].toFixed(1)}), kế đến <b>${GN[ord[1]]}</b> (${G[ord[1]].toFixed(1)}).</p>
  <ul class="lst"><li><b>${GN[ord[0]]}:</b> ${GT[ord[0]]}.</li><li><b>${GN[ord[1]]}:</b> ${GT[ord[1]]}.</li></ul>
- ${miss.length?`<p>Thiếu hoặc rất yếu: <b>${miss.map(g=>GN[g]).join(', ')}</b>. ${miss.includes(2)?'Thiếu Tài: tiền đến chậm, nên đi theo chuyên môn hơn đầu cơ. ':''}${miss.includes(3)?'Thiếu Quan: tự do, ít bị ràng buộc, khó theo nghề cần thăng tiến trong bộ máy. ':''}${miss.includes(4)?'Thiếu Ấn: ít được che chở, phải tự học, tự lo. ':''}${miss.includes(1)?'Thiếu Thực thương: ít bộc lộ, nên rèn kỹ năng trình bày. ':''}${miss.includes(0)?'Thiếu Tỷ kiếp: ít anh em bạn bè trợ giúp, làm việc nhóm cần chủ động. ':''}</p>`:''}`);
+ ${miss.length?`<p>Thiếu hoặc rất yếu: <b>${miss.map(g=>GN[g]).join(', ')}</b>. ${miss.includes(2)?'Thiếu Tài: tiền đến chậm, nên đi theo chuyên môn hơn đầu cơ. ':''}${miss.includes(3)?'Thiếu Quan: tự do, ít bị ràng buộc, khó theo nghề cần thăng tiến trong bộ máy. ':''}${miss.includes(4)?'Thiếu Ấn: ít được che chở, phải tự học, tự lo. ':''}${miss.includes(1)?'Thiếu Thực thương: ít bộc lộ, nên rèn kỹ năng trình bày. ':''}${miss.includes(0)?'Thiếu Tỷ kiếp: ít anh em bạn bè trợ giúp, làm việc nhóm cần chủ động. ':''}</p>`:''}`,`Thập thần là quan hệ ngũ hành giữa nhật chủ và từng can (kể cả can ẩn trong chi). Cách nhớ: <b>cùng hành</b> là Tỷ kiên/Kiếp tài; <b>mình sinh</b> là Thực thần/Thương quan; <b>mình khắc</b> là Thiên/Chính tài; <b>khắc mình</b> là Thất sát/Chính quan; <b>sinh mình</b> là Thiên/Chính ấn. Cùng âm dương với nhật chủ thì là chữ đầu (Tỷ kiên, Thực thần, Thiên tài, Thất sát, Thiên ấn), khác âm dương là chữ sau. Điểm số ở đây cộng: can lộ 1 điểm, tàng can chính khí 1, trung khí 0,5, dư khí 0,3; trụ tháng nhân 1,5.`);
+
  // 3 Nghề, màu, hướng
  const cp=cungPhi(R.Y,sex),good=BT[cp].slice(0,4),hyP=[].concat(...hy.map(e=>EPAL[e])),both=good.filter(p=>hyP.includes(p));
  H+=sec('3. Hỷ dụng thần: nghề, màu, hướng, số',`<p>Hỷ dụng: ${hy.map(e=>`<b ${ec(e)}>${EN[e]}</b>`).join(', ')} · Kỵ: ${ky.map(e=>`<span ${ec(e)}>${EN[e]}</span>`).join(', ')}.</p>
  <table><tr><th>Hành</th><th>Ngành nghề</th><th>Màu</th><th>Hướng</th><th>Số</th><th>Đá</th></tr>${hy.map(e=>`<tr><td ${ec(e)}>${EN[e]}</td><td>${EJOB[e]}</td><td>${ECOLN[e]}</td><td>${EDIR[e]}</td><td>${ENUM[e]}</td><td>${EDA[e]}</td></tr>`).join('')}</table><p class="mut">Vòng đá, trang sức, vật phẩm nên chọn theo hỷ dụng thần ở trên (cách sách đánh giá là sát nhất). Đá hợp tuổi và Phật bản mệnh xem ở tab Vật phẩm.</p>
  <p>Theo thập thần mạnh, hợp với: ${GJ[ord[0]]}${ord[0]!==ord[1]?'; hoặc '+GJ[ord[1]]:''}.</p>
- <p>Kết hợp Bát trạch (cung phi ${PNAME[cp]}): ${both.length?`hướng vừa là hướng cát của mệnh vừa thuộc hỷ thần: <b>${both.map(p=>PDIR[p]).join(', ')}</b>. Nên ưu tiên cho bàn làm việc, đầu giường, cửa phòng.`:'không có hướng trùng giữa 4 hướng cát Bát trạch và hướng hỷ thần; ưu tiên 4 hướng cát Bát trạch, bổ sung màu sắc theo hỷ thần.'}</p>`);
+ <p>Kết hợp Bát trạch (cung phi ${PNAME[cp]}): ${both.length?`hướng vừa là hướng cát của mệnh vừa thuộc hỷ thần: <b>${both.map(p=>PDIR[p]).join(', ')}</b>. Nên ưu tiên cho bàn làm việc, đầu giường, cửa phòng.`:'không có hướng trùng giữa 4 hướng cát Bát trạch và hướng hỷ thần; ưu tiên 4 hướng cát Bát trạch, bổ sung màu sắc theo hỷ thần.'}</p>`,`Hỷ dụng thần là hành giúp lá số <b>cân bằng</b>: thân vượng thì cần hành tiết khí, khắc chế (Thực thương, Tài, Quan); thân nhược thì cần hành sinh trợ (Ấn, Tỷ kiếp). Từ hành hỷ dụng mới suy ra nghề, màu, hướng, con số. Kỵ thần là hành làm lá số lệch thêm. Đây là phần quan trọng nhất để ứng dụng thực tế, nên đối chiếu với điều hậu ở mục 0.`);
  // 4 Sức khỏe
- H+=sec('4. Sức khỏe cần lưu ý',`<ul class="lst">${weak.map(e=>`<li><b ${ec(e)}>${EN[e]}</b> yếu: chú ý ${EORG[e]}.</li>`).join('')}${strong.map(e=>`<li><b ${ec(e)}>${EN[e]}</b> quá vượng: ${EORG[e]} dễ quá tải; hành bị nó khắc là ${EN[md(e+2,5)]} (${EORG[md(e+2,5)]}) cũng cần để ý.</li>`).join('')}${!weak.length&&!strong.length?'<li>Ngũ hành tương đối đủ, không có hành quá lệch.</li>':''}</ul>`);
+ H+=sec('4. Sức khỏe cần lưu ý',`<ul class="lst">${weak.map(e=>`<li><b ${ec(e)}>${EN[e]}</b> yếu: chú ý ${EORG[e]}.</li>`).join('')}${strong.map(e=>`<li><b ${ec(e)}>${EN[e]}</b> quá vượng: ${EORG[e]} dễ quá tải; hành bị nó khắc là ${EN[md(e+2,5)]} (${EORG[md(e+2,5)]}) cũng cần để ý.</li>`).join('')}${!weak.length&&!strong.length?'<li>Ngũ hành tương đối đủ, không có hành quá lệch.</li>':''}</ul>`,`Mỗi hành ứng với tạng phủ: Mộc – gan, mật, gân; Hỏa – tim, mạch, mắt; Thổ – tỳ vị, tiêu hóa; Kim – phổi, da, ruột già; Thủy – thận, bàng quang, xương tủy. Hành quá yếu hoặc quá vượng (lệch cân bằng) là chỗ dễ có vấn đề. Đây là tham khảo theo thuyết ngũ hành, không thay chẩn đoán y khoa.`);
  // 5 Lục thân
  const spG=sex==='nam'?2:3,chG=sex==='nam'?3:1;
  const pos=g=>{const r=[];R.p.forEach((x,i)=>{if(i!==2&&grpOf(D,x[0])===g)r.push(['Năm','Tháng','Ngày','Giờ'][i]+' (can)');if(grpOf(D,TANG[x[1]][0])===g)r.push(['Năm','Tháng','Ngày','Giờ'][i]+' (chi)')});return r};
@@ -1202,7 +1224,7 @@ function luanGiai(o){
  H+=sec('5. Lục thân: cha mẹ, hôn nhân, con cái',`<ul class="lst">
  <li><b>Tổ nghiệp, cha mẹ</b> (trụ năm, tháng): trụ tháng là ${thapThan(D,C[1])}/${thapThan(D,TANG[B[1]][0])}. ${[grpOf(D,C[1]),grpOf(D,TANG[B[1]][0])].includes(4)?'Có Ấn ở tháng: được cha mẹ nâng đỡ, học hành thuận.':[grpOf(D,C[1]),grpOf(D,TANG[B[1]][0])].includes(0)?'Tỷ kiếp ở tháng: anh em đông, phải tự lập.':'Tự thân lập nghiệp là chính.'}</li>
  <li><b>Hôn nhân:</b> sao phối ngẫu của ${sex==='nam'?'nam là Tài (Chính tài là vợ)':'nữ là Quan (Chính quan là chồng)'}: ${sp.length?'xuất hiện ở '+sp.join(', '):'không lộ rõ, duyên thường đến muộn hoặc phải chủ động tìm'}. Cung phu thê (chi ngày ${CHI[B[2]]}) chứa ${dayMain}. ${xungDay?'<b>Chi ngày bị xung</b>: hôn nhân dễ biến động, vợ chồng nên dành thời gian cho nhau, tránh xa cách lâu.':''}${hopDay?' Chi ngày được lục hợp: gắn bó, có duyên.':''}${kv.includes(B[2])?' Chi ngày rơi tuần không: duyên muộn hoặc ít gần gũi.':''}${[2,3].includes(grpOf(D,TANG[B[2]][0]))&&grpOf(D,TANG[B[2]][0])===spG?' Sao phối ngẫu nằm ngay cung phu thê: chủ được người bạn đời hỗ trợ.':''}</li>
- <li><b>Con cái</b> (trụ giờ, sao ${sex==='nam'?'Quan sát':'Thực thương'}): ${ch.length?'xuất hiện ở '+ch.join(', '):'không lộ rõ'}. Trụ giờ là ${thapThan(D,C[3])}, ${truongSinh(D,B[3])}: ${['Trường sinh','Lâm quan','Đế vượng','Quan đới','Dưỡng'].includes(truongSinh(D,B[3]))?'hậu vận khá, con cái có chí.':'hậu vận cần tích lũy từ sớm.'}</li></ul>`);
+ <li><b>Con cái</b> (trụ giờ, sao ${sex==='nam'?'Quan sát':'Thực thương'}): ${ch.length?'xuất hiện ở '+ch.join(', '):'không lộ rõ'}. Trụ giờ là ${thapThan(D,C[3])}, ${truongSinh(D,B[3])}: ${['Trường sinh','Lâm quan','Đế vượng','Quan đới','Dưỡng'].includes(truongSinh(D,B[3]))?'hậu vận khá, con cái có chí.':'hậu vận cần tích lũy từ sớm.'}</li></ul>`,`Mỗi trụ ứng một nhóm người và một giai đoạn đời: trụ năm – tổ tiên, ông bà (khoảng 1–16 tuổi); trụ tháng – cha mẹ, anh em (17–32); trụ ngày – bản thân và vợ/chồng, chi ngày gọi là <b>cung phu thê</b> (33–48); trụ giờ – con cái, hậu vận (49 về sau). Sao phối ngẫu: nam lấy Tài (mình khắc), nữ lấy Quan (khắc mình); sao con cái: nam lấy Quan sát, nữ lấy Thực thương.`);
  // 6 Thần sát & hợp xung
  const sm=[];
  if(ss.some(x=>x.includes('Thiên ất')))sm.push('<b>Thiên ất quý nhân:</b> hay gặp người giúp lúc khó, hóa giải tai ương.');
@@ -1211,20 +1233,27 @@ function luanGiai(o){
  if(ss.some(x=>x.includes('Dịch mã')))sm.push('<b>Dịch mã:</b> hay di chuyển, đi xa, hợp nghề lưu động, xuất ngoại.');
  if(out.some(x=>x.includes('xung')))sm.push('<b>Có lục xung:</b> đời nhiều thay đổi; trụ bị xung là lĩnh vực hay biến động (năm: gốc gác; tháng: công việc, cha mẹ; ngày: hôn nhân; giờ: con cái).');
  if(out.some(x=>x.includes('Tam hợp')||x.includes('Bán hợp')))sm.push('<b>Có tam hợp/bán hợp:</b> dễ được tập thể, đồng nghiệp ủng hộ; hành của cục làm thay đổi cân bằng ngũ hành.');
- H+=sec('6. Thần sát và hợp xung',sm.length?'<ul class="lst">'+sm.map(x=>`<li>${x}</li>`).join('')+'</ul>':'<p>Không có thần sát hay hợp xung nổi bật.</p>');
+ H+=sec('6. Thần sát và hợp xung',sm.length?'<ul class="lst">'+sm.map(x=>`<li>${x}</li>`).join('')+'</ul>':'<p>Không có thần sát hay hợp xung nổi bật.</p>','Thần sát là các “sao” tra theo bảng từ can ngày hoặc chi năm/ngày (vd Thiên ất quý nhân tra theo can ngày; Đào hoa, Dịch mã tra theo chi năm hoặc chi ngày trong nhóm tam hợp). Trong Tử Bình, thần sát chỉ là phụ, sức nặng kém xa ngũ hành và thập thần. Hợp làm các chi gắn kết (có thể hóa ra hành mới), xung làm chi bị lay động: trụ nào bị xung thì lĩnh vực của trụ đó hay thay đổi.');
  // 7 Đại vận
  let dv='<table><tr><th>Tuổi</th><th>Vận</th><th>Đánh giá</th><th>Chủ về</th></tr>';
  for(let k=1;k<=8;k++){const i=md(mi60+(thuan?k:-k),60),a=Math.round(yrs+10*(k-1)),yy=y+a,cur=now>=yy&&now<yy+10;
   const rt=rate(hy,CANH[i%10],CHIH[i%12]),g1=grpOf(D,i%10),g2=grpOf(D,TANG[i%12][0]);
   const xd=md(i%12-B[2],12)===6?' Xung chi ngày: biến động gia đạo, nơi ở.':'';
   dv+=`<tr${cur?' style="background:var(--good-bg)"':''}><td>${a}–${a+9}<br><span class="mut">${yy}</span></td><td>${gz(i)}</td><td><span class="tag ${rt[0]}">${rt[1]}</span></td><td>${GV[g2]}${g1!==g2?'; '+GV[g1].split(';')[0]:''}.${xd}</td></tr>`}
- H+=sec('7. Đại vận 10 năm',dv+'</table><p class="mut">Đánh giá dựa trên can/chi của vận là hỷ hay kỵ thần (chi tính nặng hơn can).</p>');
+ H+=sec('7. Đại vận 10 năm',dv+'</table><p class="mut">Đánh giá dựa trên can/chi của vận là hỷ hay kỵ thần (chi tính nặng hơn can).</p>',`Đại vận khởi từ <b>trụ tháng</b>, đi ${thuan?'thuận':'nghịch'} theo vòng 60 hoa giáp: dương nam, âm nữ đi thuận; âm nam, dương nữ đi nghịch. Tuổi khởi vận lấy số ngày từ lúc sinh đến tiết gần nhất (thuận thì tính tới tiết sau, nghịch thì lùi về tiết trước) chia 3. Mỗi vận 10 năm: 5 năm đầu nặng về can, 5 năm sau nặng về chi. Vận gặp hỷ dụng thần là vận thuận lợi; vận xung chi ngày hay ứng chuyện gia đạo, nơi ở.`);
  // 8 Lưu niên
  let ln='<table><tr><th>Năm</th><th>Can chi</th><th>Đánh giá</th><th>Chủ về</th></tr>';
  for(let k=0;k<5;k++){const yy=now+k,i=md(yy-4,60),rt=rate(hy,CANH[i%10],CHIH[i%12]);
   const notes=[];if(md(i%12-B[2],12)===6)notes.push('xung chi ngày (gia đạo, sức khỏe)');if(md(i%12-B[0],12)===6)notes.push('xung Thái Tuế bản mệnh');if(i%12===B[0])notes.push('năm tuổi (phạm Thái Tuế)');
   ln+=`<tr><td>${yy}</td><td>${gz(i)}</td><td><span class="tag ${rt[0]}">${rt[1]}</span></td><td>${GV[grpOf(D,TANG[i%12][0])].split(';')[0]}${notes.length?'. <b>Lưu ý:</b> '+notes.join(', '):''}.</td></tr>`}
- H+=sec('8. Lưu niên 5 năm tới',ln+'</table>');
+ H+=sec('8. Lưu niên 5 năm tới',ln+'</table>','Lưu niên là can chi của từng năm, xét chồng lên lá số và đại vận đang đi. Năm có can chi là hỷ thần thì thuận; năm chi trùng chi năm sinh là “năm tuổi” (phạm Thái Tuế); năm chi xung chi năm sinh là xung Thái Tuế; năm xung chi ngày dễ biến động trong gia đình, sức khỏe. Luận năm phải kết hợp đại vận: vận tốt gặp năm xấu thì nhẹ, vận xấu gặp năm xấu thì nặng.');
+ {const tips=[];
+  if(ratio>=.55)tips.push('Thân vượng: chủ động tạo việc, dùng năng lực ra ngoài (kinh doanh, quản lý, sáng tạo); tránh độc đoán, ôm hết việc.');
+  else if(ratio<=.45)tips.push('Thân nhược: nên học sâu một chuyên môn, làm trong tổ chức tốt, chọn cộng sự đáng tin; giữ sức khỏe, đừng tham việc quá sức.');
+  else tips.push('Thân gần cân bằng: linh hoạt theo vận, chọn đúng thời điểm vận tốt để mở rộng.');
+  tips.push('Tăng cường hành hỷ dụng ('+hy.map(e=>EN[e]).join(', ')+') qua nghề, màu, hướng ngồi làm việc; hạn chế hành kỵ ('+ky.map(e=>EN[e]).join(', ')+').');
+  if(miss.length)tips.push('Bù phần thiếu ('+miss.map(g=>GN[g]).join(', ')+') bằng thói quen: thiếu Tài thì lập kế hoạch tài chính, thiếu Quan thì tự đặt kỷ luật, thiếu Ấn thì chủ động học, tìm thầy.');
+  H+=sec('9. Tổng kết và lời khuyên','<ul class="lst">'+tips.map(x=>`<li>${x}</li>`).join('')+'</ul>','Trình tự luận một lá số để học: (1) xác định nhật chủ; (2) xem lệnh tháng, đắc lệnh hay không; (3) cân lực sinh trợ và khắc tiết để định vượng nhược; (4) lấy cách cục từ lệnh tháng; (5) chọn dụng thần theo vượng nhược và điều hậu; (6) đọc thập thần ở từng trụ để biết lục thân, sự nghiệp; (7) xét hợp xung, thần sát; (8) đặt vào đại vận, lưu niên. Mỗi mục ở trên tương ứng một bước.');}
  H+='<div class="tip">Bản luận do chương trình sinh tự động theo quy tắc phổ biến của Tử Bình, chỉ để tham khảo và học tập. Lá số thật cần xét thêm điều hậu, cách cục, hợp hóa và trải nghiệm thực tế.</div>';
  $('tuLuan').innerHTML=H;
 }
@@ -1594,6 +1623,72 @@ const CUNG=['Mệnh','Phụ Mẫu','Phúc Đức','Điền Trạch','Quan Lộc'
 const CUC={Thủy:2,Mộc:3,Kim:4,Thổ:5,Hỏa:6};
 const TUHOA=[['Liêm Trinh','Phá Quân','Vũ Khúc','Thái Dương'],['Thiên Cơ','Thiên Lương','Tử Vi','Thái Âm'],['Thiên Đồng','Thiên Cơ','Văn Xương','Liêm Trinh'],['Thái Âm','Thiên Đồng','Thiên Cơ','Cự Môn'],['Tham Lang','Thái Âm','Hữu Bật','Thiên Cơ'],['Vũ Khúc','Tham Lang','Thiên Lương','Văn Khúc'],['Thái Dương','Vũ Khúc','Thái Âm','Thiên Đồng'],['Cự Môn','Thái Dương','Văn Khúc','Văn Xương'],['Thiên Lương','Tử Vi','Tả Phù','Vũ Khúc'],['Phá Quân','Cự Môn','Thái Âm','Tham Lang']];
 const SAO_Y={'Tử Vi':'đế tinh, uy quyền, độ lượng','Thiên Cơ':'mưu trí, linh hoạt, hay thay đổi','Thái Dương':'quang minh, danh tiếng, chủ về nam giới','Vũ Khúc':'tài tinh, quyết đoán, cứng rắn','Thiên Đồng':'phúc tinh, hòa nhã, hưởng thụ','Liêm Trinh':'thẳng thắn, nóng nảy, liên quan pháp lý','Thiên Phủ':'kho tàng, ổn định, giữ của','Thái Âm':'điền sản, kín đáo, chủ về nữ giới','Tham Lang':'ham muốn, giao thiệp, đa tài','Cự Môn':'ăn nói, thị phi, nghi ngờ','Thiên Tướng':'ấn tín, giúp đỡ, công bằng','Thiên Lương':'che chở, thọ, lương thiện','Thất Sát':'xung phong, gian khổ, quyết liệt','Phá Quân':'phá cũ lập mới, biến động'};
+
+const CUNG_Y={'Mệnh':'bản thân: tính cách, tài năng, hướng đi cả đời','Phụ Mẫu':'cha mẹ, cấp trên, giấy tờ, học vấn ban đầu','Phúc Đức':'phúc phần dòng họ, đời sống tinh thần, tuổi thọ','Điền Trạch':'nhà cửa, đất đai, tài sản cố định','Quan Lộc':'sự nghiệp, công việc, địa vị','Nô Bộc':'bạn bè, đồng nghiệp, cấp dưới','Thiên Di':'ra ngoài xã hội, đi xa, quan hệ bên ngoài','Tật Ách':'sức khỏe, bệnh tật, tai nạn','Tài Bạch':'tiền bạc, cách kiếm và giữ tiền','Tử Tức':'con cái, học trò, sự sáng tạo','Phu Thê':'vợ chồng, hôn nhân, đối tác thân','Huynh Đệ':'anh chị em, người ngang hàng'};
+const PHU_Y={'Lộc Tồn':'lộc, giữ của, cẩn trọng','Thiên Khôi':'quý nhân (dương), được nâng đỡ','Thiên Việt':'quý nhân (âm), cơ hội bất ngờ','Tả Phù':'trợ lực, có người giúp','Hữu Bật':'trợ lực, giúp đỡ âm thầm','Văn Xương':'học vấn, văn chương, thi cử','Văn Khúc':'tài nghệ, ăn nói, nghệ thuật','Thiên Mã':'di chuyển, thay đổi, xuất ngoại','Đào Hoa':'duyên dáng, tình cảm','Hồng Loan':'hôn nhân, hỷ sự','Thiên Hỷ':'tin vui, hỷ sự','Thiên Diêu':'đa tình, nghệ thuật, mê tín','Kình Dương':'sát tinh: cương mạnh, tranh đấu, thương tích','Đà La':'sát tinh: trì trệ, dây dưa, ngấm ngầm','Địa Không':'sát tinh: hao tán, ý tưởng viển vông, mất mát bất ngờ','Địa Kiếp':'sát tinh: hao tổn, thăng trầm mạnh','Hỏa Tinh':'sát tinh: nóng nảy, đột ngột, hỏa hoạn','Linh Tinh':'sát tinh: âm ỉ, lo âu, sự cố bất ngờ','Thiên Hình':'kỷ luật, pháp luật, phẫu thuật, hình thương'};
+const CAT6=['Thiên Khôi','Thiên Việt','Tả Phù','Hữu Bật','Văn Xương','Văn Khúc'];
+const TUHOA_Y=['Hóa Lộc: thêm tài lộc, thuận lợi, duyên','Hóa Quyền: thêm quyền lực, chủ động, uy','Hóa Khoa: thêm danh tiếng, học vấn, giải nạn','Hóa Kỵ: thêm trắc trở, vướng mắc, thị phi'];
+const THAN_Y={'Mệnh':'Thân Mệnh đồng cung: tính cách trước sau như một, tự quyết đời mình.','Phúc Đức':'Thân cư Phúc: hậu vận coi trọng tinh thần, hưởng phúc, gắn với dòng họ.','Quan Lộc':'Thân cư Quan: đời xoay quanh sự nghiệp, càng về sau càng chăm lo công việc.','Thiên Di':'Thân cư Di: hay đi lại, làm ăn xa, thành công nhờ môi trường bên ngoài.','Tài Bạch':'Thân cư Tài: coi trọng tiền bạc, giỏi làm kinh tế ở hậu vận.','Phu Thê':'Thân cư Phối: hôn nhân, người phối ngẫu ảnh hưởng lớn đến hậu vận.'};
+function tvLuan(o){const{P,menh,than,cuc,cucEl,naMenh,TH,HN,yc,yz,sex,thuan,age,cur,tuan,triet,canOf,duong}=o;
+ const md2=(a)=>((a%12)+12)%12,sec=(t,h,w)=>`<details open><summary>${t}</summary><div>${h}${w?`<div class="why"><b>💡 Giải thích để học:</b> ${w}</div>`:''}</div></details>`;
+ const all=z=>[...P[z].main,...P[z].stars,...P[z].bad];
+ const tam=z=>[z,md2(z+4),md2(z+8),md2(z+6)];
+ const inTam=(z,s)=>tam(z).some(x=>all(x).includes(s));
+ const hoaAt=z=>TH.map((s,i)=>all(z).includes(s)?i:-1).filter(i=>i>=0);
+ const tt=z=>[tuan.includes(z)?'Tuần':'',triet.includes(z)?'Triệt':''].filter(Boolean);
+ let H='';
+ // 1 Tổng quan cấu trúc
+ const yEl=(()=>{for(let i=0;i<60;i++)if(i%10===yc&&i%12===yz)return NAPAM[Math.floor(i/2)].split(' ').pop()})();
+ const EL={Kim:3,Thủy:4,Mộc:0,Hỏa:1,Thổ:2},a=EL[cucEl],b=EL[yEl.replace(/^./,c=>c.toUpperCase())]??EL[yEl];
+ const rel=a===b?'Cục và Mệnh đồng hành: hòa hợp, ổn định.':(a+1)%5===b?'Cục sinh Mệnh: được hoàn cảnh nâng đỡ, tốt.':(b+1)%5===a?'Mệnh sinh Cục: phải bỏ công sức nhiều cho hoàn cảnh, vất vả hơn.':(a+2)%5===b?'Cục khắc Mệnh: hoàn cảnh gây áp lực, cần kiên trì.':'Mệnh khắc Cục: tự mình vượt hoàn cảnh, thành bằng nỗ lực.';
+ const adOk=(duong===(menh%2===0));
+ H+=sec('1. Cấu trúc lá số',`<ul class="lst">
+ <li><b>${duong?'Dương':'Âm'} ${sex?'Nam':'Nữ'}</b>, Mệnh đóng cung ${CHI[menh]} (${menh%2===0?'cung dương':'cung âm'}): ${adOk?'<b>âm dương thuận lý</b>, mọi việc dễ thuận.':'âm dương nghịch lý, đời hay phải cố gắng hơn.'}</li>
+ <li><b>${cucEl} ${cuc} cục</b>, bản mệnh nạp âm hành ${yEl}: ${rel}</li>
+ <li>Thân cư <b>${P[than].cung}</b>. ${THAN_Y[P[than].cung]||''}</li>
+ <li>Đại hạn ${thuan?'đi thuận':'đi nghịch'}, khởi ${cuc} tuổi, mỗi hạn 10 năm.</li></ul>`,
+ `<b>Cung Mệnh</b> an bằng cách: từ cung Dần đếm thuận đến tháng sinh âm, rồi từ đó đếm nghịch đến giờ sinh. <b>Cung Thân</b>: cũng từ cung tháng sinh nhưng đếm thuận đến giờ sinh. <b>Cục</b> là nạp âm của can chi cung Mệnh (ở đây ${CAN[canOf(menh)]} ${CHI[menh]} – ${naMenh}); số cục (Thủy 2, Mộc 3, Kim 4, Thổ 5, Hỏa 6) dùng để an sao Tử Vi theo ngày sinh và là tuổi khởi đại hạn. <b>Âm dương thuận lý</b> khi tuổi dương mà Mệnh ở cung dương (Tý, Dần, Thìn…) hoặc tuổi âm mà Mệnh ở cung âm. Mệnh xem tiền vận, Thân xem hậu vận (từ khoảng 30 tuổi).`);
+ // 2 Mệnh chi tiết
+ const mz=P[menh].main.length?menh:md2(menh+6),ms=P[mz].main;
+ const G={tpvt:['Tử Vi','Thiên Phủ','Vũ Khúc','Thiên Tướng'],spt:['Thất Sát','Phá Quân','Tham Lang'],cndl:['Thiên Cơ','Thái Âm','Thiên Đồng','Thiên Lương'],cn:['Cự Môn','Thái Dương']};
+ const grp=Object.keys(G).find(k=>ms.some(x=>G[k].includes(x)));
+ const GY={tpvt:'Nhóm <b>Tử Phủ Vũ Tướng</b>: ổn định, có khả năng quản lý, giữ của, hợp vị trí lãnh đạo, hành chính, tài chính.',spt:'Nhóm <b>Sát Phá Tham</b>: năng động, dám nghĩ dám làm, đời nhiều biến động, thăng trầm mạnh; hợp khai phá, kinh doanh, kỹ thuật, quân sự.',cndl:'Nhóm <b>Cơ Nguyệt Đồng Lương</b>: hiền hòa, ổn định, thích hợp công chức, chuyên môn, nghiên cứu, giáo dục, y tế.',cn:'Nhóm <b>Cự Nhật</b>: giỏi ăn nói, lý luận, hợp giảng dạy, luật, ngoại giao, truyền thông.'};
+ const cach=[];
+ if(!P[menh].main.length)cach.push('<b>Mệnh vô chính diệu</b>: mượn chính tinh cung Thiên Di; tính cách dễ chịu ảnh hưởng môi trường, linh hoạt; thường cần Tuần/Triệt hoặc cát tinh mới tốt.');
+ if(ms.includes('Tử Vi')&&ms.includes('Thiên Phủ'))cach.push('<b>Tử Phủ đồng cung</b>: cách quý, ổn định, có uy.');
+ if(inTam(menh,'Lộc Tồn')&&inTam(menh,TH[0]))cach.push('<b>Song Lộc</b> (Lộc Tồn và Hóa Lộc) hội tam phương Mệnh: tài lộc dồi dào.');
+ const c6=CAT6.filter(x=>inTam(menh,x));if(c6.length>=3)cach.push(`Tam phương Mệnh hội nhiều cát tinh (${c6.join(', ')}): được trợ lực, học hành, quý nhân.`);
+ [['Tả Phù','Hữu Bật','Tả Hữu'],['Văn Xương','Văn Khúc','Xương Khúc'],['Thiên Khôi','Thiên Việt','Khôi Việt']].forEach(([x,y,n])=>{if(inTam(menh,x)&&inTam(menh,y))cach.push(`<b>${n} hội chiếu</b> Mệnh: ${n==='Tả Hữu'?'nhiều người giúp':n==='Xương Khúc'?'học vấn, văn tài':'quý nhân nâng đỡ'}.`)});
+ const sat=P[menh].bad;if(sat.length)cach.push(`Mệnh có sát tinh <b>${sat.join(', ')}</b>: ${sat.length>=2?'đời nhiều thử thách, cần bản lĩnh; thành công thường đến sau vất vả.':'tăng cá tính, cần kiềm chế nóng vội.'}`);
+ if(['Địa Không','Địa Kiếp'].every(x=>inTam(menh,x)))cach.push('<b>Không Kiếp</b> hội Mệnh: dễ hao tán, ý tưởng lớn nhưng dễ đổ vỡ; hợp nghề kỹ thuật, nghiên cứu, tâm linh hơn đầu cơ.');
+ const hm=hoaAt(menh);hm.forEach(i=>cach.push(`Mệnh có <b>${HN[i]}</b> (${TH[i]}): ${TUHOA_Y[i].split(': ')[1]}.`));
+ const tm=tt(menh);if(tm.length)cach.push(`<b>${tm.join(', ')}</b> án ngữ Mệnh: tiền vận gặp cản trở, sau 30 tuổi mới phát; ${tm.includes('Triệt')?'Triệt nặng ở trước 30,':''} Tuần/Triệt cũng làm nhẹ sát tinh.`);
+ H+=sec('2. Cung Mệnh – tính cách và cách cục',`<p>${P[menh].main.length?'Mệnh có chính tinh':'Mệnh vô chính diệu, mượn sao Thiên Di'}: ${ms.map(x=>`<b>${x}</b> (${SAO_Y[x]})`).join('; ')}.</p>${grp?`<p>${GY[grp]}</p>`:''}
+ ${P[menh].stars.length?`<p>Phụ tinh tại Mệnh: ${P[menh].stars.map(x=>`${x} – ${PHU_Y[x]||''}`).join('; ')}.</p>`:''}
+ ${cach.length?'<ul class="lst">'+cach.map(x=>`<li>${x}</li>`).join('')+'</ul>':''}
+ <p>Vòng Tràng sinh tại Mệnh: <b>${P[menh].ts}</b>.</p>`,
+ `Đọc Mệnh theo thứ tự: (1) chính tinh tại Mệnh cho tính cách gốc; (2) chính tinh thuộc nhóm nào (Tử Phủ Vũ Tướng, Sát Phá Tham, Cơ Nguyệt Đồng Lương, Cự Nhật) cho “kiểu người”; (3) phụ tinh, sát tinh tại Mệnh làm tăng hay giảm; (4) xét <b>tam phương tứ chính</b> (Mệnh, Tài, Quan, Di) vì sao ở 3 cung kia đều chiếu về Mệnh; (5) Tứ hóa rơi vào đâu. Phần mềm chưa tính độ sáng miếu/vượng/đắc/hãm của sao, mà độ sáng làm sao tốt thành rất tốt hoặc xấu đi, nên khi học hãy tra thêm bảng miếu hãm.`);
+ // 3 Từng cung
+ const score=z=>{let sc=0;sc+=P[z].stars.filter(x=>CAT6.includes(x)||x==='Lộc Tồn').length;sc-=P[z].bad.length;hoaAt(z).forEach(i=>sc+=i<3?1:-1.5);if(tt(z).length)sc-=.5;return sc};
+ let rows='';
+ for(let i=0;i<12;i++){const z=md2(menh+i),pz=P[z],h=hoaAt(z),sc=score(z),dz=md2(z+6);
+  const vd=sc>=2?['g','Tốt']:sc>=0?['n','Bình']:['b','Cần lưu ý'];
+  rows+=`<details><summary>${pz.cung} <span class="mut">(${CHI[z]})</span> <span class="tag ${vd[0]}">${vd[1]}</span></summary><div>
+  <p class="mut">Cung này nói về ${CUNG_Y[pz.cung]}.</p>
+  <p><b>Chính tinh:</b> ${pz.main.length?pz.main.map(x=>`${x} (${SAO_Y[x]})`).join('; '):`vô chính diệu, mượn cung đối ${P[dz].cung}: ${P[dz].main.join(', ')||'—'}`}.</p>
+  ${pz.stars.length?`<p><b>Phụ tinh:</b> ${pz.stars.map(x=>`${x}${PHU_Y[x]?' – '+PHU_Y[x]:''}`).join('; ')}.</p>`:''}
+  ${pz.bad.length?`<p><b>Sát tinh:</b> ${pz.bad.map(x=>`${x} – ${PHU_Y[x].replace('sát tinh: ','')}`).join('; ')}.</p>`:''}
+  ${h.length?`<p><b>Tứ hóa:</b> ${h.map(i=>TUHOA_Y[i]).join('; ')}.</p>`:''}
+  ${tt(z).length?`<p><b>${tt(z).join(', ')}:</b> làm giảm cả tốt lẫn xấu của cung, việc của cung đến chậm.</p>`:''}
+  <p><b>Đại hạn</b> ${pz.han}–${pz.han+9} tuổi; Tràng sinh: ${pz.ts}.</p></div></details>`}
+ H+=sec('3. Luận 12 cung',rows,'Mỗi cung là một mảng đời sống. Đánh giá “Tốt / Bình / Cần lưu ý” ở đây là cách chấm đơn giản để học: cộng điểm cho cát tinh (Khôi Việt, Tả Hữu, Xương Khúc, Lộc Tồn) và Hóa Lộc/Quyền/Khoa; trừ điểm cho sát tinh (Kình Đà, Không Kiếp, Hỏa Linh, Hình) và Hóa Kỵ; trừ nhẹ nếu có Tuần/Triệt. Khi luận thật phải xét thêm tam phương tứ chính của từng cung và độ sáng của sao. <b>Vô chính diệu</b> là cung không có chính tinh, khi đó mượn chính tinh cung đối diện.');
+ // 4 Đại hạn & năm nay
+ const ny=new Date().getFullYear(),nz=((ny-4)%12+12)%12;
+ let dh='';if(cur!==undefined){const z=+cur,h=hoaAt(z);dh=`<p>Hiện đi đại hạn <b>${P[z].cung}</b> (${CHI[z]}, ${P[z].han}–${P[z].han+9} tuổi): ${P[z].main.join(', ')||'vô chính diệu'}${P[z].bad.length?'; có sát tinh '+P[z].bad.join(', '):''}${h.length?'; '+h.map(i=>HN[i]).join(', '):''}. 10 năm này nổi bật chuyện ${CUNG_Y[P[z].cung]}.</p>`}
+ dh+=`<p>Năm ${ny} (${CAN[((ny-4)%10+10)%10]} ${CHI[nz]}): lưu Thái Tuế đóng cung <b>${P[nz].cung}</b> của lá số, năm nay chú ý chuyện ${CUNG_Y[P[nz].cung]}.</p>`;
+ H+=sec('4. Đại hạn và năm nay',dh,`Đại hạn khởi từ cung Mệnh với số tuổi bằng số cục (${cuc}), rồi cứ 10 năm sang một cung, ${thuan?'thuận':'nghịch'} chiều (dương nam âm nữ đi thuận, âm nam dương nữ đi nghịch). Khi luận một đại hạn, coi cung đại hạn như “Mệnh tạm thời” 10 năm đó và xét tam phương của nó. Năm xem: lấy chi của năm (lưu Thái Tuế) đặt lên lá số, cung nào có chi đó là trọng tâm của năm.`);
+ H+='<div class="tip">Luận giải sinh tự động theo quy tắc phổ biến để học và tham khảo. Tử vi có nhiều trường phái; luận thật cần thêm độ sáng sao, lưu niên tứ hóa, tiểu hạn và kinh nghiệm thực tế.</div>';
+ return '<div class="card"><b>📜 Bình giải lá số Tử vi</b>'+H+'</div>'}
 function tuvi(){const v=$('tvDate').value,t=$('tvTime').value||'12:00';if(!v)return;const [y,m,d]=v.split('-').map(Number),[hh,mi]=t.split(':').map(Number);
  const sex=+$('tvSex').value,L=solar2lunar(d,m,y,7),[yc,yz]=yearCC(L.y),hi=hourIdx(hh),duong=yc%2===0,thuan=(duong&&sex)||(!duong&&!sex);
  const P=Array.from({length:12},()=>({stars:[],main:[],bad:[]}));const put=(z,s,k='stars')=>P[mod(z,12)][k].push(s);
@@ -1631,7 +1726,7 @@ function tuvi(){const v=$('tvDate').value,t=$('tvTime').value||'12:00';if(!v)ret
  <div class="card"><b>Đọc nhanh cung Mệnh</b><p>Mệnh tại <b>${CHI[menh]}</b>${P[menh].main.length?'':' (vô chính diệu, mượn sao cung Thiên Di)'}: ${mm.map(s=>`<b>${s}</b> – ${SAO_Y[s]}`).join('; ')}. Thân cư <b>${P[than].cung}</b>.</p>
  <p>Tam phương tứ chính của Mệnh (Mệnh, Tài Bạch, Quan Lộc, Thiên Di): ${tam.map(z=>`${P[z].cung} ${CHI[z]}: ${P[z].main.join(', ')||'vô chính diệu'}`).join(' · ')}.</p>
  <p>Tứ hóa năm ${CAN[yc]}: ${TH.map((s,i)=>`${HN[i]} ${s}`).join(', ')}. Đại hạn ${thuan?'đi thuận':'đi nghịch'}, bắt đầu ${cuc} tuổi${cur!==undefined?`; hiện đi đại hạn cung <b>${P[cur].cung}</b> (${CHI[cur]}, ${P[cur].han}–${P[cur].han+9} tuổi): ${P[cur].main.join(', ')||'vô chính diệu'}`:''}.</p></div>
- <p class="mut">An sao theo phép phổ biến ở Việt Nam: 14 chính tinh, Lộc Tồn, Kình Đà, Khôi Việt, Xương Khúc, Tả Hữu, Không Kiếp, Hỏa Linh, Thiên Mã, Đào Hồng Hỷ, Hình Diêu, Tứ Hóa, vòng Tràng Sinh, Tuần Triệt, Đại hạn. Chưa tính độ sáng (miếu, vượng, đắc, hãm) và các vòng Thái Tuế, Bác Sĩ. Tháng nhuận tính như tháng thường. Người sinh giờ Tý muộn (23h–24h) có trường phái tính sang ngày hôm sau.</p>`}
+ <p class="mut">An sao theo phép phổ biến ở Việt Nam: 14 chính tinh, Lộc Tồn, Kình Đà, Khôi Việt, Xương Khúc, Tả Hữu, Không Kiếp, Hỏa Linh, Thiên Mã, Đào Hồng Hỷ, Hình Diêu, Tứ Hóa, vòng Tràng Sinh, Tuần Triệt, Đại hạn. Chưa tính độ sáng (miếu, vượng, đắc, hãm) và các vòng Thái Tuế, Bác Sĩ. Tháng nhuận tính như tháng thường. Người sinh giờ Tý muộn (23h–24h) có trường phái tính sang ngày hôm sau.</p>`+tvLuan({P,menh,than,cuc,cucEl,naMenh,TH,HN,yc,yz,sex,thuan,age,cur,tuan,triet,canOf,duong})}
 const syncTv=()=>{$('tvDate').value=$('tuDate').value;$('tvTime').value=$('tuTime').value;$('tvSex').value=$('tuSex').value==='nam'?'1':'0';tuvi()};
 $('tvGo').onclick=tuvi;$('tvSync').onclick=syncTv;['tvDate','tvTime','tvSex'].forEach(id=>$(id).onchange=tuvi);
 syncTv();
